@@ -14,11 +14,17 @@ export interface Producto {
     cantidad_disp: number;
     tipo_prod: string;
     color: string;
-    tallas: string[];
+    tallas: string[] | null;
+    precios_tallas: number[] | null;
+    cantidad_por_talla: number[] | null;
     imagen_principal: string;
     imagenes_extra: string[];
     grosores: (string | null)[];
+    precios_grosores: number[] | null;
+    cantidad_por_grosor: number[] | null;
+    nombre_marca: string;
   }
+  
 
   export interface ProductoSimilar {
     ID_PRODUCTO: number;
