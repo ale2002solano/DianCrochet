@@ -233,7 +233,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
             const response = await axios.post('https://deploybackenddiancrochet.onrender.com/factura/envio', {
                 id_factura: idFactura,
                 direccion,
-                ciudad: selectedCiudad,
+                id_ciudad: selectedCiudad,
                 numero: telefono
             });
    
