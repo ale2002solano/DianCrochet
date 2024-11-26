@@ -138,29 +138,37 @@ export default function ShopCartForm() {
     };
     
     
-    
+   // Método para eliminar todo el carrito / eliminar orden con confirmación
+const handleCancelOrder = async () => {
+    if (!facturaId) return; // Verificar que existe un id_factura
 
-    // Método para eliminar todo el carrito / eliminar orden
-    const handleCancelOrder = async () => {
-        if (!facturaId) return; // Verificar que existe un id_factura
+    // Mostrar cuadro de confirmación
+    const confirmCancel = window.confirm(
+        "¿Estás seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?"
+    );
 
-        try {
-            const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/eliminar/carrito/${facturaId}`, {
-                method: 'DELETE',
-            });
+    if (!confirmCancel) {
+        alert("La orden no fue cancelada y los productos se mantuvieron en el carrito.");
+        return;
+    }
 
-            if (response.ok) {
-                setCarrito([]); // Limpiar carrito en frontend
-                setSubtotal(0); // Reiniciar subtotal
-                setImpuestos(0); // Reiniciar impuestos
-                alert("Orden cancelada y carrito eliminado");
-            } else {
-                console.error('Error al eliminar todos los productos del carrito');
-            }
-        } catch (error) {
-            console.error('Error en la eliminación del carrito:', error);
+    try {
+        const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/eliminar/carrito/${facturaId}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            setCarrito([]); // Limpiar carrito en frontend
+            setSubtotal(0); // Reiniciar subtotal
+            setImpuestos(0); // Reiniciar impuestos
+            alert("Orden cancelada y carrito eliminado");
+        } else {
+            console.error('Error al eliminar todos los productos del carrito');
         }
-    };
+    } catch (error) {
+        console.error('Error en la eliminación del carrito:', error);
+    }
+};
 
     //Actualizar cantidad de productos
     const handleQuantityChange = async (
