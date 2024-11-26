@@ -163,67 +163,69 @@ export default function ShopCartForm() {
     };
 
     //Actualizar cantidad de productos
-const handleQuantityChange = async (
-    idProducto: number,
-    delta: number,
-    grosor: string | number | null,
-    talla: string | number | null,
-    idProdFact: number
-) => {
-    // Manejo seguro de los valores null
-    const tallaFinal = talla || null;
-    const grosorFinal = grosor || null;
-
-    const updatedCarrito = carrito.map((item) => {
-        if (item.id_prod_fact === idProdFact) {
-            const newCantidad = item.cantidad_compra + delta;
-            return {
-                ...item,
-                cantidad_compra: newCantidad > 0 ? newCantidad : 1,
-                subtotal: ((item.subtotal ?? 0) / item.cantidad_compra) * newCantidad,
-            };
-        }
-        return item;
-    });
-
-    setCarrito(updatedCarrito);
-
-    const requestBody = {
-        correo,
-        nuevaCantidad: updatedCarrito.find((item) => item.id_prod_fact === idProdFact)?.cantidad_compra,
-        idProducto,
-        talla: tallaFinal,
-        grosor: grosorFinal,
-    };
-
-    try {
-        const response = await fetch(
-            'https://deploybackenddiancrochet.onrender.com/factura/carrito/actualizar',
-            {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(requestBody),
-            }
-        );
-
-        if (response.ok) {
-            const data = await response.json();
-            if (data.actualizar.codigo === 1 || data.actualizar.codigo === 2) {
-                console.log(data.actualizar.mensaje);
-                await fetchSubtotal();
-            } else {
-                console.error('Error en la respuesta:', data.actualizar.mensaje);
-            }
-        } else {
-            console.error('Error HTTP:', response.status);
-        }
-        
-    } catch (error) {
-        console.error('Error al actualizar cantidad:', error);
-    }
+    const handleQuantityChange = async (
+        idProducto: number,
+        delta: number,
+        grosor: string | number | null,
+        talla: string | number | null,
+        idProdFact: number
+    ) => {
+        const tallaFinal = talla || null;
+        const grosorFinal = grosor || null;
     
-};
-
+        const updatedCarrito = carrito.map((item) => {
+            if (item.id_prod_fact === idProdFact) {
+                const newCantidad = item.cantidad_compra + delta;
+                return {
+                    ...item,
+                    cantidad_compra: newCantidad > 0 ? newCantidad : 1,
+                    subtotal: ((item.subtotal ?? 0) / item.cantidad_compra) * newCantidad,
+                };
+            }
+            return item;
+        });
+    
+        const requestBody = {
+            correo,
+            nuevaCantidad: updatedCarrito.find((item) => item.id_prod_fact === idProdFact)?.cantidad_compra,
+            idProducto,
+            talla: tallaFinal,
+            grosor: grosorFinal,
+        };
+    
+        try {
+            const response = await fetch(
+                'https://deploybackenddiancrochet.onrender.com/factura/carrito/actualizar',
+                {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody),
+                }
+            );
+    
+            if (response.ok) {
+                const data = await response.json();
+                if (data.actualizar.codigo === 2) {
+                    // Código 2: Se excedió el inventario disponible
+                    alert("No puedes agregar más de este producto, ya alcanzaste el límite en inventario.");
+                    return;
+                }
+    
+                if (data.actualizar.codigo === 1) {
+                    console.log(data.actualizar.mensaje);
+                    setCarrito(updatedCarrito);
+                    await fetchSubtotal();
+                } else {
+                    console.error('Error en la respuesta:', data.actualizar.mensaje);
+                }
+            } else {
+                console.error('Error HTTP:', response.status);
+            }
+        } catch (error) {
+            console.error('Error al actualizar cantidad:', error);
+        }
+    };
+    
 // Recalcular total
 useEffect(() => {
     const calcularTotal = () => {
