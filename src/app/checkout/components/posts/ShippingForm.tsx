@@ -97,11 +97,33 @@ export default function ShippingForm() {
 
         // Agrupar productos por id_producto y talla
 const groupedCarrito = carrito.reduce((acc, item) => {
-    const existingItem = acc.find(
-        i =>
-            i.id_producto === item.id_producto && // Mismo producto
-            (i.talla === item.talla || i.talla === null || item.talla === null) // Mismo talla o alguna es null
-    );
+    const existingItem = acc.find(i => {
+        // Mismo producto
+        const sameProduct = i.id_producto === item.id_producto;
+
+        // Mismo grosor si alguna talla es null
+        const sameGrosor =
+            (i.talla === null || item.talla === null) &&
+            i.grosor === item.grosor;
+
+        // Mismo talla si ambas tallas están definidas
+        const sameTalla =
+            i.talla !== null &&
+            item.talla !== null &&
+            i.talla === item.talla;
+
+        // Si no tienen ni talla ni grosor, agrupar solo por producto
+        const noTallaNoGrosor =
+            i.talla === null &&
+            item.talla === null &&
+            i.grosor === null &&
+            item.grosor === null;
+
+        return (
+            sameProduct &&
+            (sameTalla || sameGrosor || noTallaNoGrosor)
+        );
+    });
 
     if (existingItem) {
         existingItem.cantidad_compra += item.cantidad_compra; // Sumar cantidades
@@ -111,6 +133,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
     }
     return acc;
 }, [] as CarritoItem[]);
+
 
     // Fetch ciudades cuando cambia el departamento seleccionado
     useEffect(() => {
