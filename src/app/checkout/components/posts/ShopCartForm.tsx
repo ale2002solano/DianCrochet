@@ -208,7 +208,7 @@ const handleQuantityChange = async (
 
         if (response.ok) {
             const data = await response.json();
-            if (data.actualizar.codigo === 1) {
+            if (data.actualizar.codigo === 1 || data.actualizar.codigo === 2) {
                 console.log(data.actualizar.mensaje);
                 await fetchSubtotal();
             } else {
@@ -217,9 +217,11 @@ const handleQuantityChange = async (
         } else {
             console.error('Error HTTP:', response.status);
         }
+        
     } catch (error) {
         console.error('Error al actualizar cantidad:', error);
     }
+    
 };
 
 // Recalcular total
