@@ -275,7 +275,14 @@ useEffect(() => {
     if (correo) fetchCarrito();
 }, [correo]);
   
-      
+useEffect(() => {
+    // Contar la cantidad total de productos en el carrito
+    const totalProductos = carrito.reduce((total, item) => total + item.cantidad_compra, 0);
+
+    // Guardar la cantidad en localStorage
+    localStorage.setItem('cantidadProductosCarrito', totalProductos.toString());
+}, [carrito]);
+
 
     // Agrupar productos por id_producto y talla
     const groupedCarrito = carrito.reduce((acc, item) => {
