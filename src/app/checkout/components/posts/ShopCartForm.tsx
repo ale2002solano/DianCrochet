@@ -7,6 +7,7 @@ import { CarritoItem } from "@interfaces/invoice";
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from "../loadding/LoadingSpinnerSob";
 import Image from 'next/image';
+import { useCart } from "../../../../context/cartContext";
 
 //hey, this is
 export default function ShopCartForm() {
@@ -18,7 +19,7 @@ export default function ShopCartForm() {
     const [subtotal, setSubtotal] = useState<number>(0); // Iniciar con 0, no null
     const [impuestos, setImpuestos] = useState<number>(0); // Iniciar con 0, no null
     const [mensajeAdvertencia, setMensajeAdvertencia] = useState<string | null>(null); // Mensaje de advertencia
-
+    const { updateCartCount } = useCart();
     // Función para manejar el clic en detalles de envío
     const handleShippingDetailsClick = () => {
         if (carrito.length === 0) {
@@ -180,6 +181,7 @@ const handleCancelOrder = async () => {
     ) => {
         const tallaFinal = talla || null;
         const grosorFinal = grosor || null;
+        
     
         const updatedCarrito = carrito.map((item) => {
             if (item.id_prod_fact === idProdFact) {
@@ -222,6 +224,11 @@ const handleCancelOrder = async () => {
                 if (data.actualizar.codigo === 1) {
                     console.log(data.actualizar.mensaje);
                     setCarrito(updatedCarrito);
+                    // Calcula la nueva cantidad total en el carrito
+                const totalCantidad = updatedCarrito.reduce((total, item) => total + item.cantidad_compra, 0);
+                
+                // Actualiza el contador global del carrito
+                updateCartCount(totalCantidad);
                     await fetchSubtotal();
                 } else {
                     console.error('Error en la respuesta:', data.actualizar.mensaje);
@@ -275,13 +282,6 @@ useEffect(() => {
     if (correo) fetchCarrito();
 }, [correo]);
   
-useEffect(() => {
-    // Contar la cantidad total de productos en el carrito
-    const totalProductos = carrito.reduce((total, item) => total + item.cantidad_compra, 0);
-
-    // Guardar la cantidad en localStorage
-    localStorage.setItem('cantidadProductosCarrito', totalProductos.toString());
-}, [carrito]);
 
 
     // Agrupar productos por id_producto y talla
