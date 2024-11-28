@@ -1,6 +1,6 @@
 // src/context/BounceContext.tsx
 'use client';
-import { createContext, useState, useContext, ReactNode } from 'react';
+import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 // Definir el tipo del contexto
 interface BounceContextType {
@@ -18,6 +18,14 @@ interface BounceProviderProps {
 // Crear el proveedor para envolver los componentes
 export const BounceProvider = ({ children }: BounceProviderProps) => {
   const [isBounce, setIsBounce] = useState(false);
+
+  useEffect(() => {
+    if (isBounce) {
+      const audio = new Audio('../sound/shopshop.mp3');
+      audio.play().catch((error) => console.error('Error reproduciendo el sonido:', error));
+    }
+  }, [isBounce]);
+
 
   return (
     <BounceContext.Provider value={{ isBounce, setIsBounce }}>
