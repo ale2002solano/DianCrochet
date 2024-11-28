@@ -34,10 +34,6 @@ const config: Config = {
           '100%': { transform: 'translateX(0)' },
         },
       },
-      animation: {
-        bounce: 'bounce 1s infinite',
-        shake: 'shake 0.5s ease-in-out', // Añadimos la animación shake
-      },
       beatfade: {  // Animación beat fade
         '0%, 100%': { transform: 'scale(1)', opacity: '1' },
         '50%': { transform: 'scale(1.2)', opacity: '0.5' },
