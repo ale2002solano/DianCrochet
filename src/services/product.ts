@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Filtered, FullMaterial, ProductoDetalle } from "@interfaces/product";
 import { useParams } from 'next/navigation';
-import { FullProduct, Producto, ProductoSimilar } from "@interfaces/product";
+import { FullProduct, Producto, ProductoSimilar, FullKit } from "@interfaces/product";
 
 const API_URL = "https://deploybackenddiancrochet.onrender.com/producto";
 
@@ -84,7 +84,7 @@ export const FilteredProducts = async (data: Filtered)=> {
     },
     body: JSON.stringify(data),
   });
-
+  
   if (!response.ok) {
     throw new Error("Error filtrando productos");
     return [];
@@ -147,4 +147,31 @@ export const GetKitsPopulares = async (): Promise<Producto[]> => {
     console.error('Error al obtener productos populares:', error);
     return []; 
   }
+};
+
+export const getKits = async(): Promise<FullKit[]> =>{
+  const res = await fetch(`${API_URL}/Kit`);
+  if (!res.ok) {
+    throw new Error("Error al traer productos");
+  }
+  const data = await res.json();
+  console.log(data)
+  return data.productosRandom;
+};
+
+export const FilteredKits = async (data: Filtered)=> {
+  const response = await fetch(`${API_URL}/ordenados/Kit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  
+  if (!response.ok) {
+    throw new Error("Error filtrando productos");
+    return [];
+  }
+  const datos = await response.json();
+  return datos.productos;
 };
