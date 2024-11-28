@@ -1,4 +1,3 @@
-// src/context/BounceContext.tsx
 'use client';
 import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
@@ -21,7 +20,7 @@ export const BounceProvider = ({ children }: BounceProviderProps) => {
 
   useEffect(() => {
     if (isBounce) {
-      const audio = new Audio('../sound/shopshop.mp3');
+      const audio = new Audio('public/sound/shopshop.mp3');
       audio.play().catch((error) => console.error('Error reproduciendo el sonido:', error));
     }
   }, [isBounce]);
