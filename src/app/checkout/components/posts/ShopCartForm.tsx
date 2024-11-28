@@ -7,7 +7,7 @@ import { CarritoItem } from "@interfaces/invoice";
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from "../loadding/LoadingSpinnerSob";
 import Image from 'next/image';
-
+//cambio mega x
 export default function ShopCartForm() {
     const [carrito, setCarrito] = useState<CarritoItem[]>([]);
     const [correo, setCorreo] = useState('');
