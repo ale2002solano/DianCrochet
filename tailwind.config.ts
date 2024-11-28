@@ -35,7 +35,7 @@ const config: Config = {
         },
       },
       animation: {
-        bounce: 'bounce 1s infinite',
+        bounce: 'bounce 0.5s infinite',
         shake: 'shake 0.5s ease-in-out', // Añadimos la animación shake
       },
     },
