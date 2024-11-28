@@ -4,6 +4,9 @@ import { FaUserCircle, FaShoppingCart, FaSearch } from 'react-icons/fa';
 import Image from "next/legacy/image";
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+
 
 export default function Navbar() {
   const [isProfileOpen, setProfileOpen] = useState(false);
@@ -138,6 +141,7 @@ export default function Navbar() {
           {/* Carrito */}
           <button onClick={handleCarritoClick} title='carrito'>
             <FaShoppingCart className="text-gray-700 text-2xl" />
+            <FontAwesomeIcon icon={"fa-solid fa-circle" as IconProp} />
           </button>
 
           {/* Mostrar mensaje de advertencia si no está logueado */}
