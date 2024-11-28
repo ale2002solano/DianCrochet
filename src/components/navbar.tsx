@@ -142,14 +142,20 @@ export default function Navbar() {
           <button onClick={handleCarritoClick} title="carrito" className="relative">
             {/* Ícono del carrito */}
             <FaShoppingCart className="text-gray-700 text-4xl" />
-            
+
             {/* Círculo de notificación */}
             <FontAwesomeIcon
               icon={"fa-solid fa-circle" as IconProp}
               className="absolute bottom-0 right-0 text-red-500"
-              style={{ width: '12px', height: '12px', zIndex: 10 }}
+              style={{
+                width: "12px",
+                height: "12px",
+                zIndex: 10, // Asegura que esté encima
+                transform: "translate(50%, 50%)", // Ajusta la posición fuera del borde
+              }}
             />
           </button>
+
 
 
 
