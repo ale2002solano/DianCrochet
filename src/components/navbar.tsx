@@ -4,6 +4,7 @@ import { FaUserCircle, FaShoppingCart, FaSearch } from 'react-icons/fa';
 import Image from "next/legacy/image";
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useBounce } from '../context/BounceContext';
 
 
 export default function Navbar() {
@@ -13,6 +14,7 @@ export default function Navbar() {
   const [mensajeAdvertencia, setMensajeAdvertencia] = useState<string | null>(null); // Mensaje de advertencia
   const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { isBounce } = useBounce();  // Obtener el estado de animación
 
   // Recuperar la imagen de perfil y correo del localStorage cuando el componente se monte
   useEffect(() => {
@@ -142,7 +144,7 @@ export default function Navbar() {
             <FaShoppingCart className="text-gray-700 text-4xl" />
             
             {/* Círculo rojo */}
-            <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-purple-500 rounded-full border-2 border-none animate-bounce"></span>
+            <span className={`absolute top-0 right-0 w-3.5 h-3.5 bg-purple-500 rounded-full border-2 border-none ${isBounce ? 'animate-bounce' : ''}`}></span>
           </button>
 
 

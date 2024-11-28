@@ -2,6 +2,7 @@ import Image from "next/legacy/image";
 import { useState, useEffect } from "react";
 import { ProductoDetalle } from "@interfaces/product";
 import { agregarAlCarrito } from "../post/agregarAlCarrito"; // Importa la función del POST
+import { useBounce } from '../../../context/BounceContext';
 
 interface ProductDetailProps {
   producto: ProductoDetalle;
@@ -16,6 +17,7 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
   const [correo, setCorreo] = useState<string>(""); // Correo del usuario
   const [cantidad, setCantidad] = useState<number>(1);
   const [precioActual, setPrecioActual] = useState<number>(producto.precio_venta);
+  const { setIsBounce } = useBounce();
 
   // Función para incrementar la cantidad
   const increaseQuantity = () => {
@@ -84,7 +86,8 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
       setTimeout(() => setMensajeError(null), 3000);
       return;
     }
-  
+    setIsBounce(true);
+    setTimeout(() => setIsBounce(false), 1000); 
     const idProducto = producto.id_producto.toString();
   
     const data = {
