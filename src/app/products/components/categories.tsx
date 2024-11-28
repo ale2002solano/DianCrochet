@@ -28,15 +28,46 @@ export default function Categorias({ open, setOpen, categories, setCategories }:
   }, []);
 
   const handleChange = (category: string) => {
-    // Actualiza las categorías seleccionadas y propágalo al componente padre inmediatamente
     const updatedCategories = categories.includes(category)
       ? categories.filter((item) => item !== category)
       : [...categories, category];
-    
-    setCategories(updatedCategories); // Propagamos el cambio al componente padre inmediatamente
-    console.log("actualizando categories:", categories)
+  
+    setCategories(updatedCategories); // Propaga el cambio al componente padre
+  };
+  
+  // Este efecto escucha cambios en `categories` y los imprime
+  useEffect(() => {
+    console.log("Actualizando categories:", categories);
+  }, [categories]);
+
+  const handleGlobalKeyDown = (event: Event) => {
+    const keyboardEvent = event as unknown as KeyboardEvent; // Casting doble
+  
+    if (keyboardEvent.key === "Enter" && open) {
+      if (
+        document.activeElement !== ref.current?.querySelector("#min_price") &&
+        document.activeElement !== ref.current?.querySelector("#max_price")
+      ) {
+        setOpen(false);
+      }
+    }
   };
 
+  useEffect(() => {
+    if (open) {
+      document.addEventListener("click", handleClickOutside);
+      document.addEventListener("keydown", handleGlobalKeyDown); // Escucha global para teclas
+    } else {
+      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("keydown", handleGlobalKeyDown); // Elimina el listener global
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("keydown", handleGlobalKeyDown);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
   const handleClickOutside = (event: MouseEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
       setOpen(false); // Cierra el componente si se hace clic fuera

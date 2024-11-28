@@ -12,4 +12,7 @@ export interface FullBill{
     fecha_fact:string
     nombre_prod: string
     precio_prod: number
+    impuesto: number
+    precio_envio: number
+    subtotal: number
 }

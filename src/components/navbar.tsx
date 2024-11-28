@@ -4,6 +4,8 @@ import { FaUserCircle, FaShoppingCart, FaSearch } from 'react-icons/fa';
 import Image from "next/legacy/image";
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useCart } from "../context/cartContext";
+
 
 export default function Navbar() {
   const [isProfileOpen, setProfileOpen] = useState(false);
@@ -12,7 +14,7 @@ export default function Navbar() {
   const [mensajeAdvertencia, setMensajeAdvertencia] = useState<string | null>(null); // Mensaje de advertencia
   const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
+  const { cartCount } = useCart();
   // Recuperar la imagen de perfil y correo del localStorage cuando el componente se monte
   useEffect(() => {
     const storedResponse = localStorage.getItem('loginResponse');
@@ -81,8 +83,8 @@ export default function Navbar() {
           <nav className="hidden md:flex space-x-8">
             <a onClick={() => router.push('/products')} href="#" className="text-gray-700 hover:text-purple-500">PRODUCTOS</a>
             <a onClick={() => router.push('/products/materials')} href="#" className="text-gray-700 hover:text-purple-500">MATERIALES</a>
-            <a href="#" className="text-gray-700 hover:text-purple-500">KITS</a>
-            <a href="#" className="text-gray-700 hover:text-purple-500">TUTORIALES</a>
+            <a onClick={() => router.push('/products/kits')} href="#" className="text-gray-700 hover:text-purple-500">KITS</a>
+            <a onClick={() => router.push('/products/tutoriales')} href="#" className="text-gray-700 hover:text-purple-500">TUTORIALES</a>
           </nav>
         </div>
 
@@ -138,6 +140,7 @@ export default function Navbar() {
           {/* Carrito */}
           <button onClick={handleCarritoClick} title='carrito'>
             <FaShoppingCart className="text-gray-700 text-2xl" />
+            <p>Items en carrito: {cartCount}</p>
           </button>
 
           {/* Mostrar mensaje de advertencia si no está logueado */}

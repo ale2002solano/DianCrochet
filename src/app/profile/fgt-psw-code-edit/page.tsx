@@ -1,19 +1,19 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import PswdCodeFormEdit from "../post/PswdCodeFormEdit";
 
 export default function PswCodeEdit() {
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    const emailParam = searchParams.get("email");
+    // Usamos window.location para obtener los parámetros de búsqueda
+    const params = new URLSearchParams(window.location.search);
+    const emailParam = params.get("email");
     setEmail(emailParam);
-  }, [searchParams]);
+  }, []);
 
   if (email === null) {
-    return <div>Cargando...</div>; // Puedes mostrar un mensaje de carga mientras obtienes el parámetro
+    return <div>Cargando...</div>;
   }
 
   return (

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Product from './Product';
-import { GetProductosPopulares } from '@services/product'; 
+import { GetKitsPopulares } from '@services/product'; 
 import { Producto } from '@interfaces/product';
 import { useRouter } from 'next/navigation'; 
 
@@ -11,7 +11,7 @@ export default function CarruselKit() {
 
   useEffect(() => {
     const obtenerProductos = async () => {
-      const productosPopulares = await GetProductosPopulares();
+      const productosPopulares = await GetKitsPopulares();
       setProductos(productosPopulares);
     };
 

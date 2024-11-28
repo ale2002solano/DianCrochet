@@ -138,3 +138,13 @@ export const FilteredMaterials = async (data: Filtered)=> {
   return datos.productos;
 };
 
+export const GetKitsPopulares = async (): Promise<Producto[]> => {
+  try {
+    const response = await fetch(`${API_URL}/filtro/popularidad/2`);
+    const data = await response.json();
+    return data.populares; 
+  } catch (error) {
+    console.error('Error al obtener productos populares:', error);
+    return []; 
+  }
+};

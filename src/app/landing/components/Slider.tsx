@@ -9,19 +9,19 @@ interface Slide {
 export default function Slider() {
   const slides: Slide[] = [
     {
-      url: 'https://images.unsplash.com/photo-1530396333989-24c5b8f805dd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      url: 'https://dian-crochet-8ii.vercel.app/products/tutoriales',
     },
     {
-      url: 'https://images.unsplash.com/photo-1475578749612-705fc64d0574?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      url: 'https://dian-crochet-8ii.vercel.app/products/tutoriales',
     },
     {
-      url: 'https://images.unsplash.com/photo-1532629804872-98086b058cae?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      url: 'https://dian-crochet-8ii.vercel.app/products/tutoriales',
     },
     {
-      url: 'https://images.unsplash.com/photo-1528753048379-09010ddb8820?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      url: 'https://dian-crochet-8ii.vercel.app/products/tutoriales',
     },
     {
-      url: 'https://images.unsplash.com/photo-1604510493959-8a20b3630d53?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      url: 'https://dian-crochet-8ii.vercel.app/products/tutoriales',
     },
   ];
 

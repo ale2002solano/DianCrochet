@@ -7,8 +7,9 @@ import { CarritoItem } from "@interfaces/invoice";
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from "../loadding/LoadingSpinnerSob";
 import Image from 'next/image';
+import { useCart } from "../../../../context/cartContext";
 
-
+//hey, this is
 export default function ShopCartForm() {
     const [carrito, setCarrito] = useState<CarritoItem[]>([]);
     const [correo, setCorreo] = useState('');
@@ -18,7 +19,7 @@ export default function ShopCartForm() {
     const [subtotal, setSubtotal] = useState<number>(0); // Iniciar con 0, no null
     const [impuestos, setImpuestos] = useState<number>(0); // Iniciar con 0, no null
     const [mensajeAdvertencia, setMensajeAdvertencia] = useState<string | null>(null); // Mensaje de advertencia
-
+    const { updateCartCount } = useCart();
     // Función para manejar el clic en detalles de envío
     const handleShippingDetailsClick = () => {
         if (carrito.length === 0) {
@@ -79,12 +80,10 @@ export default function ShopCartForm() {
         try {
             const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/subtotal', {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ correo })
             });
-
+    
             if (response.ok) {
                 const data = await response.json();
                 setSubtotal(data.subtotal);
@@ -96,96 +95,235 @@ export default function ShopCartForm() {
             console.error('Error al intentar obtener el subtotal e impuestos:', error);
         }
     };
+    
 
     // Eliminar producto carrito
-    const handleDelete = async (idProducto: number) => {
+    const handleDelete = async (correo: string, idProducto: number, talla: string | null, grosor: string | null) => {
+        if (!correo || !idProducto) {
+            alert("Por favor, proporciona la información requerida.");
+            return;
+        }
+    
         try {
             const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/producto/eliminar', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ correo, idProducto }),
+                body: JSON.stringify({
+                    correo,
+                    idProducto,
+                    talla: talla ? talla.toString() : null, // Asegura que talla sea un string
+                    grosor: grosor ? grosor.toString() : null, // Asegura que grosor sea un string
+                }),
             });
-
-            if (response.ok) {
-                // Eliminar el producto del estado local
-                setCarrito(carrito.filter(item => item.id_producto !== idProducto));
-                 await fetchSubtotal();
+    
+            const result = await response.json();
+    
+            if (response.ok && result.eliminar.codigo === 1) {
+                setCarrito((prevCarrito) =>
+                    prevCarrito.filter(
+                        (producto) =>
+                            producto.id_producto !== idProducto ||
+                            producto.talla !== talla ||
+                            producto.grosor !== grosor
+                    )
+                );
+                alert(result.eliminar.mensaje);
             } else {
-                console.error('Error al eliminar el producto del carrito');
+                console.error('Error al eliminar el producto del carrito:', result.eliminar.mensaje || 'Error desconocido');
             }
         } catch (error) {
-            console.error('Error al eliminar el producto del carrito:', error);
+            console.error('Error en la solicitud de eliminación:', error);
         }
     };
+    
+    
+   // Método para eliminar todo el carrito / eliminar orden con confirmación
+const handleCancelOrder = async () => {
+    if (!facturaId) return; // Verificar que existe un id_factura
 
-    // Método para eliminar todo el carrito / eliminar orden
-    const handleCancelOrder = async () => {
-        if (!facturaId) return; // Verificar que existe un id_factura
+    // Mostrar cuadro de confirmación
+    const confirmCancel = window.confirm(
+        "¿Estás seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?"
+    );
 
-        try {
-            const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/eliminar/carrito/${facturaId}`, {
-                method: 'DELETE',
-            });
+    if (!confirmCancel) {
+        alert("La orden no fue cancelada y los productos se mantuvieron en el carrito.");
+        return;
+    }
 
-            if (response.ok) {
-                setCarrito([]); // Limpiar carrito en frontend
-                setSubtotal(0); // Reiniciar subtotal
-                setImpuestos(0); // Reiniciar impuestos
-                alert("Orden cancelada y carrito eliminado");
-            } else {
-                console.error('Error al eliminar todos los productos del carrito');
-            }
-        } catch (error) {
-            console.error('Error en la eliminación del carrito:', error);
+    try {
+        const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/eliminar/carrito/${facturaId}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            setCarrito([]); // Limpiar carrito en frontend
+            setSubtotal(0); // Reiniciar subtotal
+            setImpuestos(0); // Reiniciar impuestos
+            alert("Orden cancelada y carrito eliminado");
+        } else {
+            console.error('Error al eliminar todos los productos del carrito');
         }
-    };
+    } catch (error) {
+        console.error('Error en la eliminación del carrito:', error);
+    }
+};
 
     //Actualizar cantidad de productos
-    const handleQuantityChange = async (idProducto: number, delta: number) => {
-        const updatedCarrito = carrito.map(item => {
-            if (item.id_producto === idProducto) {
+    const handleQuantityChange = async (
+        idProducto: number,
+        delta: number,
+        grosor: string | number | null,
+        talla: string | number | null,
+        idProdFact: number
+    ) => {
+        const tallaFinal = talla || null;
+        const grosorFinal = grosor || null;
+        
+    
+        const updatedCarrito = carrito.map((item) => {
+            if (item.id_prod_fact === idProdFact) {
                 const newCantidad = item.cantidad_compra + delta;
                 return {
                     ...item,
-                    cantidad_compra: newCantidad > 0 ? newCantidad : 1, // Asegurarse de que la cantidad no sea menor que 1
-                    subtotal: (item.subtotal ?? 0) / item.cantidad_compra * (newCantidad > 0 ? newCantidad : 1) // Actualizar el subtotal
+                    cantidad_compra: newCantidad > 0 ? newCantidad : 1,
+                    subtotal: ((item.subtotal ?? 0) / item.cantidad_compra) * newCantidad,
                 };
             }
             return item;
         });
-
-        setCarrito(updatedCarrito);
-
+    
+        const requestBody = {
+            correo,
+            nuevaCantidad: updatedCarrito.find((item) => item.id_prod_fact === idProdFact)?.cantidad_compra,
+            idProducto,
+            talla: tallaFinal,
+            grosor: grosorFinal,
+        };
+    
         try {
-            const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/actualizar', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ correo, nuevaCantidad: updatedCarrito.find(item => item.id_producto === idProducto)?.cantidad_compra, idProducto }),
-            });
-
-            if (!response.ok) {
-                console.error('Error al actualizar la cantidad del producto en el carrito');
+            const response = await fetch(
+                'https://deploybackenddiancrochet.onrender.com/factura/carrito/actualizar',
+                {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody),
+                }
+            );
+    
+            if (response.ok) {
+                const data = await response.json();
+                if (data.actualizar.codigo === 2) {
+                    // Código 2: Se excedió el inventario disponible
+                    alert("No puedes agregar más de este producto, ya alcanzaste el límite en inventario.");
+                    return;
+                }
+    
+                if (data.actualizar.codigo === 1) {
+                    console.log(data.actualizar.mensaje);
+                    setCarrito(updatedCarrito);
+                    // Calcula la nueva cantidad total en el carrito
+                const totalCantidad = updatedCarrito.reduce((total, item) => total + item.cantidad_compra, 0);
+                
+                // Actualiza el contador global del carrito
+                updateCartCount(totalCantidad);
+                    await fetchSubtotal();
+                } else {
+                    console.error('Error en la respuesta:', data.actualizar.mensaje);
+                }
+            } else {
+                console.error('Error HTTP:', response.status);
             }
         } catch (error) {
-            console.error('Error al actualizar la cantidad del producto en el carrito:', error);
+            console.error('Error al actualizar cantidad:', error);
         }
     };
+    
+// Recalcular total
+useEffect(() => {
+    const calcularTotal = () => {
+        const total = subtotal + impuestos;
+        document.getElementById('total')!.innerText = `L. ${total.toFixed(2)}`;
+    };
+    calcularTotal();
+}, [subtotal, impuestos]);
 
-    // Agrupar productos por id_producto y sumar cantidades
+// UI
+<div id="total">L. 0.00</div>
+
+    
+// Recalcular el subtotal global cada vez que cambia el carrito
+useEffect(() => {
+    const calcularSubtotal = () => {
+        const nuevoSubtotal = carrito.reduce((acc, item) => acc + (item.subtotal ?? 0), 0);
+        setSubtotal(nuevoSubtotal);
+    };
+    calcularSubtotal();
+}, [carrito]);
+
+// Mantener cambios tras recargar
+useEffect(() => {
+    const fetchCarrito = async () => {
+        try {
+            const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/carrito/${correo}`);
+            const data = await response.json();
+            setCarrito(data.carrito);
+            if (data.carrito.length > 0) {
+                const facturaId = data.carrito[0].id_factura;
+                setFacturaId(facturaId);
+                localStorage.setItem('facturaId', facturaId.toString());
+            }
+        } catch (error) {
+            console.error('Error al obtener el carrito:', error);
+        }
+    };
+    if (correo) fetchCarrito();
+}, [correo]);
+  
+
+
+    // Agrupar productos por id_producto y talla
     const groupedCarrito = carrito.reduce((acc, item) => {
-        const existingItem = acc.find(i => i.id_producto === item.id_producto);
+        const existingItem = acc.find(i => {
+            // Mismo producto
+            const sameProduct = i.id_producto === item.id_producto;
+    
+            // Mismo grosor si alguna talla es null
+            const sameGrosor =
+                (i.talla === null || item.talla === null) &&
+                i.grosor === item.grosor;
+    
+            // Mismo talla si ambas tallas están definidas
+            const sameTalla =
+                i.talla !== null &&
+                item.talla !== null &&
+                i.talla === item.talla;
+    
+            // Si no tienen ni talla ni grosor, agrupar solo por producto
+            const noTallaNoGrosor =
+                i.talla === null &&
+                item.talla === null &&
+                i.grosor === null &&
+                item.grosor === null;
+    
+            return (
+                sameProduct &&
+                (sameTalla || sameGrosor || noTallaNoGrosor)
+            );
+        });
+    
         if (existingItem) {
-            existingItem.cantidad_compra += item.cantidad_compra;
-            existingItem.subtotal = (existingItem.subtotal ?? 0) + (item.subtotal ?? 0);
+            existingItem.cantidad_compra += item.cantidad_compra; // Sumar cantidades
+            existingItem.subtotal = (existingItem.subtotal ?? 0) + (item.subtotal ?? 0); // Sumar subtotales
         } else {
-            acc.push({ ...item });
+            acc.push({ ...item }); // Agregar como nuevo si no cumple las condiciones de agrupación
         }
         return acc;
     }, [] as CarritoItem[]);
+    
+
 
 
     return (
@@ -215,14 +353,25 @@ export default function ShopCartForm() {
                                     <h4 id="color" className="font-lekton text-gray-400">Grosor:{item.grosor ?? ''} </h4>
                                 </div>
                                 <div className="flex items-center border border-black rounded-full bg-gray-100 text-gray-700 font-lekton w-max">
-                                    <button className="text-lg font-semibold px-2" onClick={() => handleQuantityChange(item.id_producto, -1)}>−</button>
-                                    <span className="mx-4 text-lg">{item.cantidad_compra}</span>
-                                    <button className="text-lg font-semibold px-2" onClick={() => handleQuantityChange(item.id_producto, 1)}>+</button>
+                                <button
+                                    className="text-lg font-semibold px-2"
+                                    onClick={() => handleQuantityChange(item.id_producto, -1, item.grosor, item.talla, item.id_prod_fact)}
+                                >
+                                    −
+                                </button>
+                                <span className="mx-4 text-lg">{item.cantidad_compra}</span>
+                                <button
+                                    className="text-lg font-semibold px-2"
+                                    onClick={() => handleQuantityChange(item.id_producto, 1, item.grosor, item.talla, item.id_prod_fact)}
+                                >
+                                    +
+                                </button>
                                 </div>
+
                             </div>
                             <div id="precio" className="mt-8 flex flex-col flex-nowrap justify-start items-end content-stretch">
                                 <h3 className="text-gray-700">{item.subtotal !== null ? `${item.subtotal} Lps` : 'No disponible'}</h3>
-                                <button title="delete" onClick={() => handleDelete(item.id_producto)}>
+                                <button title="delete" onClick={() => handleDelete(correo, item.id_producto, item.talla, item.grosor)}>
                                     <FaRegTrashAlt className="text-gray-700 hover:text-red-700"/>
                                 </button>
                             </div>

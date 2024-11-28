@@ -95,16 +95,45 @@ export default function ShippingForm() {
     }, [correo]);  // Dependencia en correo
     
 
-    const groupedCarrito = carrito.reduce((acc, item) => {
-        const existingItem = acc.find(i => i.id_producto === item.id_producto);
-        if (existingItem) {
-            existingItem.cantidad_compra += item.cantidad_compra;
-            existingItem.subtotal = (existingItem.subtotal ?? 0) + (item.subtotal ?? 0);
-        } else {
-            acc.push({ ...item });
-        }
-        return acc;
-    }, [] as CarritoItem[]);
+        // Agrupar productos por id_producto y talla
+const groupedCarrito = carrito.reduce((acc, item) => {
+    const existingItem = acc.find(i => {
+        // Mismo producto
+        const sameProduct = i.id_producto === item.id_producto;
+
+        // Mismo grosor si alguna talla es null
+        const sameGrosor =
+            (i.talla === null || item.talla === null) &&
+            i.grosor === item.grosor;
+
+        // Mismo talla si ambas tallas están definidas
+        const sameTalla =
+            i.talla !== null &&
+            item.talla !== null &&
+            i.talla === item.talla;
+
+        // Si no tienen ni talla ni grosor, agrupar solo por producto
+        const noTallaNoGrosor =
+            i.talla === null &&
+            item.talla === null &&
+            i.grosor === null &&
+            item.grosor === null;
+
+        return (
+            sameProduct &&
+            (sameTalla || sameGrosor || noTallaNoGrosor)
+        );
+    });
+
+    if (existingItem) {
+        existingItem.cantidad_compra += item.cantidad_compra; // Sumar cantidades
+        existingItem.subtotal = (existingItem.subtotal ?? 0) + (item.subtotal ?? 0); // Sumar subtotales
+    } else {
+        acc.push({ ...item }); // Agregar como nuevo si no cumple las condiciones de agrupación
+    }
+    return acc;
+}, [] as CarritoItem[]);
+
 
     // Fetch ciudades cuando cambia el departamento seleccionado
     useEffect(() => {
@@ -204,7 +233,7 @@ export default function ShippingForm() {
             const response = await axios.post('https://deploybackenddiancrochet.onrender.com/factura/envio', {
                 id_factura: idFactura,
                 direccion,
-                ciudad: selectedCiudad,
+                id_ciudad: selectedCiudad,
                 numero: telefono
             });
    
