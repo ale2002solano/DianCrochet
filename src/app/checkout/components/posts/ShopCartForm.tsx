@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import LoadingSpinner from "../loadding/LoadingSpinnerSob";
 import Image from 'next/image';
 
-//hey, this is
 export default function ShopCartForm() {
     const [carrito, setCarrito] = useState<CarritoItem[]>([]);
     const [correo, setCorreo] = useState('');
