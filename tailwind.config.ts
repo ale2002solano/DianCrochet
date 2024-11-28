@@ -38,6 +38,15 @@ const config: Config = {
         bounce: 'bounce 1s infinite',
         shake: 'shake 0.5s ease-in-out', // Añadimos la animación shake
       },
+      beatfade: {  // Animación beat fade
+        '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+        '50%': { transform: 'scale(1.2)', opacity: '0.5' },
+      },
+    },
+    animation: {
+      bounce: 'bounce 1s infinite',
+      shake: 'shake 0.5s ease-in-out', 
+      beatfade: 'beatfade 1s ease-in-out infinite', // Añadimos la animación beat fade
     },
   },
   plugins: [forms],
