@@ -1,5 +1,5 @@
 // src/context/BounceContext.tsx
-
+'use client';
 import { createContext, useState, useContext, ReactNode } from 'react';
 
 // Definir el tipo del contexto
