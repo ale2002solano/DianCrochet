@@ -18,12 +18,12 @@ interface BounceProviderProps {
 export const BounceProvider = ({ children }: BounceProviderProps) => {
   const [isBounce, setIsBounce] = useState(false);
 
-  useEffect(() => {
-    if (isBounce) {
-      const audio = new Audio('/img/cash.mp3');
-      audio.play().catch((error) => console.error('Error reproduciendo el sonido:', error));
-    }
-  }, [isBounce]);
+  // useEffect(() => {
+  //   if (isBounce) {
+  //     const audio = new Audio('/img/cash.mp3');
+  //     audio.play().catch((error) => console.error('Error reproduciendo el sonido:', error));
+  //   }
+  // }, [isBounce]);
 
 
   return (
