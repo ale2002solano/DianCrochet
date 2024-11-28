@@ -20,7 +20,7 @@ export const BounceProvider = ({ children }: BounceProviderProps) => {
 
   useEffect(() => {
     if (isBounce) {
-      const audio = new Audio('../../public/img/shopshop.mp3');
+      const audio = new Audio('/img/shopshop.mp3');
       audio.play().catch((error) => console.error('Error reproduciendo el sonido:', error));
     }
   }, [isBounce]);
