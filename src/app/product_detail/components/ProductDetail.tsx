@@ -256,7 +256,7 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
 
     <button
       onClick={handleAddToCart}
-      className="px-4 py-2 mt-4 bg-[#C68EFE] text-white font-semibold rounded-lg shadow-md hover:bg-[#b053fe] transition duration-300"
+      className="px-4 py-2 mt-4 bg-[#C68EFE] text-white font-semibold rounded-lg shadow-md hover:bg-[#b053fe] transition duration-200"
     >
       Agregar al Carrito
     </button>
