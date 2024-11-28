@@ -6,11 +6,14 @@ import Footer from 'components/Footer';
 import Carrusel from './landing/components/Carrusel';
 import CarruselKit from './landing/components/CarruselKit';
 import BackendKeepAlive from "../components/BackendKeepAlive";
+import { BounceProvider } from '../context/BounceContext';
 
 export default function Dashboard() {
   return (
+    <BounceProvider>
     <div className="w-full min-h-screen flex flex-col bg-slate-50">
       <BackendKeepAlive /> {/* Mantiene el backend activo */}
+      
       <Navbar />  
       <main className="bg-slate-50 flex-grow w-full mt-10">
         <div className="flex justify-center">
@@ -34,5 +37,6 @@ export default function Dashboard() {
 
       <Footer />
     </div>
+    </BounceProvider>
   );
 }
