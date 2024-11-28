@@ -35,8 +35,8 @@ const config: Config = {
         },
       },
       beatfade: {  // Animación beat fade
-        '0%, 100%': { transform: 'scale(1)', opacity: '1' },
-        '50%': { transform: 'scale(1.2)', opacity: '0.5' },
+        '0%, 100%': { transform: 'scale(1)', opacity: '2' },
+        '50%': { transform: 'scale(1.2)', opacity: '0.1' },
       },
     },
     animation: {
