@@ -4,8 +4,6 @@ import { FaUserCircle, FaShoppingCart, FaSearch } from 'react-icons/fa';
 import Image from "next/legacy/image";
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 
 export default function Navbar() {
@@ -142,19 +140,11 @@ export default function Navbar() {
           <button onClick={handleCarritoClick} title="carrito" className="relative">
             {/* Ícono del carrito */}
             <FaShoppingCart className="text-gray-700 text-4xl" />
-
-            {/* Círculo de notificación */}
-            <FontAwesomeIcon
-              icon={"fa-solid fa-circle" as IconProp}
-              className="absolute bottom-0 right-0 text-red-500"
-              style={{
-                width: "12px",
-                height: "12px",
-                zIndex: 10, // Asegura que esté encima
-                transform: "translate(50%, 50%)", // Ajusta la posición fuera del borde
-              }}
-            />
+            
+            {/* Círculo rojo */}
+            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
           </button>
+
 
 
 
