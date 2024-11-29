@@ -90,3 +90,13 @@ export interface Producto {
     grosores: string | null;
     tallas: string | null;
   }
+
+  export interface FullKit {
+    id_producto: number;
+    nombre_prod: string;
+    precio_venta: number;
+    imagen_principal: string;
+    categorias: string[];
+    stock: number;
+  }
+
