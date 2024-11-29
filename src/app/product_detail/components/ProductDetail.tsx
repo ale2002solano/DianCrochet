@@ -88,7 +88,7 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
       return;
     }
     setIsBounce(true);
-    setTimeout(() => setIsBounce(false), 3000); 
+    setTimeout(() => setIsBounce(false), 2000); 
     const idProducto = producto.id_producto.toString();
   
     const data = {
