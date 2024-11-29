@@ -135,7 +135,7 @@ export default function Navbar() {
           <BounceProvider>
             <button onClick={handleCarritoClick} title="carrito" className={`relative ${isBounce ? 'animate-beatfade' : ''} `}>
               <FaShoppingCart className="text-gray-700 text-3xl" />
-              <span className={`absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-none`}></span>
+              <span  className={`absolute top-0 right-0 w-3 h-3 rounded-full border-2 border-none flex items-center justify-center text-white ${ isBounce ? 'bg-green-700' : 'bg-gray-500'}`}>0</span>
             </button>
           </BounceProvider>
 
