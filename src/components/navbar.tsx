@@ -5,7 +5,7 @@ import Image from "next/legacy/image";
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { BounceProvider, useBounce } from '../context/BounceContext'; // Asegúrate de importar el BounceProvider
-
+//cambio minimo
 export default function Navbar() {
   const [isProfileOpen, setProfileOpen] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
