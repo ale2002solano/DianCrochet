@@ -1,5 +1,5 @@
 "use client";
-import Product from "../landing/components/Product";
+import Product from "./components/Product";
 import Footer from "components/Footer";
 import Navbar from "components/navbar";
 import Image from "next/legacy/image";
@@ -225,7 +225,7 @@ export default function Products() {
   return (
     <div>
       <Navbar />
-      <div className="h-24 bg-white"></div>
+      <div className="h-20 sm:h-24 bg-white"></div>
       <section className="bg-white">
         <div className="flex h-20 items-center">
           <h1 className="pl-6 font-koulen text-5xl text-gray-900">Productos</h1>
@@ -244,9 +244,9 @@ export default function Products() {
             className="pointer-events-none ml-2 mt-4 mix-blend-multiply"
           />
         </div>
-        <div className="-mt-4 flex h-32 flex-col-reverse">
-          <div className="mb-3 flex h-9 w-full items-center pl-6 ">
-           <div className=" flex w-[78%] flex-wrap items-center">
+        <div className="sm:-mt-4 flex sm:h-32 h-44 flex-col-reverse">
+          <div className="sm:static  relative mb-3 flex h-9 w-full items-center pl-6 ">
+           <div className="z-10 sm:overflow-x-hidden overflow-x-scroll overflow-y-hidden  flex sm:w-[78%] w-full sm:flex-wrap flex-nowrap items-center">
             {categories.map((category, index) => (
               <div
                 key={index}
@@ -361,9 +361,9 @@ export default function Products() {
             )}
            </div>  
 
-            <div className="h-full  flex items-center ">
+            <div className="h-full sm:static relative flex items-center ">
             {ordenamiento != "" && (
-                <div className="absolute right-[7.5%] mr-3 flex items-center rounded-2xl bg-gray-200 px-2 font-lekton text-lg text-[#444343]">
+                <div className="absolute sm:top-auto top-[-115%] whitespace-nowrap right-[7.5%] mr-3 flex items-center rounded-2xl bg-gray-200 px-2 font-lekton text-lg text-[#444343]">
                   <>
                     <h2>{nombresFiltros[`${ordenamiento}_${orden}`] || ""}</h2>
                     <svg
@@ -388,10 +388,10 @@ export default function Products() {
 
           </div>
 
-          <div className="relative mb-3 flex h-9 w-full items-center pl-6">
-            <h2 className="font-lekton text-lg text-[#444343]">Filtros :</h2>
+          <div className="relative mb-3 flex flex-col sm:flex-row sm:h-9 w-full sm:mt-0 mt-3 sm:items-center pl-0 sm:pl-6 ">
+            <h2 className="font-lekton text-lg text-[#444343] hidden sm:block">Filtros :</h2>
 
-            <div className="relative ml-6 flex cursor-pointer items-center font-lekton text-lg text-[#444343]">
+            <div className="relative  ml-6 flex cursor-pointer items-center font-lekton text-lg text-[#444343]">
               <h2 onClick={handleToggleCategories}>Categorias</h2>
               <svg
                 onClick={handleToggleCategories}
@@ -409,7 +409,7 @@ export default function Products() {
                 />
               </svg>
 
-              <div className="absolute top-7">
+              <div className="absolute top-7 sm:right-0 right-2">
                 <Categorias
                   open={showCategories}
                   setOpen={setShowCategories}
@@ -419,7 +419,7 @@ export default function Products() {
               </div>
             </div>
 
-            <div className="relative ml-6 flex cursor-pointer select-none items-center font-lekton text-lg text-[#444343]">
+            <div className="relative  ml-6 flex cursor-pointer select-none items-center font-lekton text-lg text-[#444343]">
               <h2 onClick={handlePrices}>Precio</h2>
               <svg
                 onClick={handlePrices}
@@ -436,7 +436,7 @@ export default function Products() {
                   d="m19.5 8.25-7.5 7.5-7.5-7.5"
                 />
               </svg>
-              <div className="absolute top-7 ml-4 h-[250%] w-[340%] rounded-lg">
+              <div className="absolute sm:top-7  sm:right-0 right-[2.5%] top-16 ml-4 h-[250%] sm:w-[340%] w-[70%] rounded-lg">
                 <Prices
                   open={showPrices}
                   setOpen={setShowPrices}
@@ -449,7 +449,7 @@ export default function Products() {
               </div>
             </div>
 
-            <div className="absolute right-[5%] ml-6 flex cursor-pointer select-none items-center font-lekton text-lg text-[#444343]">
+            <div className="relative sm:absolute sm:right-[5%] right-0  ml-6 flex cursor-pointer select-none items-center font-lekton text-lg text-[#444343]">
               <h2 onClick={handleOrder}>Ordenar por:</h2>
               <svg
                 onClick={handleOrder}
@@ -467,7 +467,7 @@ export default function Products() {
                 />
               </svg>
 
-              <div className="absolute right-[2.5%] top-7 w-[180%]">
+              <div className="absolute right-[2.5%] sm:top-7 top-8 sm:w-[180%] w-60">
                 <Ordenamiento
                   open={showOrder}
                   setOpen={setShowOrder}
@@ -479,19 +479,19 @@ export default function Products() {
           </div>
         </div>
 
-        <section className="relative h-full px-[8.32%] py-12">
+        <section className="relative h-full px-[8.32%] sm:py-12 py-3  w-full ">
           {isLoading ? (
             <div className="ml-0 h-96 bg-white opacity-50">
               <LoadingSpinner />{" "}
             </div>
           ) : (
-            <div className="grid select-none grid-cols-4 gap-6">
+            <div className="grid select-none sm:grid-cols-3 md:grid-cols-4 gap-6 grid-cols-2">
             {productos
               .slice(productsSplit, productsSplit + 16)
               .map((producto) => (
                 <div
                   key={producto.id_producto}
-                  className="h-[364px] w-[260px] cursor-pointer text-center"
+                  className=" w-[100%] md:max-h-[260px] sm:h-[30vh] xl:h-[60vh] h-[30vh] xl:max-h-[470px] cursor-pointer text-center"
                   onClick={() => handleProductClick(producto.id_producto)}
                 >
                   <Product
@@ -510,12 +510,12 @@ export default function Products() {
 
         </section>
 
-        <div className="flex h-20 items-start justify-end px-[8.32%]">
+        <div className="flex h-20 items-start sm:justify-end px-[8.32%]">
           <div className="flex h-2/3">
             <button
               onClick={handleSplitPrev}
               type="button"
-              className="mb-2 me-2 flex h-full w-20 items-center justify-center bg-slate-300 px-5 py-2.5 text-center text-sm font-medium text-white transition-colors duration-200 ease-in hover:bg-pink-500 focus:outline-none focus:ring-4 focus:ring-transparent"
+              className="mb-2 sm:me-2 flex h-full sm:w-20 w-[15%] items-center justify-center bg-slate-300 px-5 py-2.5 text-center text-sm font-medium text-white transition-colors duration-200 ease-in hover:bg-violet-300 focus:outline-none focus:ring-4 focus:ring-transparent"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -548,8 +548,8 @@ export default function Products() {
                         onClick={() => handlePageNumber(number)}
                         className={`mx-1 flex h-7 w-7 items-center justify-center border pt-1 font-lekton text-lg ${
                           pageNumber === number
-                            ? "bg-pink-500 text-white" // Estilos cuando pageNumber coincide con number
-                            : "bg-slate-300 text-white hover:bg-pink-500 hover:text-white" // Estilos por defecto
+                            ? "bg-violet-300 text-white" // Estilos cuando pageNumber coincide con number
+                            : "bg-slate-300 text-white hover:bg-violet-300 hover:text-white" // Estilos por defecto
                         }`}
                       >
                         {number}
@@ -560,8 +560,8 @@ export default function Products() {
                         onClick={() => handlePageNumber(number)}
                         className={`mx-1 flex h-7 w-7 items-center justify-center border pt-1 font-lekton text-lg ${
                           pageNumber === number
-                            ? "bg-pink-500 text-white" // Estilos cuando pageNumber coincide con number
-                            : "bg-slate-300 text-white hover:bg-pink-500 hover:text-white" // Estilos por defecto
+                            ? "bg-violet-300 text-white" // Estilos cuando pageNumber coincide con number
+                            : "bg-slate-300 text-white hover:bg-violet-300 hover:text-white" // Estilos por defecto
                         }`}
                       >
                         {number}
@@ -579,8 +579,8 @@ export default function Products() {
                       onClick={() => handlePageNumber(number)}
                       className={`mx-1 flex h-7 w-7 items-center justify-center border pt-1 font-lekton text-lg ${
                         pageNumber === number
-                          ? "bg-pink-500 text-white" // Estilos cuando pageNumber coincide con number
-                          : "bg-slate-300 text-white hover:bg-pink-500 hover:text-white" // Estilos por defecto
+                          ? "bg-violet-300 text-white" // Estilos cuando pageNumber coincide con number
+                          : "bg-slate-300 text-white hover:bg-violet-300 hover:text-white" // Estilos por defecto
                       }`}
                     >
                       {number}
@@ -591,8 +591,8 @@ export default function Products() {
                       onClick={() => handlePageNumber(number)}
                       className={`mx-1 flex h-7 w-7 items-center justify-center border pt-1 font-lekton text-lg ${
                         pageNumber === number
-                          ? "bg-pink-500 text-white" // Estilos cuando pageNumber coincide con number
-                          : "bg-slate-300 text-white hover:bg-pink-500 hover:text-white" // Estilos por defecto
+                          ? "bg-violet-300 text-white" // Estilos cuando pageNumber coincide con number
+                          : "bg-slate-300 text-white hover:bg-violet-300 hover:text-white" // Estilos por defecto
                       }`}
                     >
                       {number}
@@ -606,8 +606,8 @@ export default function Products() {
                     onClick={() => handlePageNumber(number)}
                     className={`mx-1 flex h-7 w-7 items-center justify-center border pt-1 font-lekton text-lg ${
                       pageNumber === number
-                        ? "bg-pink-500 text-white" // Estilos cuando pageNumber coincide con number
-                        : "bg-slate-300 text-white hover:bg-pink-500 hover:text-white" // Estilos por defecto
+                        ? "bg-violet-300 text-white" // Estilos cuando pageNumber coincide con number
+                        : "bg-slate-300 text-white hover:bg-violet-300 hover:text-white" // Estilos por defecto
                     }`}
                   >
                     {number}
@@ -618,7 +618,7 @@ export default function Products() {
             <button
               onClick={handleSplitNext}
               type="button"
-              className="mb-2 me-2 flex h-full w-20 items-center justify-center bg-slate-300 px-5 py-2.5 text-center text-sm font-medium text-white transition-colors duration-200 ease-in hover:bg-pink-500 hover:bg-gradient-to-l focus:outline-none focus:ring-4 focus:ring-transparent dark:focus:ring-transparent"
+              className="mb-2 sm:me-2 flex h-full sm:w-20 w-[15%] items-center justify-center bg-slate-300 px-5 py-2.5 text-center text-sm font-medium text-white transition-colors duration-200 ease-in hover:bg-violet-300 hover:bg-gradient-to-l focus:outline-none focus:ring-4 focus:ring-transparent dark:focus:ring-transparent"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
