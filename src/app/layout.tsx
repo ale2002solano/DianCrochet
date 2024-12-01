@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { BounceProvider } from "../context/BounceContext";  // Asegúrate de ajustar la ruta si es necesario
+import {CartProvider} from "../context/CartContext";
 
 const geistSans = localFont({
   src: "../public/fonts/GeistVF.woff",
@@ -67,9 +68,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${crimsom.variable}  ${robotoMono.variable} ${roboto.variable}  ${lekton.variable} ${koulen.variable} ${inter.variable} antialiased`}
       >
         {/* Envuelve los hijos en el BounceProvider */}
+        <CartProvider>
         <BounceProvider>
           {children}
         </BounceProvider>
+        </CartProvider>
       </body>
     </html>
   );

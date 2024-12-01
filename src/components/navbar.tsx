@@ -4,7 +4,8 @@ import { FaUserCircle, FaShoppingCart, FaSearch } from 'react-icons/fa';
 import Image from "next/legacy/image";
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { BounceProvider, useBounce } from '../context/BounceContext'; // Asegúrate de importar el BounceProvider
+import { BounceProvider, useBounce } from '../context/BounceContext';
+import { useCart } from '../context/CartContext';
 //cambio minimo
 export default function Navbar() {
   const [isProfileOpen, setProfileOpen] = useState(false);
@@ -13,38 +14,17 @@ export default function Navbar() {
   const [mensajeAdvertencia, setMensajeAdvertencia] = useState<string | null>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const { isBounce } = useBounce();  // Obtener el estado isBounce desde el hook
-  const [cantidadProductos, setCantidadProductos] = useState<number>(0); // Estado para la cantidad de productos en el carrito
+  const { isBounce } = useBounce();  
+  const { cantidadProductos } = useCart();
 
+  // Recuperar la imagen de perfil y correo del localStorage
   useEffect(() => {
-    // Obtener la imagen de perfil y el correo
-    const storedResponse = localStorage.getItem("loginResponse");
+    const storedResponse = localStorage.getItem('loginResponse');
     if (storedResponse) {
       const parsedResponse = JSON.parse(storedResponse);
       setProfileImageUrl(parsedResponse.imagen_url);
-      setCorreo(parsedResponse?.query_result?.CORREO || "");
+      setCorreo(parsedResponse?.query_result?.CORREO || '');
     }
-
-    // Obtener la cantidad de productos del carrito
-    const cantidad = localStorage.getItem("cantidadProductosCarrito");
-    if (cantidad) {
-      setCantidadProductos(parseInt(cantidad, 10));
-    }
-
-    // Escuchar cambios en el storage para sincronización
-    const handleStorageChange = () => {
-      const updatedCantidad = localStorage.getItem("cantidadProductosCarrito");
-      if (updatedCantidad) {
-        setCantidadProductos(parseInt(updatedCantidad, 10));
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    // Limpiar el listener al desmontar
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
   }, []);
 
   const toggleProfileMenu = () => {
@@ -157,7 +137,7 @@ export default function Navbar() {
           <BounceProvider>
             <button onClick={handleCarritoClick} title="carrito" className={`relative ${isBounce ? 'animate-beatfade' : ''} `}>
               <FaShoppingCart className="text-gray-700 text-3xl" />
-              <span  className={`absolute top-0 right-0 w-4 h-4 rounded-full border-2 border-none flex items-center justify-center text-xs text-white ${ isBounce ? 'bg-green-700' : 'bg-gray-400'}`}> {cantidadProductos}</span>
+              <span  className={`absolute top-0 right-0 w-4 h-4 rounded-full border-2 border-none flex items-center justify-center text-xs text-white ${ isBounce ? 'bg-green-700' : 'bg-gray-400'}`}>{cantidadProductos}</span>
             </button>
           </BounceProvider>
 
