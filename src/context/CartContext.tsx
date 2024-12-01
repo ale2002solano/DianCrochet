@@ -1,57 +1,69 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from "react";
+
+interface CartItem {
+  id_producto: string;
+  nombre_prod: string;
+  cantidad_compra: number;
+  talla: string | null;
+  grosor: string | null;
+  precio: number;
+}
 
 interface CartContextProps {
-  cantidadProductos: number;
-  setCantidadProductos: (cantidad: number) => void;
+  carrito: CartItem[];
+  totalCantidad: number;
+  agregarProducto: (producto: CartItem) => void;
+  actualizarCarrito: (nuevoCarrito: CartItem[]) => void;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [cantidadProductos, setCantidadProductos] = useState<number>(0);
+export const CartProvider = ({ children }: { children: ReactNode }) => {
+  const [carrito, setCarrito] = useState<CartItem[]>(() => {
+    const storedCarrito = localStorage.getItem("carrito");
+    return storedCarrito ? JSON.parse(storedCarrito) : [];
+  });
 
-  useEffect(() => {
-    // Función para cargar y actualizar la cantidad de productos desde el localStorage
-    const updateCantidadProductos = () => {
-      const carrito = localStorage.getItem('carrito');
-      if (carrito) {
-        const productosCarrito = JSON.parse(carrito); // Obtener los productos del carrito
-        const cantidadTotal = productosCarrito.reduce((total: number, producto: { cantidad_compra: number }) => total + producto.cantidad_compra, 0); // Sumar las cantidades de productos
-        setCantidadProductos(cantidadTotal); // Actualizar el estado con la cantidad total
-      }
-    };
+  const totalCantidad = carrito.reduce((acc, item) => acc + item.cantidad_compra, 0);
 
-    // Inicializar con el valor del carrito al cargar la vista
-    updateCantidadProductos();
+  const agregarProducto = (producto: CartItem) => {
+    const index = carrito.findIndex(
+      (item) =>
+        item.id_producto === producto.id_producto &&
+        item.talla === producto.talla &&
+        item.grosor === producto.grosor
+    );
 
-    // Escuchar cambios en el localStorage
-    const handleStorageChange = () => {
-      updateCantidadProductos();
-    };
+    const nuevoCarrito = [...carrito];
+    if (index !== -1) {
+      nuevoCarrito[index].cantidad_compra += producto.cantidad_compra;
+    } else {
+      nuevoCarrito.push(producto);
+    }
 
-    window.addEventListener('storage', handleStorageChange);
+    setCarrito(nuevoCarrito);
+    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+  };
 
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []); // Este efecto solo se ejecuta una vez cuando el componente se monta
-
-  useEffect(() => {
-    console.log('Cantidad de productos:', cantidadProductos);
-  }, [cantidadProductos]);
+  const actualizarCarrito = (nuevoCarrito: CartItem[]) => {
+    setCarrito(nuevoCarrito);
+    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+  };
 
   return (
-    <CartContext.Provider value={{ cantidadProductos, setCantidadProductos }}>
+    <CartContext.Provider value={{ carrito, totalCantidad, agregarProducto, actualizarCarrito }}>
       {children}
     </CartContext.Provider>
   );
 };
 
-export const useCart = (): CartContextProps => {
+export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error('useCart debe ser usado dentro de un CartProvider');
+    throw new Error("useCart debe usarse dentro de un CartProvider");
   }
   return context;
 };
+
+export default CartContext;

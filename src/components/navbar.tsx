@@ -15,7 +15,7 @@ export default function Navbar() {
   const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { isBounce } = useBounce();  
-  const { cantidadProductos } = useCart();
+  const { totalCantidad } = useCart();
 
   // Recuperar la imagen de perfil y correo del localStorage
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Navbar() {
   };
 
 
-console.log('Cantidad de productos en Navbar:', cantidadProductos);
+console.log('Cantidad de productos en Navbar:', totalCantidad);
 
 
   // Cerrar el menú al hacer clic fuera
@@ -141,7 +141,7 @@ console.log('Cantidad de productos en Navbar:', cantidadProductos);
           <BounceProvider>
             <button onClick={handleCarritoClick} title="carrito" className={`relative ${isBounce ? 'animate-beatfade' : ''} `}>
               <FaShoppingCart className="text-gray-700 text-3xl" />
-              <span  className={`absolute top-0 right-0 w-4 h-4 rounded-full border-2 border-none flex items-center justify-center text-xs text-white ${ isBounce ? 'bg-green-700' : 'bg-gray-400'}`}>{cantidadProductos}</span>
+              <span  className={`absolute top-0 right-0 w-4 h-4 rounded-full border-2 border-none flex items-center justify-center text-xs text-white ${ isBounce ? 'bg-green-700' : 'bg-gray-400'}`}>{totalCantidad}</span>
             </button>
           </BounceProvider>
 
