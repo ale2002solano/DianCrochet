@@ -4,6 +4,17 @@ import { useState, useEffect } from "react";
 import { ProductoDetalle } from "@interfaces/product";
 import { agregarAlCarrito } from "../post/agregarAlCarrito"; // Importa la función del POST
 import { useBounce } from '../../../context/BounceContext';
+import { useCart } from "context/CartContext";
+
+// Definimos el tipo para los elementos del carrito
+interface CarritoItem {
+  id_producto: string;
+  nombre_prod: string;
+  cantidad_compra: number;
+  talla: string | null;
+  grosor: string | null;
+  precio: number;
+}
 
 interface ProductDetailProps {
   producto: ProductoDetalle;
@@ -19,6 +30,8 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
   const [cantidad, setCantidad] = useState<number>(1);
   const [precioActual, setPrecioActual] = useState<number>(producto.precio_venta);
   const { setIsBounce } = useBounce();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { agregarProducto, actualizarCarrito } = useCart();
 
   // Función para incrementar la cantidad
   const increaseQuantity = () => {
@@ -68,7 +81,6 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
       setPrecioActual(producto.precio_venta);
     }
   }, [selectedTalla, selectedGrosores, producto]);
-  
 
   // Manejar el clic en miniaturas
   const handleThumbnailClick = (src: string) => {
@@ -81,68 +93,66 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
   };
 
   // Manejar la acción de agregar al carrito
-const handleAddToCart = async () => {
-  if (!correo) {
-    setMensajeError("Inicia sesión para comprar");
-    setTimeout(() => setMensajeError(null), 3000);
-    return;
-  }
-  setIsBounce(true);
-  setTimeout(() => setIsBounce(false), 2000); 
+  const handleAddToCart = async () => {
+    if (!correo) {
+      setMensajeError("Inicia sesión para comprar");
+      setTimeout(() => setMensajeError(null), 3000);
+      return;
+    }
 
-  const idProducto = producto.id_producto.toString();
-  
-  // Datos para el carrito
-  const data = {
-    correo,
-    idProducto,
-    cantidadCompra: cantidad,
-    talla: selectedTalla || null,
-    grosor: selectedGrosores || null,
-  };
+    setIsBounce(true);
+    setTimeout(() => setIsBounce(false), 2000);
 
-  // Obtener el carrito actual desde localStorage
-  const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
-
-  // Comprobar si el producto ya está en el carrito
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const index = carrito.findIndex((item: any) => item.id_producto === idProducto && item.talla === selectedTalla && item.grosor === selectedGrosores);
-
-  if (index !== -1) {
-    // Si el producto ya está en el carrito, actualizar la cantidad
-    carrito[index].cantidad_compra += cantidad;
-  } else {
-    // Si el producto no existe, agregarlo al carrito
-    carrito.push({
+    const idProducto = producto.id_producto.toString();
+    const newProduct = {
       id_producto: idProducto,
       nombre_prod: producto.nombre_prod,
       cantidad_compra: cantidad,
-      talla: selectedTalla,
-      grosor: selectedGrosores,
+      talla: selectedTalla || null,
+      grosor: selectedGrosores || null,
       precio: precioActual,
-    });
-  }
+    };
 
-  // Guardar el carrito actualizado en localStorage
-  localStorage.setItem("carrito", JSON.stringify(carrito));
+    // Se agrega el tipo `CarritoItem[]` al carrito
+    const carrito = JSON.parse(localStorage.getItem("carrito") || "[]") as CarritoItem[];
+    const index = carrito.findIndex(
+      (item: CarritoItem) =>
+        item.id_producto === idProducto &&
+        item.talla === selectedTalla &&
+        item.grosor === selectedGrosores
+    );
 
-  try {
-    const result = await agregarAlCarrito(data);
-
-    if (result.carrito && result.carrito.codigo === 4) {
-      setMensajeError(result.carrito.mensaje);
-      setTimeout(() => setMensajeError(null), 3000);
+    if (index !== -1) {
+      carrito[index].cantidad_compra += cantidad;
     } else {
-      setMensajeExito("¡Producto agregado al carrito con éxito!");
-      setTimeout(() => setMensajeExito(null), 3000);
+      carrito.push(newProduct);
     }
-  } catch (error) {
-    console.error("Error al agregar al carrito:", error);
-    setMensajeError("Hubo un problema con la solicitud");
-    setTimeout(() => setMensajeError(null), 3000);
-  }
-};
 
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    actualizarCarrito(carrito);
+
+    try {
+      const result = await agregarAlCarrito({
+        correo,
+        idProducto,
+        cantidadCompra: cantidad,
+        talla: selectedTalla,
+        grosor: selectedGrosores,
+      });
+
+      if (result.carrito && result.carrito.codigo === 4) {
+        setMensajeError(result.carrito.mensaje);
+        setTimeout(() => setMensajeError(null), 3000);
+      } else {
+        setMensajeExito("¡Producto agregado al carrito con éxito!");
+        setTimeout(() => setMensajeExito(null), 3000);
+      }
+    } catch (error) {
+      console.error("Error al agregar al carrito:", error);
+      setMensajeError("Hubo un problema con la solicitud");
+      setTimeout(() => setMensajeError(null), 3000);
+    }
+  };
 
   return (
     <div className="relative w-max grid grid-cols-1 md:grid-cols-2 gap-[15%] p-8">
