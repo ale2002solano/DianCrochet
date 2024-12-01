@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 interface CartItem {
   id_producto: string;
@@ -20,10 +20,19 @@ interface CartContextProps {
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [carrito, setCarrito] = useState<CartItem[]>(() => {
-    const storedCarrito = localStorage.getItem("carrito");
-    return storedCarrito ? JSON.parse(storedCarrito) : [];
-  });
+  const [carrito, setCarrito] = useState<CartItem[]>([]);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Marca que ahora estamos en el cliente
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      const storedCarrito = localStorage.getItem("carrito");
+      setCarrito(storedCarrito ? JSON.parse(storedCarrito) : []);
+    }
+  }, [isClient]);
 
   const totalCantidad = carrito.reduce((acc, item) => acc + item.cantidad_compra, 0);
 
@@ -43,12 +52,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
 
     setCarrito(nuevoCarrito);
-    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+    if (isClient) {
+      localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+    }
   };
 
   const actualizarCarrito = (nuevoCarrito: CartItem[]) => {
     setCarrito(nuevoCarrito);
-    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+    if (isClient) {
+      localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+    }
   };
 
   return (
