@@ -11,27 +11,20 @@ const CartContext = createContext<CartContextProps | undefined>(undefined);
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cantidadProductos, setCantidadProductos] = useState<number>(0);
 
+  // Este useEffect inicializa la cantidadProductos desde localStorage
   useEffect(() => {
-    // Inicializar con el valor del localStorage
     const cantidad = localStorage.getItem('cantidadProductosCarrito');
     if (cantidad) {
       setCantidadProductos(parseInt(cantidad, 10));
     }
-
-    // Escuchar cambios en el localStorage
-    const handleStorageChange = () => {
-      const updatedCantidad = localStorage.getItem('cantidadProductosCarrito');
-      if (updatedCantidad) {
-        setCantidadProductos(parseInt(updatedCantidad, 10));
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
   }, []);
+
+  // Este useEffect actualiza localStorage cuando cantidadProductos cambia
+  useEffect(() => {
+    if (cantidadProductos >= 0) { // Verifica que la cantidad sea válida
+      localStorage.setItem('cantidadProductosCarrito', cantidadProductos.toString());
+    }
+  }, [cantidadProductos]);
 
   useEffect(() => {
     console.log('Cantidad de productos:', cantidadProductos);
