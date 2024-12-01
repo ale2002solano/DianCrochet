@@ -33,6 +33,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
+  useEffect(() => {
+    console.log('Cantidad de productos:', cantidadProductos);
+  }, [cantidadProductos]);
+
   return (
     <CartContext.Provider value={{ cantidadProductos, setCantidadProductos }}>
       {children}
