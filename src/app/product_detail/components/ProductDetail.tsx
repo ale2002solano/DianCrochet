@@ -81,41 +81,68 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
   };
 
   // Manejar la acción de agregar al carrito
-  const handleAddToCart = async () => {
-    if (!correo) {
-      setMensajeError("Inicia sesión para comprar");
-      setTimeout(() => setMensajeError(null), 3000);
-      return;
-    }
-    setIsBounce(true);
-    setTimeout(() => setIsBounce(false), 2000); 
-    const idProducto = producto.id_producto.toString();
+const handleAddToCart = async () => {
+  if (!correo) {
+    setMensajeError("Inicia sesión para comprar");
+    setTimeout(() => setMensajeError(null), 3000);
+    return;
+  }
+  setIsBounce(true);
+  setTimeout(() => setIsBounce(false), 2000); 
+
+  const idProducto = producto.id_producto.toString();
   
-    const data = {
-      correo,
-      idProducto,
-      cantidadCompra: cantidad,
-      talla: selectedTalla || null,
-      grosor: selectedGrosores || null,
-    };
-  
-    try {
-      const result = await agregarAlCarrito(data);
-  
-      if (result.carrito && result.carrito.codigo === 4) {
-        setMensajeError(result.carrito.mensaje);
-        setTimeout(() => setMensajeError(null), 3000);
-      } else {
-        setMensajeExito("¡Producto agregado al carrito con éxito!");
-        setTimeout(() => setMensajeExito(null), 3000);
-      }
-    } catch (error) {
-      console.error("Error al agregar al carrito:", error); // Muestra detalles en la consola
-      setMensajeError("Hubo un problema con la solicitud");
-      setTimeout(() => setMensajeError(null), 3000);
-    }
+  // Datos para el carrito
+  const data = {
+    correo,
+    idProducto,
+    cantidadCompra: cantidad,
+    talla: selectedTalla || null,
+    grosor: selectedGrosores || null,
   };
-  
+
+  // Obtener el carrito actual desde localStorage
+  const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+
+  // Comprobar si el producto ya está en el carrito
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const index = carrito.findIndex((item: any) => item.id_producto === idProducto && item.talla === selectedTalla && item.grosor === selectedGrosores);
+
+  if (index !== -1) {
+    // Si el producto ya está en el carrito, actualizar la cantidad
+    carrito[index].cantidad_compra += cantidad;
+  } else {
+    // Si el producto no existe, agregarlo al carrito
+    carrito.push({
+      id_producto: idProducto,
+      nombre_prod: producto.nombre_prod,
+      cantidad_compra: cantidad,
+      talla: selectedTalla,
+      grosor: selectedGrosores,
+      precio: precioActual,
+    });
+  }
+
+  // Guardar el carrito actualizado en localStorage
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+
+  try {
+    const result = await agregarAlCarrito(data);
+
+    if (result.carrito && result.carrito.codigo === 4) {
+      setMensajeError(result.carrito.mensaje);
+      setTimeout(() => setMensajeError(null), 3000);
+    } else {
+      setMensajeExito("¡Producto agregado al carrito con éxito!");
+      setTimeout(() => setMensajeExito(null), 3000);
+    }
+  } catch (error) {
+    console.error("Error al agregar al carrito:", error);
+    setMensajeError("Hubo un problema con la solicitud");
+    setTimeout(() => setMensajeError(null), 3000);
+  }
+};
+
 
   return (
     <div className="relative w-max grid grid-cols-1 md:grid-cols-2 gap-[15%] p-8">
