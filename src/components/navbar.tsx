@@ -31,6 +31,10 @@ export default function Navbar() {
     setProfileOpen(!isProfileOpen);
   };
 
+
+console.log('Cantidad de productos en Navbar:', cantidadProductos);
+
+
   // Cerrar el menú al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
