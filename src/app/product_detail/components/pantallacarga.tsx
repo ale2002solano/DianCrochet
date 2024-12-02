@@ -1,6 +1,6 @@
 
-import Footer from "components/Footer";
-import Navbar from "components/navbar";
+
+
 import LoadingSpinnerSob from "./LoadingSpinnerSob";
 
 
@@ -11,7 +11,7 @@ export default function PantallaCarga() {
         <main className="bg-slate-50 flex-grow w-full flex justify-center">
           <LoadingSpinnerSob/>
         </main>
-        <Footer />
+        
       </div>
     );
   }

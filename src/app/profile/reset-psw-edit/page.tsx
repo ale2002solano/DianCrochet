@@ -1,5 +1,5 @@
 "use client";
-import Navbar from "components/navbar";
+
 import ResetPswFormEdit from "../post/ResetPwdFormEdit";
 
 export default function ResetPswEdit() {

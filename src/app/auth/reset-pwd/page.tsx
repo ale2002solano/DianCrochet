@@ -2,8 +2,8 @@
 import ResetPswdForm from "../components/posts/ResetPwdForm";
 import LoginBG from "../components/backgrounds/LoginBackGround";
 
-import Footer from "components/Footer";
-import Navbar from "components/navbar";
+
+
 
 export default function ResetPsw() {
   return (
@@ -13,7 +13,7 @@ export default function ResetPsw() {
         <ResetPswdForm />
         <LoginBG />
       </section>
-      <Footer/>
+      
     </main>
   );
 }

@@ -1,7 +1,6 @@
 'use client';
 import VideoPage from './components/video'; 
 
-import Footer from 'components/Footer';
 
 export default function Dashboard() {
   return (
@@ -13,7 +12,7 @@ export default function Dashboard() {
         </div>
       </main>
 
-      <Footer />
+      
     </div>
   );
 }

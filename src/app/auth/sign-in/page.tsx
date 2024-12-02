@@ -1,7 +1,7 @@
 import "../../globals.css";
 import LoginForm from "../components/posts/LoginForm";
 import LoginBG from "../components/backgrounds/LoginBackGround";
-import Navbar from "components/navbar";
+
 
 export default function Login() {
   return (

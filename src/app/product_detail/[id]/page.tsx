@@ -1,8 +1,5 @@
 'use client'
 
-
-import Footer from 'components/Footer';
-
 import { useProducto } from '@services/product';
 import ProductDetail from '../components/ProductDetail';
 import CarruselProductoRelacionado from '../components/CarruselProductoRelacionado';
@@ -27,7 +24,7 @@ export default function ProductDetailPageDinamic() {
         <CarruselProductoRelacionado/>
       </div>
       </main>
-      <Footer />
+      
     </div>
   );
 }

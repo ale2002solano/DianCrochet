@@ -2,7 +2,6 @@
 
 
 import SliderVideo from './landing/components/SliderVideo';
-import Footer from 'components/Footer';
 import Carrusel from './landing/components/Carrusel';
 import CarruselKit from './landing/components/CarruselKit';
 import BackendKeepAlive from "../components/BackendKeepAlive";
@@ -31,7 +30,7 @@ export default function Dashboard() {
         </div>
       </main>
 
-      <Footer />
+      
     </div>
   );
 }

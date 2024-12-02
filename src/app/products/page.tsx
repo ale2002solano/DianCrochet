@@ -1,7 +1,7 @@
 "use client";
 import Product from "./components/Product";
-import Footer from "components/Footer";
-import Navbar from "components/navbar";
+
+
 import Image from "next/legacy/image";
 import Categorias from "./components/categories";
 import { useEffect, useState } from "react";
@@ -638,7 +638,7 @@ export default function Products() {
           </div>
         </div>
       </section>
-      <Footer />
+      
     </div>
   );
 }

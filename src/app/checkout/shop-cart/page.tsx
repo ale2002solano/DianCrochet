@@ -1,5 +1,5 @@
 "use client";
-import Navbar from "components/navbar";
+
 import ShopCartForm from "../components/posts/ShopCartForm";
 
 

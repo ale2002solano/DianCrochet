@@ -1,7 +1,7 @@
 "use client";
 import Product from "../components/Product";
-import Footer from "components/Footer";
-import Navbar from "components/navbar";
+
+
 import Image from "next/legacy/image";
 import { useEffect, useState } from "react";
 import Prices from "../components/prices";
@@ -636,7 +636,7 @@ export default function Materials() {
           </div>
         </div>
       </section>
-      <Footer />
+      
     </div>
   );
 }
