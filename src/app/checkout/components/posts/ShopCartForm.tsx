@@ -28,6 +28,9 @@ export default function ShopCartForm() {
     const [mensajeAdvertencia, setMensajeAdvertencia] = useState<string | null>(null); // Mensaje de advertencia
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { carrito: carritoContexto, actualizarCarrito } = useCart();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [total, setTotal] = useState<number>(0); // Añadir estado para total
+
 
       // Función para transformar el carrito
       const transformarCarrito = (carrito: CarritoItem[]): CartItem[] => {
@@ -37,7 +40,7 @@ export default function ShopCartForm() {
             cantidad_compra: item.cantidad_compra,
             talla: item.talla,
             grosor: item.grosor,
-            precio: item.subtotal ?? 0,
+            precio: item.subtotal !== null ? item.subtotal : 0,
         }));
     };
 
@@ -123,49 +126,61 @@ export default function ShopCartForm() {
     
 
     // Eliminar producto carrito
-    const handleDelete = async (correo: string, idProducto: number, talla: string | null, grosor: string | null) => {
-        if (!correo || !idProducto) {
-            alert("Por favor, proporciona la información requerida.");
-            return;
+const handleDelete = async (correo: string, idProducto: number, talla: string | null, grosor: string | null) => {
+    if (!correo || !idProducto) {
+        alert("Por favor, proporciona la información requerida.");
+        return;
+    }
+
+    try {
+        const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/producto/eliminar', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                correo,
+                idProducto,
+                talla: talla ? talla.toString() : null, // Asegura que talla sea un string
+                grosor: grosor ? grosor.toString() : null, // Asegura que grosor sea un string
+            }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.eliminar.codigo === 1) {
+            // Actualizar el carrito localmente
+            const nuevoCarrito = carrito.filter(
+                (producto) =>
+                    producto.id_producto !== idProducto ||
+                    producto.talla !== talla ||
+                    producto.grosor !== grosor
+            );
+
+            // Recalcular el total
+            const nuevoTotal = nuevoCarrito.reduce((total, producto) => total + (producto.subtotal * producto.cantidad_compra), 0);
+            const nuevoImpuesto = nuevoTotal * 0.15; // Ejemplo de impuesto del 15%
+            const nuevoSubtotal = nuevoTotal; // Asumimos que el subtotal es igual al total, pero si hay descuentos, puedes ajustarlo.
+
+            // Actualizar el estado del carrito y el total
+            setCarrito(nuevoCarrito);
+            actualizarCarrito(nuevoCarrito);
+
+            // Aquí puedes actualizar el estado del subtotal, impuesto y total (por ejemplo, en un estado de React)
+            setSubtotal(nuevoSubtotal);
+            setImpuestos(nuevoImpuesto);
+            setTotal(nuevoSubtotal + nuevoImpuesto); // Actualizar total aquí
+
+
+            alert(result.eliminar.mensaje);
+        } else {
+            console.error('Error al eliminar el producto del carrito:', result.eliminar.mensaje || 'Error desconocido');
         }
-    
-        try {
-            const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/producto/eliminar', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    correo,
-                    idProducto,
-                    talla: talla ? talla.toString() : null, // Asegura que talla sea un string
-                    grosor: grosor ? grosor.toString() : null, // Asegura que grosor sea un string
-                }),
-            });
-    
-            const result = await response.json();
-    
-            if (response.ok && result.eliminar.codigo === 1) {
-                // Actualizar el carrito localmente
-                const nuevoCarrito = carrito.filter(
-                    (producto) =>
-                        producto.id_producto !== idProducto ||
-                        producto.talla !== talla ||
-                        producto.grosor !== grosor
-                );
-                setCarrito(nuevoCarrito);
-    
-                // Actualizar el carrito en el contexto
-                actualizarCarrito(nuevoCarrito);
-    
-                alert(result.eliminar.mensaje);
-            } else {
-                console.error('Error al eliminar el producto del carrito:', result.eliminar.mensaje || 'Error desconocido');
-            }
-        } catch (error) {
-            console.error('Error en la solicitud de eliminación:', error);
-        }
-    };
+    } catch (error) {
+        console.error('Error en la solicitud de eliminación:', error);
+    }
+};
+
     
     
     
@@ -271,14 +286,14 @@ export default function ShopCartForm() {
         }
     };
     
-// Recalcular total
-useEffect(() => {
-    const calcularTotal = () => {
-        const total = subtotal + impuestos;
-        document.getElementById('total')!.innerText = `L. ${total.toFixed(2)}`;
-    };
-    calcularTotal();
-}, [subtotal, impuestos]);
+    useEffect(() => {
+        const calcularTotal = () => {
+            const nuevoTotal = subtotal + impuestos;
+            setTotal(nuevoTotal); // Actualizamos el estado del total
+        };
+        calcularTotal();
+    }, [subtotal, impuestos]);
+    
 
 // UI
 <div id="total">L. 0.00</div>
