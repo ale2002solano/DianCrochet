@@ -228,7 +228,7 @@ export default function Products() {
       <div className="h-20 sm:h-24 bg-white"></div>
       <section className="bg-white">
         <div className="flex h-20 items-center">
-          <h1 className="pl-6 font-koulen text-5xl text-gray-900">Productores</h1>
+          <h1 className="pl-6 font-koulen text-5xl text-gray-900">Productos</h1>
           <Image
             src="/img/girasol.svg"
             alt="Crochet Flower"
