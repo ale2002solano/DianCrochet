@@ -4,7 +4,7 @@ import Image from "next/legacy/image";
 export default function Product({ nombre, precio, imagen }: { nombre: string; precio: string; imagen: string }) {
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full h-full">
-      <div className='w-[100%] h-[100%] relative overflow-hidden'>
+      <div className='w-[260px] h-[305px] relative overflow-hidden'>
         <Image
           src={imagen}
           alt={nombre}
