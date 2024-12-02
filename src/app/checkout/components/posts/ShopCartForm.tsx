@@ -8,6 +8,14 @@ import { useRouter } from 'next/navigation';
 import LoadingSpinner from "../loadding/LoadingSpinnerSob";
 import Image from 'next/image';
 import {useCart} from "../../../../context/CartContext";
+interface CartItem {
+    id_producto: number;
+    nombre_prod: string;
+    cantidad_compra: number;
+    talla: string | null;
+    grosor: string | null;
+    precio: number;
+}
 //cambio mega x
 export default function ShopCartForm() {
     const [carrito, setCarrito] = useState<CarritoItem[]>([]);
@@ -21,6 +29,17 @@ export default function ShopCartForm() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { carrito: carritoContexto, actualizarCarrito } = useCart();
 
+      // Función para transformar el carrito
+      const transformarCarrito = (carrito: CarritoItem[]): CartItem[] => {
+        return carrito.map(item => ({
+            id_producto: item.id_producto,
+            nombre_prod: item.nombre_prod,
+            cantidad_compra: item.cantidad_compra,
+            talla: item.talla,
+            grosor: item.grosor,
+            precio: item.subtotal ?? 0,
+        }));
+    };
 
 
     // Función para manejar el clic en detalles de envío
@@ -53,6 +72,9 @@ export default function ShopCartForm() {
                     const data = await response.json();
                     console.log('Datos del carrito:', data); // Verifica los datos recibidos
                     setCarrito(data.carrito);
+                    const carritoAgrupado = agruparCarrito(data.carrito);
+                    setCarrito(carritoAgrupado);
+                    actualizarCarrito(transformarCarrito(carritoAgrupado));
                     await fetchSubtotal();
                     if (data.carrito.length > 0) {
                         const facturaId = data.carrito[0].id_factura;
@@ -182,6 +204,8 @@ export default function ShopCartForm() {
         console.error('Error en la eliminación del carrito:', error);
     }
 };
+
+
 
     //Actualizar cantidad de productos
     const handleQuantityChange = async (
@@ -335,6 +359,27 @@ useEffect(() => {
         }
         return acc;
     }, [] as CarritoItem[]);
+
+
+    // Agrupar carrito
+    const agruparCarrito = (carrito: CarritoItem[]): CarritoItem[] => {
+        return carrito.reduce((acc, item) => {
+            const existingItem = acc.find(i =>
+                i.id_producto === item.id_producto &&
+                ((i.talla === item.talla) || (!i.talla && !item.talla)) &&
+                ((i.grosor === item.grosor) || (!i.grosor && !item.grosor))
+            );
+
+            if (existingItem) {
+                existingItem.cantidad_compra += item.cantidad_compra;
+                existingItem.subtotal = (existingItem.subtotal ?? 0) + (item.subtotal ?? 0);
+            } else {
+                acc.push({ ...item });
+            }
+
+            return acc;
+        }, [] as CarritoItem[]);
+    };
     
 
 

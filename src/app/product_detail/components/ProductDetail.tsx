@@ -16,6 +16,16 @@ interface CarritoItem {
   precio: number;
 }
 
+interface CartItem {
+  id_producto: number; // Cambié el tipo a number para ser consistente
+  nombre_prod: string;
+  cantidad_compra: number;
+  talla: string | null;
+  grosor: string | null;
+  precio: number;
+}
+
+
 interface ProductDetailProps {
   producto: ProductoDetalle;
 }
@@ -32,6 +42,18 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
   const { setIsBounce } = useBounce();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { agregarProducto, actualizarCarrito } = useCart();
+
+  // Función para transformar el carrito
+  const transformarCarrito = (carrito: CarritoItem[]): CartItem[] => {
+    return carrito.map(item => ({
+      id_producto: Number(item.id_producto), // Convertir a number
+      nombre_prod: item.nombre_prod,
+      cantidad_compra: item.cantidad_compra,
+      talla: item.talla,
+      grosor: item.grosor,
+      precio: item.precio,
+    }));
+  };
 
   // Función para incrementar la cantidad
   const increaseQuantity = () => {
@@ -104,7 +126,7 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
     setTimeout(() => setIsBounce(false), 2000);
 
     const idProducto = producto.id_producto.toString();
-    const newProduct = {
+    const newProduct: CarritoItem = {
       id_producto: idProducto,
       nombre_prod: producto.nombre_prod,
       cantidad_compra: cantidad,
@@ -113,7 +135,7 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
       precio: precioActual,
     };
 
-    // Se agrega el tipo `CarritoItem[]` al carrito
+    // Obtén el carrito del localStorage y asegura el tipo
     const carrito = JSON.parse(localStorage.getItem("carrito") || "[]") as CarritoItem[];
     const index = carrito.findIndex(
       (item: CarritoItem) =>
@@ -128,8 +150,12 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
       carrito.push(newProduct);
     }
 
+    // Guarda el carrito actualizado en el localStorage
     localStorage.setItem("carrito", JSON.stringify(carrito));
-    actualizarCarrito(carrito);
+
+    // **Transforma el carrito antes de actualizarlo en el contexto**
+    const carritoTransformado = transformarCarrito(carrito);
+    actualizarCarrito(carritoTransformado);
 
     try {
       const result = await agregarAlCarrito({
@@ -152,7 +178,7 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
       setMensajeError("Hubo un problema con la solicitud");
       setTimeout(() => setMensajeError(null), 3000);
     }
-  };
+  }
 
   return (
     <div className="relative w-max grid grid-cols-1 md:grid-cols-2 gap-[15%] p-8">
