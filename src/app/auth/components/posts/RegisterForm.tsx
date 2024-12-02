@@ -144,7 +144,7 @@ export function RegisterForm() {
   };
 
   return (
-    (<div className="relative z-20 flex h-[80.4%] w-[25.7%] items-center justify-center">
+    (<div className="relative z-20 flex h-[80.4%] w-[25.7%] items-center justify-center min-w-[335px]">
       {loading && (
         <div className="absolute z-50 flex h-full w-full items-center justify-center">
           <LoadingPage />
@@ -296,7 +296,7 @@ export function RegisterForm() {
             }`}
           >
             {passwordRequirements ? (
-              <div className="absolute right-[-30%] top-[36.7%] z-20 flex h-24 w-[60%] items-center justify-center rounded-md bg-white shadow-xl">
+              <div className="absolute sm:right-[-30%] right-0 top-[36.7%] z-20 flex h-24 w-[60%] items-center justify-center rounded-md bg-white shadow-xl">
                 <ul className="max-w-md list-inside space-y-1 font-lekton text-[100%] text-gray-500">
                   <li className="flex items-center">
                     <svg

@@ -95,7 +95,7 @@ export default function ResetPswForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative z-10 h-[60.4%] w-[25.7%] rounded-3xl bg-white opacity-90 shadow-2xl p-6">
+    <form onSubmit={handleSubmit} className="relative z-10 h-[60.4%] w-[25.7%] rounded-3xl bg-white opacity-90 shadow-2xl p-6 min-w-[335px]">
       <div className="flex flex-col items-center">
         <h1 className="w-[88.1%] font-koulen text-3xl text-gray-800 mb-6">
           RESTABLECER CLAVE

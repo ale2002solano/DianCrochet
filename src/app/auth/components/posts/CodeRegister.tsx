@@ -111,7 +111,7 @@ export default function CodeRegister({ mail, setShowEmailVerification }: AuthFor
   };
 
   return (
-    <div className="relative z-20 flex h-[70%] w-full items-center justify-center">
+    <div className="relative z-20 flex h-[70%] w-full items-center justify-center min-h-[485px]">
       {loading && (
         <div className="absolute z-50 flex h-full w-full items-center justify-center">
           <LoadingPage />
