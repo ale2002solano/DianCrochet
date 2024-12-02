@@ -1,7 +1,7 @@
 "use client";
 import Product from "./components/Product";
-import Footer from "components/Footer";
-import Navbar from "components/navbar";
+
+
 import Image from "next/legacy/image";
 import Categorias from "./components/categories";
 import { useEffect, useState } from "react";
@@ -224,7 +224,7 @@ export default function Products() {
 
   return (
     <div>
-      <Navbar />
+      
       <div className="h-20 sm:h-24 bg-white"></div>
       <section className="bg-white">
         <div className="flex h-20 items-center">
@@ -638,7 +638,7 @@ export default function Products() {
           </div>
         </div>
       </section>
-      <Footer />
+      
     </div>
   );
 }

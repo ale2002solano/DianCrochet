@@ -1,11 +1,12 @@
 "use client";
 import Link from 'next/link';
-import { FaUserCircle, FaShoppingCart, FaSearch } from 'react-icons/fa';
+import { FaUserCircle, FaShoppingCart} from 'react-icons/fa';
 import Image from "next/legacy/image";
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiMenu } from 'react-icons/fi';
 import { AiOutlineClose } from 'react-icons/ai';
+import Search from './SearchBar';
 
 
 export default function Navbar() {
@@ -100,26 +101,12 @@ export default function Navbar() {
 
         {/* Search bar */}
         <div className="hidden md:flex items-center rounded-full px-4 py-1 w-1/3 bg-gray-100 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none">
-          <input
-            type="text"
-            placeholder="Buscar..."
-            className="w-full bg-transparent border-none text-gray-600 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none"
-          />
-          <button title='buscar'>
-            <FaSearch className="text-purple-500" />
-          </button>
+          <Search/>
         </div>
 
         <div className="flex justify-center">
         <div className="flex md:hidden lg:hidden xl:hidden 2xl:hidden rounded-full  px-4 py-1 w-[screen] bg-gray-100 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none">
-          <input
-            type="text"
-            placeholder="Buscar..."
-            className="w-full bg-transparent border-none text-gray-600 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none"
-          />
-          <button title='buscar'>
-            <FaSearch className="text-purple-500" />
-          </button>
+          <Search/>
         </div>
         </div>
 
