@@ -398,9 +398,9 @@ useEffect(() => {
 
 
     return (
-        <div className="flex justify-between font-koulen w-full p-8">
+        <div className="flex flex-col lg:flex-row justify-between font-koulen w-full p-8">
             {loading && <LoadingSpinner />}
-            <div title="Articulos" className="m-2 rounded-md bg-gray-200 w-1/2 flex-grow p-5 px-10 ">
+            <div title="Articulos" className="m-2 rounded-md bg-gray-200 w-full lg:w-1/2 flex-grow p-5 lg:px-10">
                 <div id="header" className="text-gray-700 flex flex-row flex-nowrap justify-center items-baseline content-stretch">
                     <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch text-purple-400">Resumen <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-gray-800" /> <IoRemoveOutline /></h4></div>
                     <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch">Envio <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-gray-800" /> <IoRemoveOutline /></h4></div>
@@ -410,7 +410,7 @@ useEffect(() => {
 
                 <div id="PRODUCTOS" className="max-h-96 overflow-y-auto">
                 {groupedCarrito.map((item) => (
-                    <div key={item.id_prod_fact} id="product" className="bg-white rounded-md flex flex-row flex-nowrap justify-start items-start content-start overflow-hidden mb-5">
+                    <div key={item.id_prod_fact} id="product" className="bg-white rounded-md flex flex-col sm:flex-row flex-nowrap justify-start items-start content-start overflow-hidden mb-5">
                         <div id="img" className="mr-8 w-24 h-24 rounded-none rounded-tl-md rounded-bl-md" title={item.nombre_prod}>
                             {item.url ? (<Image src={item.url} alt={item.nombre_prod} width={100} height={100} objectFit="cover" className="w-full h-full"/>) : (
                             <CiImageOff className="w-full h-full object-contain text-gray-400" />)}
@@ -456,7 +456,7 @@ useEffect(() => {
                 
             </div>
 
-            <div title="Resumen orden" className="m-2 p-10 rounded-md bg-gray-200 flex flex-col flex-nowrap justify-between items-stretch content-stretch">
+            <div title="Resumen orden" className="m-2 p-5 rounded-md bg-gray-200 w-full lg:w-1/3 flex flex-col justify-between">
             <div id="hd1" className="flex flex-row flex-nowrap justify-between items-start content-start">
                  <div id="orden" className="mr-64 text-gray-800">
                      <h1 className="mb-3">Resumen de la orden</h1>
