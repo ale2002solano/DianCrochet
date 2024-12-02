@@ -498,7 +498,11 @@ useEffect(() => {
                         <h3 className="mb-3" id="subtotal">L. {carrito.length === 0 ? "0.00" : subtotal.toFixed(2)}</h3>
                         <h3 className="mb-3" id="impuestos">L. {carrito.length === 0 ? "0.00" : impuestos.toFixed(2)}</h3>
                         <h3 className="mb-3">...</h3>
-                        <h3 className="mb-3" id="total">L.</h3>
+                        <h3 className="mb-3" id="total">L.
+                            {carrito.length === 0
+                               ? "0.00"
+                                : (subtotal + impuestos).toFixed(2)}
+                        </h3>
                     </div>
                  </div>
 
