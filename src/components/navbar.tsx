@@ -162,10 +162,6 @@ console.log('Cantidad de productos en Navbar:', totalCantidad);
             </button>
           </BounceProvider>
 
-          {/* Mostrar mensaje de advertencia */}
-          <button onClick={handleCarritoClick} title='carrito'>
-            <FaShoppingCart className="text-gray-700 text-2xl" />
-          </button>
           </div>  
           {/* Mostrar mensaje de advertencia si no está logueado */}
           {mensajeAdvertencia && (
