@@ -458,22 +458,21 @@ useEffect(() => {
             </div>
 
             <div title="Resumen orden" className="m-2 p-5 rounded-md bg-gray-200 w-full lg:w-1/3 flex flex-col justify-between">
-            <div id="hd1" className="flex flex-row flex-nowrap justify-between items-start content-start">
-                 <div id="orden" className="mr-64 text-gray-800">
-                     <h1 className="mb-3">Resumen de la orden</h1>
-                     <div id="cantprod" className="max-h-52 overflow-y-auto w-auto">
-                         {groupedCarrito.map((item) => (
-                             <h2 key={item.id_prod_fact} className="mb-3">{item.cantidad_compra} x {item.nombre_prod}</h2>
-                         ))}
-                     </div>
-                 </div>
-                 <div id="pago" className="text-gray-800">
-                     <h1>Pagos con</h1>
-                     <button className="w-16 border-blue-900 rounded-md border-2 px-3 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px]">
-                        <Image alt="paypal" src="/img/paypal-logo-0.png"  width={100} height={100}/>
+            <div id="hd1" className="flex flex-col sm:flex-row justify-between items-start content-start space-y-4 sm:space-y-0">
+                <div id="orden" className="text-gray-800 sm:mr-64"><h1 className="text-xl sm:text-2xl mb-3">Resumen de la orden</h1>
+                    <div id="cantprod" className="max-h-52 overflow-y-auto w-full">{groupedCarrito.map((item) => (
+                        <h2 key={item.id_prod_fact} className="text-sm sm:text-base mb-3">{item.cantidad_compra} x {item.nombre_prod}</h2>))}
+                    </div>
+                </div>
+                
+                <div id="pago" className="text-gray-800">
+                    <h1 className="text-xl sm:text-2xl mb-3">Pagos con</h1>
+                    <button className="w-16 sm:w-24 border-blue-900 rounded-md border-2 px-3 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px]">
+                    <Image alt="paypal" src="/img/paypal-logo-0.png" width={100} height={100} className="w-full h-auto"/>
                     </button>
-                 </div>
+                </div>
             </div>
+
 
 
                 {/* 
