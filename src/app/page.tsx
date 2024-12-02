@@ -7,6 +7,8 @@ import CarruselKit from './landing/components/CarruselKit';
 import BackendKeepAlive from "../components/BackendKeepAlive";
 import { BounceProvider } from '../context/BounceContext';
 
+import Navbar from 'components/navbar';
+
 export default function Dashboard() {
   return (
     <BounceProvider>
