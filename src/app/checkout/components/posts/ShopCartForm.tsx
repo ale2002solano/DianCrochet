@@ -7,6 +7,7 @@ import { CarritoItem } from "@interfaces/invoice";
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from "../loadding/LoadingSpinnerSob";
 import Image from 'next/image';
+import {useCart} from "../../../../context/CartContext";
 //cambio mega x
 export default function ShopCartForm() {
     const [carrito, setCarrito] = useState<CarritoItem[]>([]);
@@ -17,6 +18,10 @@ export default function ShopCartForm() {
     const [subtotal, setSubtotal] = useState<number>(0); // Iniciar con 0, no null
     const [impuestos, setImpuestos] = useState<number>(0); // Iniciar con 0, no null
     const [mensajeAdvertencia, setMensajeAdvertencia] = useState<string | null>(null); // Mensaje de advertencia
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { carrito: carritoContexto, actualizarCarrito } = useCart();
+
+
 
     // Función para manejar el clic en detalles de envío
     const handleShippingDetailsClick = () => {
@@ -119,14 +124,18 @@ export default function ShopCartForm() {
             const result = await response.json();
     
             if (response.ok && result.eliminar.codigo === 1) {
-                setCarrito((prevCarrito) =>
-                    prevCarrito.filter(
-                        (producto) =>
-                            producto.id_producto !== idProducto ||
-                            producto.talla !== talla ||
-                            producto.grosor !== grosor
-                    )
+                // Actualizar el carrito localmente
+                const nuevoCarrito = carrito.filter(
+                    (producto) =>
+                        producto.id_producto !== idProducto ||
+                        producto.talla !== talla ||
+                        producto.grosor !== grosor
                 );
+                setCarrito(nuevoCarrito);
+    
+                // Actualizar el carrito en el contexto
+                actualizarCarrito(nuevoCarrito);
+    
                 alert(result.eliminar.mensaje);
             } else {
                 console.error('Error al eliminar el producto del carrito:', result.eliminar.mensaje || 'Error desconocido');
@@ -137,8 +146,9 @@ export default function ShopCartForm() {
     };
     
     
+    
    // Método para eliminar todo el carrito / eliminar orden con confirmación
-const handleCancelOrder = async () => {
+   const handleCancelOrder = async () => {
     if (!facturaId) return; // Verificar que existe un id_factura
 
     // Mostrar cuadro de confirmación
@@ -160,6 +170,10 @@ const handleCancelOrder = async () => {
             setCarrito([]); // Limpiar carrito en frontend
             setSubtotal(0); // Reiniciar subtotal
             setImpuestos(0); // Reiniciar impuestos
+
+            // Actualizar el carrito en el contexto
+            actualizarCarrito([]);
+
             alert("Orden cancelada y carrito eliminado");
         } else {
             console.error('Error al eliminar todos los productos del carrito');
