@@ -401,11 +401,12 @@ useEffect(() => {
         <div className="flex flex-col lg:flex-row justify-between font-koulen w-full p-8">
             {loading && <LoadingSpinner />}
             <div title="Articulos" className="m-2 rounded-md bg-gray-200 w-full lg:w-1/2 flex-grow p-5 lg:px-10">
-            <div id="header" className="text-gray-700 flex flex-col md:flex-row justify-center items-baseline content-stretch">
-                    <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch text-purple-400">Resumen <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-gray-800" /> <IoRemoveOutline /></h4></div>
-                    <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch">Envio <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-gray-800" /> <IoRemoveOutline /></h4></div>
-                    <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch">Pago <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-gray-800" /> <IoRemoveOutline /></h4></div>
-                </div>
+            <div id="header" className="text-gray-700 flex flex-row justify-center items-baseline content-stretch flex-wrap">
+                    <div className="m-2"><h4 className="flex flex-row justify-start items-baseline text-purple-400">Resumen<IoRemoveOutline className="ml-2" /><FaCheckCircle className="text-gray-800" /><IoRemoveOutline /></h4></div>
+                    <div className="m-2"><h4 className="flex flex-row justify-start items-baseline">Envio<IoRemoveOutline className="ml-2" /><FaCheckCircle className="text-gray-800" /><IoRemoveOutline /></h4></div>
+                    <div className="m-2"><h4 className="flex flex-row justify-start items-baseline">Pago<IoRemoveOutline className="ml-2" /><FaCheckCircle className="text-gray-800" /><IoRemoveOutline /></h4></div>
+            </div>
+
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl text-gray-900 pb-5">Articulos</h1>
 
                 <div id="PRODUCTOS" className="max-h-96 overflow-y-auto">
