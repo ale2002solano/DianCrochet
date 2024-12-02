@@ -110,6 +110,21 @@ export default function Navbar() {
           </button>
         </div>
 
+        <div className="flex justify-center">
+        <div className="flex md:hidden lg:hidden xl:hidden 2xl:hidden rounded-full  px-4 py-1 w-[screen] bg-gray-100 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none">
+          <input
+            type="text"
+            placeholder="Buscar..."
+            className="w-full bg-transparent border-none text-gray-600 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none"
+          />
+          <button title='buscar'>
+            <FaSearch className="text-purple-500" />
+          </button>
+        </div>
+        </div>
+
+
+
         {/* Iconos */}
         <div className="flex items-center space-x-6 relative ">
           {/* Perfil */}
@@ -198,18 +213,7 @@ export default function Navbar() {
                   {correo ? "Cerrar Sesion" : "Iniciar Sesion"}  {/* Mostrar "Cerrar Sesión" o "Iniciar Sesión" según el estado del correo */}
                 </a>
         </nav>
-        <div className="flex justify-center mt-[5%]">
-        <div className="flex rounded-full  py-1 w-[70%] bg-gray-100 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none">
-          <input
-            type="text"
-            placeholder="Buscar..."
-            className="w-full bg-transparent border-none text-gray-600 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none"
-          />
-          <button title='buscar'>
-            <FaSearch className="text-purple-500" />
-          </button>
-        </div>
-        </div>
+        
       </div>
       
   
