@@ -4,6 +4,9 @@ import { FaUserCircle, FaShoppingCart, FaSearch } from 'react-icons/fa';
 import Image from "next/legacy/image";
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { FiMenu } from 'react-icons/fi';
+import { AiOutlineClose } from 'react-icons/ai';
+
 
 export default function Navbar() {
   const [isProfileOpen, setProfileOpen] = useState(false);
@@ -12,7 +15,15 @@ export default function Navbar() {
   const [mensajeAdvertencia, setMensajeAdvertencia] = useState<string | null>(null); // Mensaje de advertencia
   const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [isSideMenuOpen, setSideMenu] = useState(false);
 
+  function openSideMenu() {
+    setSideMenu(true);
+  }
+  
+  function closeSideMenu() {
+    setSideMenu(false);
+  }
   // Recuperar la imagen de perfil y correo del localStorage cuando el componente se monte
   useEffect(() => {
     const storedResponse = localStorage.getItem('loginResponse');
@@ -78,6 +89,7 @@ export default function Navbar() {
           <Link href="http://dian-crochet-8ii.vercel.app/">
             <Image src="/img/logo.svg" alt="Logo" width={40} height={40} />
           </Link>
+          {isSideMenuOpen && <MobileNav closeSideMenu={closeSideMenu} />}
           <nav className="hidden md:flex space-x-8">
             <a onClick={() => router.push('/products')} href="#" className="text-gray-700 hover:text-purple-500">PRODUCTOS</a>
             <a onClick={() => router.push('/products/materials')} href="#" className="text-gray-700 hover:text-purple-500">MATERIALES</a>
@@ -98,10 +110,25 @@ export default function Navbar() {
           </button>
         </div>
 
+        <div className="flex justify-center">
+        <div className="flex md:hidden lg:hidden xl:hidden 2xl:hidden rounded-full  px-4 py-1 w-[screen] bg-gray-100 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none">
+          <input
+            type="text"
+            placeholder="Buscar..."
+            className="w-full bg-transparent border-none text-gray-600 focus:outline-none focus-visible:outline-none focus:ring-0 focus:border-none"
+          />
+          <button title='buscar'>
+            <FaSearch className="text-purple-500" />
+          </button>
+        </div>
+        </div>
+
+
+
         {/* Iconos */}
         <div className="flex items-center space-x-6 relative ">
           {/* Perfil */}
-          <div className="relative flex items-center" ref={profileRef}>
+          <div className="hidden md:flex relative items-center" ref={profileRef}>
             <button onClick={toggleProfileMenu} className="relative w-[40px] h-[40px] focus:outline-none" title='iconos'>
               {profileImageUrl ? (
                 // Si la URL de la imagen está disponible, mostrar la imagen de perfil
@@ -134,12 +161,12 @@ export default function Navbar() {
               </div>
             )}
           </div>
-
+          <div className='hidden md:flex'>
           {/* Carrito */}
           <button onClick={handleCarritoClick} title='carrito'>
             <FaShoppingCart className="text-gray-700 text-2xl" />
           </button>
-
+          </div>  
           {/* Mostrar mensaje de advertencia si no está logueado */}
           {mensajeAdvertencia && (
              <div className="text-lg items-center w-1/4 flex justify-center font-koulen fixed bottom-5 right-5 bg-gray-200 opacity-75 text-purple-800 px-1 py-2 rounded-lg z-50">
@@ -149,9 +176,50 @@ export default function Navbar() {
             </svg>
            </div>
           )}
-
+          
+        </div>
+        <div>
+          <FiMenu onClick={openSideMenu} className="cursor-pointer text-black text-4xl md:hidden"
+          />
         </div>
       </div>
     </header>)
   );
+
+  function MobileNav({closeSideMenu}:{closeSideMenu:()=> void}) {
+
+    return(
+      <div className="fixed left-0 top-0 flex h-full min-h-screen w-full justify-end  md:hidden">
+  
+      <div className="h-full w-[65%] bg-white px-4 py-4">
+        <section className="flex justify-end text-black">
+        <AiOutlineClose
+        onClick={closeSideMenu}
+        className="cursor-pointer text-4xl"/>
+        
+        </section>
+        
+        <nav className="flex flex-col items-center gap-4 transition-all text-2xl ">
+              <a onClick={() => router.push('/products')} href="#" className="text-gray-700 hover:text-purple-500">PRODUCTOS</a>
+              <a onClick={() => router.push('/products/materials')} href="#" className="text-gray-700 hover:text-purple-500">MATERIALES</a>
+              <a onClick={() => router.push('/products/kits')} href="#" className="text-gray-700 hover:text-purple-500">KITS</a>
+              <a onClick={() => router.push('/products/tutoriales')} href="#" className="text-gray-700 hover:text-purple-500">TUTORIALS</a>
+              <a onClick={handleCarritoClick} href="#" className="text-gray-700 hover:text-purple-500">MI CARRITO</a>
+              <a onClick={handleMiperfilClick} href="#" className="text-gray-700 hover:text-purple-500">MI PERFIL</a>
+              <a onClick={correo ? handleLogout : () => router.push('/auth/sign-in')}
+                href="#"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  {correo ? "Cerrar Sesion" : "Iniciar Sesion"}  {/* Mostrar "Cerrar Sesión" o "Iniciar Sesión" según el estado del correo */}
+                </a>
+        </nav>
+        
+      </div>
+      
+  
+      </div>
+    )
+  }
+
+
 }
