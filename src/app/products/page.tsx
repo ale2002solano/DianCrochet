@@ -224,7 +224,7 @@ export default function Products() {
 
   return (
     <div>
-      <Navbar />
+      
       <div className="h-20 sm:h-24 bg-white"></div>
       <section className="bg-white">
         <div className="flex h-20 items-center">

@@ -6,6 +6,15 @@ export interface Producto {
     URL: string | null; // Ahora incluye la URL de la imagen
   }
 
+  export interface ProductoSearch {
+    id_: number;
+    nombre_prod: string;
+    precio_venta: number;
+    url: string | null; // Ahora incluye la URL de la imagen
+    prioridad: number;
+    score: number;
+  }
+
   export interface ProductoDetalle {
     id_producto: number;
     nombre_prod: string;
