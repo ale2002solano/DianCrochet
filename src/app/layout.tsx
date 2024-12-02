@@ -73,12 +73,11 @@ export default function RootLayout({
         {/* Envuelve los hijos en el BounceProvider */}
         <CartProvider>
         <BounceProvider>
-          {children}
-        </BounceProvider>
-        </CartProvider>
         <Navbar/>
         {children}
         <Footer/>
+        </BounceProvider>
+        </CartProvider>
       </body>
     </html>
   );
