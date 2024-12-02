@@ -94,7 +94,7 @@ export default function WorkInProgress() {
             </svg>
             </div>
                 <h2 className="mb-4 text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                    Próximamente... JIJIJIJIJIJIJIJIJIJI
+                    Próximamente... jajaja
                 </h2>
             <p className="mb-8 text-xl text-gray-500">
                 Estamos trabajando en nuevo contenido emocionante para ti.
