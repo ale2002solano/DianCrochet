@@ -1,7 +1,30 @@
+'use client';
 import Image from "next/legacy/image";
 import { useState, useEffect } from "react";
 import { ProductoDetalle } from "@interfaces/product";
 import { agregarAlCarrito } from "../post/agregarAlCarrito"; // Importa la función del POST
+import { useBounce } from '../../../context/BounceContext';
+import { useCart } from "context/CartContext";
+
+// Definimos el tipo para los elementos del carrito
+interface CarritoItem {
+  id_producto: string;
+  nombre_prod: string;
+  cantidad_compra: number;
+  talla: string | null;
+  grosor: string | null;
+  precio: number;
+}
+
+interface CartItem {
+  id_producto: number; // Cambié el tipo a number para ser consistente
+  nombre_prod: string;
+  cantidad_compra: number;
+  talla: string | null;
+  grosor: string | null;
+  precio: number;
+}
+
 
 interface ProductDetailProps {
   producto: ProductoDetalle;
@@ -16,6 +39,21 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
   const [correo, setCorreo] = useState<string>(""); // Correo del usuario
   const [cantidad, setCantidad] = useState<number>(1);
   const [precioActual, setPrecioActual] = useState<number>(producto.precio_venta);
+  const { setIsBounce } = useBounce();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { agregarProducto, actualizarCarrito } = useCart();
+
+  // Función para transformar el carrito
+  const transformarCarrito = (carrito: CarritoItem[]): CartItem[] => {
+    return carrito.map(item => ({
+      id_producto: Number(item.id_producto), // Convertir a number
+      nombre_prod: item.nombre_prod,
+      cantidad_compra: item.cantidad_compra,
+      talla: item.talla,
+      grosor: item.grosor,
+      precio: item.precio,
+    }));
+  };
 
   // Función para incrementar la cantidad
   const increaseQuantity = () => {
@@ -65,7 +103,6 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
       setPrecioActual(producto.precio_venta);
     }
   }, [selectedTalla, selectedGrosores, producto]);
-  
 
   // Manejar el clic en miniaturas
   const handleThumbnailClick = (src: string) => {
@@ -84,20 +121,51 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
       setTimeout(() => setMensajeError(null), 3000);
       return;
     }
-  
+
+    setIsBounce(true);
+    setTimeout(() => setIsBounce(false), 2000);
+
     const idProducto = producto.id_producto.toString();
-  
-    const data = {
-      correo,
-      idProducto,
-      cantidadCompra: cantidad,
+    const newProduct: CarritoItem = {
+      id_producto: idProducto,
+      nombre_prod: producto.nombre_prod,
+      cantidad_compra: cantidad,
       talla: selectedTalla || null,
       grosor: selectedGrosores || null,
+      precio: precioActual,
     };
-  
+
+    // Obtén el carrito del localStorage y asegura el tipo
+    const carrito = JSON.parse(localStorage.getItem("carrito") || "[]") as CarritoItem[];
+    const index = carrito.findIndex(
+      (item: CarritoItem) =>
+        item.id_producto === idProducto &&
+        item.talla === selectedTalla &&
+        item.grosor === selectedGrosores
+    );
+
+    if (index !== -1) {
+      carrito[index].cantidad_compra += cantidad;
+    } else {
+      carrito.push(newProduct);
+    }
+
+    // Guarda el carrito actualizado en el localStorage
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    // **Transforma el carrito antes de actualizarlo en el contexto**
+    const carritoTransformado = transformarCarrito(carrito);
+    actualizarCarrito(carritoTransformado);
+
     try {
-      const result = await agregarAlCarrito(data);
-  
+      const result = await agregarAlCarrito({
+        correo,
+        idProducto,
+        cantidadCompra: cantidad,
+        talla: selectedTalla,
+        grosor: selectedGrosores,
+      });
+
       if (result.carrito && result.carrito.codigo === 4) {
         setMensajeError(result.carrito.mensaje);
         setTimeout(() => setMensajeError(null), 3000);
@@ -106,12 +174,11 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
         setTimeout(() => setMensajeExito(null), 3000);
       }
     } catch (error) {
-      console.error("Error al agregar al carrito:", error); // Muestra detalles en la consola
+      console.error("Error al agregar al carrito:", error);
       setMensajeError("Hubo un problema con la solicitud");
       setTimeout(() => setMensajeError(null), 3000);
     }
-  };
-  
+  }
 
   return (
     <div className="relative w-max grid grid-cols-1 md:grid-cols-2 gap-[15%] p-8">
@@ -252,7 +319,7 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
 
     <button
       onClick={handleAddToCart}
-      className="px-4 py-2 mt-4 bg-[#C68EFE] text-white font-semibold rounded-lg shadow-md hover:bg-[#b053fe] transition duration-300"
+      className="px-4 py-2 mt-4 bg-[#C68EFE] text-white font-semibold rounded-lg shadow-md hover:bg-[#b053fe] transition duration-100"
     >
       Agregar al Carrito
     </button>

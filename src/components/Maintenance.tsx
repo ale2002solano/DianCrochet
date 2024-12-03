@@ -41,7 +41,7 @@ export default function WorkInProgress() {
 
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white px-4 py-12">
         {}
-        <div className="animate-swing absolute left-0 top-0 h-32 w-32 md:h-48 md:w-48">
+        <div className="animate-swing absolute left-0 top-10 h-32 w-32 md:h-48 md:w-48 ">
             <Image
             src="https://ik.imagekit.io/diancrochet/Fotos/rana%20final%20liviana.png?updatedAt=1729230005393"
             alt="Rana columpiándose"
@@ -59,7 +59,7 @@ export default function WorkInProgress() {
             objectFit="contain"
         />
         </div>
-        <div className="animate-rotate absolute bottom-10 left-20 h-20 w-20 md:h-32 md:w-32">
+        <div className="animate-rotate absolute bottom-10 left-16 h-20 w-20 md:h-32 md:w-32">
             <Image
             src="https://ik.imagekit.io/diancrochet/Fotos/girasol.png?updatedAt=1729229985108"
             alt="Girasol en la esquina inferior izquierda"
