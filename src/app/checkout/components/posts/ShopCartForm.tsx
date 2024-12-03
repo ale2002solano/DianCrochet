@@ -467,7 +467,7 @@ useEffect(() => {
                 
                 <div id="pago" className="text-gray-800">
                     <h1 className="text-base sm:text-1xl mb-3">Pagos con</h1>
-                    <button className="w-16 sm:w-10 border-blue-900 rounded-md border-2 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px]">
+                    <button className="w-24 sm:w-10 border-blue-900 rounded-md border-2 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px]">
                     <Image alt="paypal" src="/img/paypal-logo-0.png" width={100} height={100} className="w-auto h-auto"/>
                     </button>
                 </div>
