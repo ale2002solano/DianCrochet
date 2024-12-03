@@ -486,24 +486,33 @@ useEffect(() => {
                 </div>
                 */}
 
-                <div id="hd3" className="flex flex-row flex-nowrap justify-between items-start content-start mt-2 font-inter text-sm">
-                    <div id="orden" className="mr-64 text-gray-800">
-                        <h2 className="mb-3">Subtotal</h2>
-                        <h2 className="mb-3">Impuestos</h2>
-                        <h2 className="mb-3">Envio</h2>
-                        <h2 className="mb-3">Total</h2>
-                    </div>
-                    <div id="pago" className="text-gray-800">
-                        <h3 className="mb-3" id="subtotal">L. {carrito.length === 0 ? "0.00" : subtotal.toFixed(2)}</h3>
-                        <h3 className="mb-3" id="impuestos">L. {carrito.length === 0 ? "0.00" : impuestos.toFixed(2)}</h3>
-                        <h3 className="mb-3">...</h3>
-                        <h3 className="mb-3" id="total">L.
-                            {carrito.length === 0
-                               ? "0.00"
-                                : (subtotal + impuestos).toFixed(2)}
-                        </h3>
-                    </div>
-                 </div>
+                <div id="hd3" className="flex flex-row flex-wrap sm:flex-nowrap justify-between items-start mt-2 font-inter text-sm space-y-4 sm:space-y-0" >
+                {/* Columna izquierda: Subtotales */}
+                <div
+                    id="orden"
+                    className="text-gray-800 flex-1 sm:mr-10 text-center sm:text-left"
+                >
+                    <h2 className="mb-3">Subtotal</h2>
+                    <h2 className="mb-3">Impuestos</h2>
+                    <h2 className="mb-3">Envio</h2>
+                    <h2 className="mb-3">Total</h2>
+                </div>
+
+                {/* Columna derecha: Valores */}
+                <div id="pago" className="text-gray-800 flex-1 text-center sm:text-right">
+                    <h3 className="mb-3" id="subtotal">
+                    L. {carrito.length === 0 ? "0.00" : subtotal.toFixed(2)}
+                    </h3>
+                    <h3 className="mb-3" id="impuestos">
+                    L. {carrito.length === 0 ? "0.00" : impuestos.toFixed(2)}
+                    </h3>
+                    <h3 className="mb-3">...</h3>
+                    <h3 className="mb-3" id="total">
+                    L. {carrito.length === 0 ? "0.00" : (subtotal + impuestos).toFixed(2)}
+                    </h3>
+                </div>
+                </div>
+
 
                  
 
