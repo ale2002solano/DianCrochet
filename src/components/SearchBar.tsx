@@ -7,9 +7,10 @@ export default function Search() {
   const router = useRouter();
 
   const handleSearch = () => {
-    if (searchTerm.trim()) {
-      // Redirige a la página de resultados de búsqueda
-      router.push(`/search?query=${encodeURIComponent(searchTerm)}`);
+    const trimmedSearchTerm = searchTerm.trim(); // Elimina espacios al inicio y al final
+    if (trimmedSearchTerm) {
+      // Redirige a la página de resultados de búsqueda con la cadena procesada
+      router.push(`/search?query=${encodeURIComponent(trimmedSearchTerm)}`);
     }
   };
 

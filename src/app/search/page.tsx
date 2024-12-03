@@ -8,6 +8,7 @@ import { ProductoSearch } from "@interfaces/product";
 import { search } from "@services/product";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import Categorias from "./components/categories";
 
 export default function Products() {
   const router = useRouter();
@@ -18,6 +19,40 @@ export default function Products() {
   const [productsSplit, setProductsSplit] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [showCategories, setShowCategories] = useState(false);
+  const [categories, setCategories] = useState<number[]>([]);
+
+  useEffect(() => {
+      handleSendCategories(categories);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories]);
+
+  const handleSendCategories = async (updatedCategories: number[]) => {
+    try {
+      // setIsLoading(true);
+      // const res = await search("hola", null);
+      // setPageNumber(1);
+      // setProductsSplit(0);
+      // setIsLoading(false); // Llama a la función para obtener los productos filtrados
+      // setProductos(res);
+      //console.log("Enviando: ", filteredData); // Asegúrate de que envías los datos correctos
+      // console.log("Recibiendo: ", res); // Imprime los resultados de los productos filtrados
+      // setProductos(res); // Actualiza el estado con los nuevos productos
+    } catch (error) {
+      console.error("Error al traer productos:", error);
+    }
+  };
+
+  const deleteFilters = () => {
+    setCategories([])
+    setPageNumber(1);
+  }
+
+  const handleToggleCategories = () => {
+    setShowCategories((prev) => !prev);
+  };
+
 
   // Manejar el cambio de página
   const handlePageNumber = (index: number) => {
@@ -71,6 +106,7 @@ export default function Products() {
           // Si hay un término de búsqueda, llama al endpoint de búsqueda
           res = await search(searchQuery, null);
           setProductos(res);
+          console.log(productos)
           setProductsSplit(0); // Reinicia la división
           setPageNumber(1); // Reinicia la página actual
         } else {
@@ -107,6 +143,44 @@ export default function Products() {
             className="pointer-events-none ml-2 mt-4 mix-blend-multiply"
           />
         </div>
+        {(productos.length == 0)? (""):(
+                  <div className="sm:-mt-4 flex sm:h-32 h-44 flex-col-reverse">
+
+                  <div className="relative mb-3 flex flex-col sm:flex-row sm:h-9 w-full sm:mt-0 mt-3 sm:items-center pl-0 sm:pl-6 ">
+                    <h2 className="font-lekton text-lg text-[#444343] hidden sm:block">Filtros :</h2>
+        
+                    <div className="relative  ml-6 flex cursor-pointer items-center font-lekton text-lg text-[#444343]">
+                      <h2 onClick={handleToggleCategories}>Categorias</h2>
+                      <svg
+                        onClick={handleToggleCategories}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2.1}
+                        stroke="currentColor"
+                        className={`size-5 transition-all duration-300 ease-linear ${showCategories ? "rotate-180 transform" : ""}`}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                        />
+                      </svg>
+        
+                      <div className="absolute top-7 sm:right-0 right-2">
+                        <Categorias
+                          open={showCategories}
+                          setOpen={setShowCategories}
+                          categories={categories}
+                          setCategories={setCategories}
+                        />
+                      </div>
+                    </div>
+        
+                  </div>
+                </div>
+        )}
+
 
 
         <section className="relative px-[8.32%] sm:py-12 py-3 h-full w-full min-h-[59vh] sm:min-[30vh]:">

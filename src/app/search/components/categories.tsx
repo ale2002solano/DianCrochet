@@ -6,28 +6,32 @@ import { useRef, useState, useEffect } from "react";
 interface CategoriesProps {
   open: boolean;
   setOpen: (value: boolean) => void;
-  categories: string[];
-  setCategories: (categories: string[]) => void;
+  categories: number[];
+  setCategories: (categories: number[]) => void;
 }
 
 export default function Categorias({ open, setOpen, categories, setCategories }: CategoriesProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [categoriasOptions, setCategoriasOptions] = useState<Categories[]>([]);
+  const [categoriasOptions, setCategoriasOptions] = useState<Categories[]>([
+    { ID_CATEGORIA: 1, CATEGORIA: 'Productos' },
+    { ID_CATEGORIA: 2, CATEGORIA: 'Kits' },
+    { ID_CATEGORIA: 3, CATEGORIA: 'Materiales' },
+  ]);
 
-  // Obtener categorías una sola vez al cargar el componente
-  useEffect(() => {
-    async function fetchCategorias() {
-      try {
-        const res = await getCategories();
-        setCategoriasOptions(res);
-      } catch (error) {
-        console.error("Error al traer categorias:", error);
-      }
-    }
-    fetchCategorias();
-  }, []);
+  // // Obtener categorías una sola vez al cargar el componente
+  // useEffect(() => {
+  //   async function fetchCategorias() {
+  //     try {
+  //       const res = await getCategories();
+  //       setCategoriasOptions(res);
+  //     } catch (error) {
+  //       console.error("Error al traer categorias:", error);
+  //     }
+  //   }
+  //   fetchCategorias();
+  // }, []);
 
-  const handleChange = (category: string) => {
+  const handleChange = (category: number) => {
     const updatedCategories = categories.includes(category)
       ? categories.filter((item) => item !== category)
       : [...categories, category];
@@ -35,10 +39,6 @@ export default function Categorias({ open, setOpen, categories, setCategories }:
     setCategories(updatedCategories); // Propaga el cambio al componente padre
   };
   
-  // Este efecto escucha cambios en `categories` y los imprime
-  useEffect(() => {
-    console.log("Actualizando categories:", categories);
-  }, [categories]);
 
   const handleGlobalKeyDown = (event: Event) => {
     const keyboardEvent = event as unknown as KeyboardEvent; // Casting doble
@@ -101,8 +101,8 @@ export default function Categorias({ open, setOpen, categories, setCategories }:
               type="checkbox"
               value={`${category.CATEGORIA}`}
               className="select-none h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-transparent"
-              checked={categories.includes(category.CATEGORIA)} // Se usa el estado directamente del padre
-              onChange={() => handleChange(category.CATEGORIA)}
+              checked={categories.includes(category.ID_CATEGORIA)} // Se usa el estado directamente del padre
+              onChange={() => handleChange(category.ID_CATEGORIA)}
             />
             <label
               htmlFor={`${category.ID_CATEGORIA}`}
