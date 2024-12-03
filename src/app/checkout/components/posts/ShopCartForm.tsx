@@ -409,7 +409,7 @@ useEffect(() => {
 
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl text-gray-900 pb-5">Articulos</h1>
 
-                <div id="PRODUCTOS" className="max-h-[60vh] overflow-y-auto">
+                <div id="PRODUCTOS" className="max-h-96 overflow-y-auto">
                 {groupedCarrito.map((item) => (
                     <div key={item.id_prod_fact} id="product" className="bg-white rounded-md flex flex-col sm:flex-row flex-nowrap justify-start items-start content-start overflow-hidden mb-5">
                         <div id="img" className="mr-8 w-24 h-24 rounded-none rounded-tl-md rounded-bl-md" title={item.nombre_prod}>
