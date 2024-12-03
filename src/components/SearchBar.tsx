@@ -1,16 +1,15 @@
-import { search } from '@services/product';
 import { useState } from "react";
 import { FaSearch } from 'react-icons/fa';
+import { useRouter } from "next/navigation";
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
 
-  const handleSearch = async () => {
-    try {
-      const productos = await search(searchTerm, null); // Llamada a searchProducts
-      console.log("Productos encontrados:", productos); // Manejo de resultados
-    } catch (error) {
-      console.error("Error al buscar productos:", error); // Manejo de errores
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      // Redirige a la página de resultados de búsqueda
+      router.push(`/search?query=${encodeURIComponent(searchTerm)}`);
     }
   };
 

@@ -164,7 +164,7 @@ export const search = async (nombre_prod: string, tallas: string[] | null): Prom
     }
 
     const data: { resultado: ProductoSearch[] } = await response.json(); // Tipado explícito
-    return data.resultado || []; // Devuelve un arreglo vacío si resultado no existe
+    return data.resultado; // Devuelve un arreglo vacío si resultado no existe
   } catch (error) {
     console.error("Error al obtener productos de búsqueda:", error);
     throw error; // Lanza el error para que el llamador pueda manejarlo
