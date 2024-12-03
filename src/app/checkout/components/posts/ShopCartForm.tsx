@@ -398,7 +398,7 @@ useEffect(() => {
 
 
     return (
-        <div className="flex flex-col lg:flex-row justify-between font-koulen w-full p-8 min-h-screen overflow-y-auto">
+        <div className="flex flex-col lg:flex-row justify-between font-koulen w-full p-8 min-h-screen">
             {loading && <LoadingSpinner />}
             <div title="Articulos" className="m-2 rounded-md bg-gray-200 w-full lg:w-1/2 flex-grow p-5 lg:px-10">
             <div id="header" className="text-gray-700 flex flex-row justify-center items-baseline content-stretch flex-wrap">
@@ -409,7 +409,7 @@ useEffect(() => {
 
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl text-gray-900 pb-5">Articulos</h1>
 
-                <div id="PRODUCTOS" className="max-h-[calc(100vh-200px)] overflow-y-auto">
+                <div id="PRODUCTOS" className="overflow-y-auto max-h-[70vh] sm:max-h-[80vh]">
                 {groupedCarrito.map((item) => (
                     <div key={item.id_prod_fact} id="product" className="bg-white rounded-md flex flex-col sm:flex-row flex-nowrap justify-start items-start content-start overflow-auto mb-5">
                         <div id="img" className="mr-8 w-24 h-24 rounded-none rounded-tl-md rounded-bl-md" title={item.nombre_prod}>
