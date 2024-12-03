@@ -410,89 +410,103 @@ useEffect(() => {
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl text-gray-900 pb-5">Articulos</h1>
 
                 <div id="PRODUCTOS" className="max-h-96 overflow-y-auto px-4 sm:px-6 lg:px-8">
-                {groupedCarrito.map((item) => (
-                    <div key={item.id_prod_fact} id="product" className="bg-white rounded-md flex flex-col sm:flex-row flex-nowrap justify-start items-start content-start overflow-hidden mb-5 shadow-md" >
-                    {/* Imagen del producto */}
-                    <div id="img" className="sm:mr-8 w-20 h-20 sm:w-24 sm:h-24 rounded-none rounded-tl-md rounded-bl-md" title={item.nombre_prod} >
-                        {item.url ? (
-                        <Image
-                            src={item.url}
-                            alt={item.nombre_prod}
-                            width={100}
-                            height={100}
-                            objectFit="cover"
-                            className="w-full h-full"
-                        />
-                        ) : (
-                        <CiImageOff className="w-full h-full object-contain text-gray-400" />
-                        )}
-                    </div>
-
-                    {/* Detalles del producto */}
-                    <div id="detalle" className="flex flex-grow flex-col sm:flex-row justify-between sm:mr-8 text-sm sm:text-base" >
-                        <div id="det">
-                        <h1 id="nombre" className="text-gray-700 text-lg sm:text-xl font-semibold"  > {item.nombre_prod} </h1>
-                        <div className="flex flex-col sm:flex-row flex-wrap justify-around items-start sm:items-center mt-2">
-                            <h4 id="cantidad" className="font-lekton text-gray-400 mr-0 sm:mr-5" > Cantidad: {item.cantidad_compra} </h4>
-                            <h4 id="talla" className="font-lekton text-gray-400 mr-0 sm:mr-5">Talla: {item.talla ?? ""}</h4>
-                            <h4 id="color" className="font-lekton text-gray-400">Grosor: {item.grosor ?? ""}</h4>
-                        </div>
-                        <div className="flex items-center border border-black rounded-full bg-gray-100 text-gray-700 font-lekton w-max mt-2">
-                            <button
-                            className="text-sm sm:text-lg font-semibold px-2"
-                            onClick={() =>
-                                handleQuantityChange(
-                                item.id_producto,
-                                -1,
-                                item.grosor,
-                                item.talla,
-                                item.id_prod_fact
-                                )
-                            }
-                            >
-                            −
-                            </button>
-                            <span className="mx-4 text-sm sm:text-lg">
-                            {item.cantidad_compra}
-                            </span>
-                            <button
-                            className="text-sm sm:text-lg font-semibold px-2"
-                            onClick={() =>
-                                handleQuantityChange(
-                                item.id_producto,
-                                1,
-                                item.grosor,
-                                item.talla,
-                                item.id_prod_fact
-                                )
-                            }
-                            >
-                            +
-                            </button>
-                        </div>
-                        </div>
-
-                        {/* Precio y eliminar */}
+                    {groupedCarrito.map((item) => (
                         <div
-                        id="precio"
-                        className="mt-4 sm:mt-0 flex flex-col flex-nowrap justify-start items-end content-stretch"
+                        key={item.id_prod_fact}
+                        id="product"
+                        className="bg-white rounded-md flex flex-col sm:flex-row items-start justify-between mb-5 shadow-md"
                         >
-                        <h3 className="text-gray-700 text-sm sm:text-base">
-                            {item.subtotal !== null ? `${item.subtotal} Lps` : "No disponible"}
-                        </h3>
-                        <button
-                            title="delete"
-                            onClick={() =>
-                            handleDelete(correo, item.id_producto, item.talla, item.grosor)
-                            }
+                        {/* Imagen del producto */}
+                        <div
+                            id="img"
+                            className="w-24 h-24 flex-shrink-0 rounded-none rounded-tl-md rounded-bl-md overflow-hidden"
+                            title={item.nombre_prod}
                         >
-                            <FaRegTrashAlt className="text-gray-700 hover:text-red-700 text-base sm:text-lg" />
-                        </button>
+                            {item.url ? (
+                            <Image
+                                src={item.url}
+                                alt={item.nombre_prod}
+                                width={100}
+                                height={100}
+                                objectFit="cover"
+                                className="w-full h-full"
+                            />
+                            ) : (
+                            <CiImageOff className="w-full h-full text-gray-400" />
+                            )}
                         </div>
+
+                        {/* Detalles del producto */}
+                        <div
+                            id="detalle"
+                            className="flex-grow flex flex-col justify-between p-4"
+                        >
+                            {/* Nombre del producto */}
+                            <h1 className="text-gray-700 text-lg font-semibold mb-2">
+                            {item.nombre_prod}
+                            </h1>
+
+                            {/* Detalles adicionales */}
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mb-2">
+                            <h4 className="text-gray-400 text-sm">Cantidad: {item.cantidad_compra}</h4>
+                            <h4 className="text-gray-400 text-sm">Talla: {item.talla ?? "N/A"}</h4>
+                            <h4 className="text-gray-400 text-sm">Grosor: {item.grosor ?? "N/A"}</h4>
+                            </div>
+
+                            {/* Controles de cantidad */}
+                            <div className="flex items-center border border-black rounded-full bg-gray-100 text-gray-700 w-max mt-2">
+                            <button
+                                className="text-lg font-semibold px-3"
+                                onClick={() =>
+                                handleQuantityChange(
+                                    item.id_producto,
+                                    -1,
+                                    item.grosor,
+                                    item.talla,
+                                    item.id_prod_fact
+                                )
+                                }
+                            >
+                                −
+                            </button>
+                            <span className="mx-4 text-lg">{item.cantidad_compra}</span>
+                            <button
+                                className="text-lg font-semibold px-3"
+                                onClick={() =>
+                                handleQuantityChange(
+                                    item.id_producto,
+                                    1,
+                                    item.grosor,
+                                    item.talla,
+                                    item.id_prod_fact
+                                )
+                                }
+                            >
+                                +
+                            </button>
+                            </div>
+                        </div>
+
+                        {/* Precio y botón de eliminar */}
+                        <div
+                            id="precio"
+                            className="flex flex-col items-end justify-between p-4"
+                        >
+                            <h3 className="text-gray-700 text-base mb-2">
+                            {item.subtotal !== null ? `${item.subtotal} Lps` : "No disponible"}
+                            </h3>
+                            <button
+                            title="Eliminar"
+                            onClick={() =>
+                                handleDelete(correo, item.id_producto, item.talla, item.grosor)
+                            }
+                            >
+                            <FaRegTrashAlt className="text-gray-700 hover:text-red-700 text-lg" />
+                            </button>
+                        </div>
+                        </div>
+                    ))}
                     </div>
-                    </div>
-                ))}
-                </div>
 
 
                 
