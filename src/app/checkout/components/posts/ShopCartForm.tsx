@@ -398,9 +398,9 @@ useEffect(() => {
 
 
     return (
-        <div className="flex flex-col lg:flex-row justify-between font-koulen w-full p-8 min-h-screen overflow-y-auto">
+        <div className="flex flex-col lg:flex-row justify-between font-koulen w-full p-8 min-h-screen">
             {loading && <LoadingSpinner />}
-            <div title="Articulos" className="m-2 rounded-md bg-gray-200 w-full lg:w-1/2 flex-grow p-5 lg:px-10">
+            <div title="Articulos" className="m-2 rounded-md bg-gray-200 w-full lg:w-1/2 flex-grow p-5 lg:px-10 overflow-y-auto">
             <div id="header" className="text-gray-700 flex flex-row justify-center items-baseline content-stretch flex-wrap">
                     <div className="m-2"><h4 className="flex flex-row justify-start items-baseline text-purple-400 text-sm sm:text-base md:text-lg lg:text-xl">Resumen<IoRemoveOutline className="ml-2" /><FaCheckCircle className="text-gray-800" /><IoRemoveOutline /></h4></div>
                     <div className="m-2"><h4 className="flex flex-row justify-start items-baseline text-sm sm:text-base md:text-lg lg:text-xl">Envio<IoRemoveOutline className="ml-2" /><FaCheckCircle className="text-gray-800" /><IoRemoveOutline /></h4></div>
