@@ -186,7 +186,7 @@ export default function Navbar() {
         
         </section>
         
-        <nav className="flex flex-col items-center gap-4 transition-all text-2xl ">
+        <nav className="flex flex-col items-start gap-4 transition-all text-2xl ">
               <a onClick={() => router.push('/products')} href="#" className="text-gray-700 hover:text-purple-500">PRODUCTOS</a>
               <a onClick={() => router.push('/products/materials')} href="#" className="text-gray-700 hover:text-purple-500">MATERIALES</a>
               <a onClick={() => router.push('/products/kits')} href="#" className="text-gray-700 hover:text-purple-500">KITS</a>
@@ -195,7 +195,7 @@ export default function Navbar() {
               <a onClick={handleMiperfilClick} href="#" className="text-gray-700 hover:text-purple-500">MI PERFIL</a>
               <a onClick={correo ? handleLogout : () => router.push('/auth/sign-in')}
                 href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  className="block py-2 text-gray-700 hover:bg-gray-100"
                 >
                   {correo ? "Cerrar Sesion" : "Iniciar Sesion"}  {/* Mostrar "Cerrar Sesión" o "Iniciar Sesión" según el estado del correo */}
                 </a>
