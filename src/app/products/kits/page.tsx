@@ -1,4 +1,5 @@
 "use client";
+<<<<<<< HEAD
 import Product from "../../landing/components/Product";
 import Footer from "components/Footer";
 import Navbar from "components/navbar";
@@ -11,6 +12,10 @@ import { FilteredKits, getKits } from "@services/product";
 import Ordenamiento from "../components/ordenamiento";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../../checkout/components/loadding/LoadingSpinner";
+=======
+
+import Maintenance from "components/Maintenance";
+>>>>>>> bd19f4a79c241a2bc286e71db4f009e4e172e807
 
 export default function Products() {
     const router = useRouter();
@@ -224,6 +229,7 @@ export default function Products() {
 
     return (
         <div>
+<<<<<<< HEAD
         <Navbar />
         <div className="h-24 bg-white"></div>
         <section className="bg-white">
@@ -639,6 +645,11 @@ export default function Products() {
             </div>
         </section>
         <Footer />
+=======
+            
+            <Maintenance/>
+            
+>>>>>>> bd19f4a79c241a2bc286e71db4f009e4e172e807
         </div>
     );
     }

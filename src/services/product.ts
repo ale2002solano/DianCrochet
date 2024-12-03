@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Filtered, FullMaterial, ProductoDetalle } from "@interfaces/product";
+import { Filtered, FullMaterial, ProductoDetalle, ProductoSearch } from "@interfaces/product";
 import { useParams } from 'next/navigation';
 import { FullProduct, Producto, ProductoSimilar, FullKit } from "@interfaces/product";
 
@@ -149,6 +149,7 @@ export const GetKitsPopulares = async (): Promise<Producto[]> => {
   }
 };
 
+<<<<<<< HEAD
 export const getKits = async(): Promise<FullKit[]> =>{
   const res = await fetch(`${API_URL}/Kit`);
   if (!res.ok) {
@@ -174,4 +175,26 @@ export const FilteredKits = async (data: Filtered)=> {
   }
   const datos = await response.json();
   return datos.productos;
+=======
+export const search = async (nombre_prod: string, tallas: string[] | null): Promise<ProductoSearch[]> => {
+  try {
+    const response = await fetch(`${API_URL}/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nombre_prod, tallas }), // El cuerpo debe ser un objeto
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error en la respuesta del servidor: ${response.statusText}`);
+    }
+
+    const data: { resultado: ProductoSearch[] } = await response.json(); // Tipado explícito
+    return data.resultado || []; // Devuelve un arreglo vacío si resultado no existe
+  } catch (error) {
+    console.error("Error al obtener productos de búsqueda:", error);
+    throw error; // Lanza el error para que el llamador pueda manejarlo
+  }
+>>>>>>> bd19f4a79c241a2bc286e71db4f009e4e172e807
 };

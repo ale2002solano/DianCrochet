@@ -69,7 +69,8 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="relative z-10 h-[78.4%] w-[25.7%] rounded-3xl">
+    //min-w-[335px]
+    <div className="relative z-10 h-[78.4%] w-[25.7%] rounded-3xl min-w-[335px] ">
       {loading && (
         <div className="absolute z-50 flex h-full w-full items-center justify-center">
           <LoadingPage />
@@ -186,7 +187,7 @@ export default function LoginForm() {
             <h1 className="font-lekton text-base text-[#535353]">
               ¿No tienes una cuenta?{" "}
             </h1>
-            <h1 className="cursor-pointer font-lekton text-base text-[#535353] underline decoration-slate-900">
+            <h1 className="z-30 cursor-pointer font-lekton text-base text-[#535353] underline decoration-slate-900">
               <Link href="/auth/sign-up">Regístrate aquí</Link>
             </h1>
           </div>

@@ -92,7 +92,7 @@ export default function Categorias({ open, setOpen, categories, setCategories }:
     open ? (
       <div
         ref={ref}
-        className="z-30 select-none absolute flex whitespace-nowrap flex-col rounded-lg bg-slate-50 p-2 shadow-2xl shadow-slate-900 drop-shadow-lg"
+        className="z-30 sm:right-0 right-0 select-none absolute flex whitespace-nowrap flex-col rounded-lg bg-slate-50 p-2 shadow-2xl shadow-slate-900 drop-shadow-lg"
       >
         {categoriasOptions.map((category) => (
           <div key={category.ID_CATEGORIA} className="mb-[2px] flex items-center">

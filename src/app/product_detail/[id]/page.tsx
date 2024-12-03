@@ -1,12 +1,12 @@
 'use client'
 
-import Navbar from 'components/navbar';
-import Footer from 'components/Footer';
-
 import { useProducto } from '@services/product';
 import ProductDetail from '../components/ProductDetail';
 import CarruselProductoRelacionado from '../components/CarruselProductoRelacionado';
 import PantallaCarga from '../components/pantallacarga';
+import { BounceProvider } from '../../../context/BounceContext';
+import Navbar from "../../../components/navbar";
+import Footer from "../../../components/Footer";
 
 
 export default function ProductDetailPageDinamic() {
@@ -18,7 +18,10 @@ export default function ProductDetailPageDinamic() {
 
   return (
     <div className="w-full min-h-screen flex flex-col bg-slate-50">
+       <BounceProvider>
+      
       <Navbar />
+      
       <main className="bg-slate-50 flex-grow w-full">
       <div className="min-w-screen text-black bg-slate-50 flex items-center ml-24 mr-24 mt-[6%]">
       <ProductDetail producto={producto} />
@@ -27,7 +30,9 @@ export default function ProductDetailPageDinamic() {
         <CarruselProductoRelacionado/>
       </div>
       </main>
+      </BounceProvider>
       <Footer />
+      
     </div>
   );
 }

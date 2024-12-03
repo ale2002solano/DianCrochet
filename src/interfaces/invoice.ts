@@ -13,7 +13,7 @@ export interface CarritoItem {
     cantidad_compra: number;
     grosor: string | null; // Tipo `string | null` si puede ser nulo
     talla: string | null; 
-    subtotal: number | null;
+    subtotal: number;
     url: string | null;
 }
 
