@@ -7,7 +7,7 @@ import Categorias from "../components/categories";
 import { useEffect, useState } from "react";
 import Prices from "../components/prices";
 import { Filtered, FullKit } from "@interfaces/product";
-import { FilteredProducts, getProducts } from "@services/product";
+import { FilteredKits, getKits } from "@services/product";
 import Ordenamiento from "../components/ordenamiento";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../../checkout/components/loadding/LoadingSpinner";
@@ -81,7 +81,7 @@ export default function Products() {
         // Ahora debería mostrar las categorías correcta
         try {
         setIsLoading(true);
-        const res = await FilteredProducts(filteredData);
+        const res = await FilteredKits(filteredData);
                 setPageNumber(1);
         setProductsSplit(0);
         setIsLoading(false); // Llama a la función para obtener los productos filtrados
@@ -207,7 +207,7 @@ export default function Products() {
     useEffect(() => {
         async function fetchGets() {
         try {
-            const res = await getProducts(); // Llama a la función para obtener los productos
+            const res = await getKits(); // Llama a la función para obtener los productos
             setProductos(res);
             setIsLoading(false);
             setPageNumber(1); // Actualiza el estado con el resultado
@@ -228,7 +228,7 @@ export default function Products() {
         <div className="h-20 sm:h-24 bg-white"></div>
         <section className="bg-white">
             <div className="flex h-20 items-center">
-            <h1 className="pl-6 font-koulen text-5xl text-gray-900">Productos</h1>
+            <h1 className="pl-6 font-koulen text-5xl text-gray-900">Kits</h1>
             <Image
                 src="/img/girasol.svg"
                 alt="Crochet Flower"

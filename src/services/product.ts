@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Filtered, FullMaterial, ProductoDetalle, ProductoSearch } from "@interfaces/product";
+import { Filtered, FullKit, FullMaterial, ProductoDetalle, ProductoSearch } from "@interfaces/product";
 import { useParams } from 'next/navigation';
 import { FullProduct, Producto, ProductoSimilar } from "@interfaces/product";
 
@@ -169,4 +169,31 @@ export const search = async (nombre_prod: string, tallas: string[] | null): Prom
     console.error("Error al obtener productos de búsqueda:", error);
     throw error; // Lanza el error para que el llamador pueda manejarlo
   }
+};
+
+export const getKits = async(): Promise<FullKit[]> =>{
+  const res = await fetch(`${API_URL}/Kit`);
+  if (!res.ok) {
+    throw new Error("Error al traer productos");
+  }
+  const data = await res.json();
+  console.log(data)
+  return data.productosRandom;
+};
+
+export const FilteredKits = async (data: Filtered)=> {
+  const response = await fetch(`${API_URL}/ordenados/Kit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  
+  if (!response.ok) {
+    throw new Error("Error filtrando productos");
+    return [];
+  }
+  const datos = await response.json();
+  return datos.productos;
 };
