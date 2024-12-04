@@ -23,31 +23,23 @@ export default function Products() {
   const [showCategories, setShowCategories] = useState(false);
   const [categories, setCategories] = useState<number[]>([]);
 
-  useEffect(() => {
-      handleSendCategories(categories);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categories]);
 
-  const handleSendCategories = async (updatedCategories: number[]) => {
-    try {
-      // setIsLoading(true);
-      // const res = await search("hola", null);
-      // setPageNumber(1);
-      // setProductsSplit(0);
-      // setIsLoading(false); // Llama a la función para obtener los productos filtrados
-      // setProductos(res);
-      //console.log("Enviando: ", filteredData); // Asegúrate de que envías los datos correctos
-      // console.log("Recibiendo: ", res); // Imprime los resultados de los productos filtrados
-      // setProductos(res); // Actualiza el estado con los nuevos productos
-    } catch (error) {
-      console.error("Error al traer productos:", error);
-    }
-  };
-
-  const deleteFilters = () => {
-    setCategories([])
-    setPageNumber(1);
-  }
+  // const handleSendCategories = async (updatedCategories: number[]) => {
+  //   try {
+  //     setIsLoading(true);
+  //     console.log(updatedCategories)
+  //     const res = await search("hola", null, updatedCategories);
+  //     setPageNumber(1);
+  //     setProductsSplit(0);
+  //     setIsLoading(false); // Llama a la función para obtener los productos filtrados
+  //     setProductos(res);
+  //     //console.log("Enviando: ", filteredData); // Asegúrate de que envías los datos correctos
+  //     // console.log("Recibiendo: ", res); // Imprime los resultados de los productos filtrados
+  //     // setProductos(res); // Actualiza el estado con los nuevos productos
+  //   } catch (error) {
+  //     console.error("Error al traer productos:", error);
+  //   }
+  // };
 
   const handleToggleCategories = () => {
     setShowCategories((prev) => !prev);
@@ -96,32 +88,35 @@ export default function Products() {
   const pagesNumber = Math.ceil(totalProducts / 16);
   const divNumbers = Array.from({ length: pagesNumber }, (_, i) => i + 1);
 
-  // Cargar productos al montar el componente o cuando cambie el término de búsqueda
+  useEffect(() => {
+  // Vaciar categorías cuando cambia el término de búsqueda
+  setCategories([]);
+}, [searchQuery]);
+
   useEffect(() => {
     async function fetchProducts() {
       try {
+        console.log("categorias",categories);
         setIsLoading(true);
-        let res;
-        if (searchQuery) {
-          // Si hay un término de búsqueda, llama al endpoint de búsqueda
-          res = await search(searchQuery, null);
-          setProductos(res);
-          console.log(productos)
-          setProductsSplit(0); // Reinicia la división
-          setPageNumber(1); // Reinicia la página actual
-        } else {
-
-        }
-
+        const categoryFilter = categories.length > 0 ? categories : null; // Si no hay categorías, enviar null
+        console.log("Enviando búsqueda:", searchQuery, "Categorías:", categoryFilter);
+        
+        // Llama al servicio con ambos parámetros
+        const res = await search(searchQuery, null, categoryFilter);
+        
+        setProductos(res); // Actualiza el estado con los productos
+        setProductsSplit(0); // Reinicia la división
+        setPageNumber(1); // Reinicia la página actual
       } catch (error) {
         console.error("Error al traer productos:", error);
       } finally {
         setIsLoading(false);
       }
     }
+    
     fetchProducts();
-  }, [searchQuery]);
-
+  }, [categories, searchQuery]); // Ejecutar cuando cambien categorías o el término de búsqueda
+  
   return (
     <div>   
       <div className="h-20 sm:h-24 bg-white"></div>
@@ -143,7 +138,7 @@ export default function Products() {
             className="pointer-events-none ml-2 mt-4 mix-blend-multiply"
           />
         </div>
-        {(productos.length == 0)? (""):(
+        {(productos.length == 0 && categories.length==0)? (""):(
                   <div className="sm:-mt-4 flex sm:h-32 h-44 flex-col-reverse">
 
                   <div className="relative mb-3 flex flex-col sm:flex-row sm:h-9 w-full sm:mt-0 mt-3 sm:items-center pl-0 sm:pl-6 ">
