@@ -216,6 +216,9 @@ console.log('Cantidad de productos en Navbar:', totalCantidad);
       </div>
     )
   }
+  
 
 
 }
+
+

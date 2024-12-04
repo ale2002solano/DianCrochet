@@ -149,14 +149,14 @@ export const GetKitsPopulares = async (): Promise<Producto[]> => {
   }
 };
 
-export const search = async (nombre_prod: string, tallas: string[] | null): Promise<ProductoSearch[]> => {
+export const search = async (nombre_prod: string, tallas: string[] | null, tipos_prod :number[]|null): Promise<ProductoSearch[]> => {
   try {
     const response = await fetch(`${API_URL}/search`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ nombre_prod, tallas }), // El cuerpo debe ser un objeto
+      body: JSON.stringify({ nombre_prod, tallas, tipos_prod }), // El cuerpo debe ser un objeto
     });
 
     if (!response.ok) {
@@ -164,7 +164,7 @@ export const search = async (nombre_prod: string, tallas: string[] | null): Prom
     }
 
     const data: { resultado: ProductoSearch[] } = await response.json(); // Tipado explícito
-    return data.resultado || []; // Devuelve un arreglo vacío si resultado no existe
+    return data.resultado; // Devuelve un arreglo vacío si resultado no existe
   } catch (error) {
     console.error("Error al obtener productos de búsqueda:", error);
     throw error; // Lanza el error para que el llamador pueda manejarlo

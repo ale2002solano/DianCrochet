@@ -7,7 +7,7 @@ export interface Producto {
   }
 
   export interface ProductoSearch {
-    id_: number;
+    id_producto: number;
     nombre_prod: string;
     precio_venta: number;
     url: string | null; // Ahora incluye la URL de la imagen

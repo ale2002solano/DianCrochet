@@ -91,3 +91,21 @@ input[type='number']::-webkit-inner-spin-button {
   margin: 0;
 }
 
+@keyframes complexAnimation {
+  0% {
+    transform: rotate(0deg);
+    left: 60%;
+  }
+  50% {
+    transform: rotate(120deg);
+    left: 40%; /* Finalización */
+  }
+  100%{
+    transform: rotate(0deg);
+    left: 60%; /* Finalización */
+  }
+}
+
+.icon-rotate {
+  animation: complexAnimation 5s linear infinite;
+}
