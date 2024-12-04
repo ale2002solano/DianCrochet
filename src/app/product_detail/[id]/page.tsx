@@ -19,7 +19,6 @@ export default function ProductDetailPageDinamic() {
   return (
     <div className="w-full min-h-screen flex flex-col bg-slate-50 " >
        <BounceProvider>
-      
       <main className="bg-slate-50 flex-grow container mx-auto px-4 py-10">
       <div className="container mx-auto px-4 pt-10">
       <section className='flex justify-center mt-[5%]'>
