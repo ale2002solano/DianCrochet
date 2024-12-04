@@ -93,3 +93,28 @@ export const getFacturas = async(correo:string, col: string, dir: string)=>{
       throw new Error('Error updating profile picture');
     }
   };
+
+  export const getKitsUsuario = async (correo: string, col: string, dir: string)=>{
+    const response = await fetch(`${API_URL}/kits/${correo}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        columna_ordenamiento: col,
+        direccion_ordenamiento: dir,
+      }),
+    });
+
+    console.log(JSON.stringify({
+      columna_ordenamiento: col,
+      direccion_ordenamiento: dir,
+    }))
+  
+    if (!response.ok) {
+      throw new Error("Error al traer kits");
+    }
+  
+    const data = await response.json();
+    return data;
+  };

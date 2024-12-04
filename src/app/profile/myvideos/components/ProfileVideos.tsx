@@ -91,7 +91,7 @@ export default function MyVideos() {
                         <Video
                         nombre={video.NOMBRE_PROD}
                         dificultad={video.DIFICULTAD}
-                        imagen={"https://ik.imagekit.io/diancrochet/Fotos/GORROCUERNOS.jpg?updatedAt=1728867304044"}
+                        imagen={video.URL}
                         />
                     </div>
               ))}        

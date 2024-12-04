@@ -19,6 +19,7 @@ export default function Sidebar() {
         // Prefetch las rutas al cargar el componente
         router.prefetch('/profile/myvideos');
         router.prefetch('/profile/records');
+        router.prefetch('/profile/mykits');
         router.prefetch('/profile');
     }, [router]);
 
@@ -26,6 +27,10 @@ export default function Sidebar() {
         router.push('/profile/myvideos');  // Redirige al usuario a la página de inicio de sesión
     };
     
+    const handleMyKits = () => { // Limpia todos los datos del localStorage
+        router.push('/profile/mykits');  // Redirige al usuario a la página de inicio de sesión
+    };
+
     const handleMyBills = () => { // Limpia todos los datos del localStorage
         router.push('/profile/records');  // Redirige al usuario a la página de inicio de sesión
     };
@@ -63,6 +68,7 @@ export default function Sidebar() {
             <div onClick={handleMyData} className="w-[70%] h-10 flex items-center mt-[13%]"><h1 className="font-koulen select-none text-slate-700 text-xl rounded-lg hover:bg-[#C68EFE] hover:text-2xl transition-all duration-300 ease-in-out px-2 hover:text-stone-50">Datos Personales</h1></div>
             <div onClick={handleMyBills} className="w-[70%] h-10 flex items-center "><h1 className="font-koulen select-none text-slate-700 text-xl rounded-lg hover:bg-[#C68EFE] hover:text-2xl transition-all duration-300 ease-in-out px-2 hover:text-stone-50 ">Historial de Compras</h1></div>
             <div onClick={handleMyVideos} className="w-[70%] h-10 flex items-center "><h1 className="font-koulen select-none text-slate-700 text-xl rounded-lg hover:bg-[#C68EFE] hover:text-2xl transition-all duration-300 ease-in-out px-2 hover:text-stone-50 ">Mis videos</h1></div>
+            <div onClick={handleMyKits} className="w-[70%] h-10 flex items-center "><h1 className="font-koulen select-none text-slate-700 text-xl rounded-lg hover:bg-[#C68EFE] hover:text-2xl transition-all duration-300 ease-in-out px-2 hover:text-stone-50 ">Mis kits </h1></div>
             <div
             onClick={handleLogout} 
             className="w-[70%] h-10 flex items-center "><h1 className="font-koulen select-none text-slate-700 text-xl rounded-lg hover:bg-[#C68EFE] hover:text-2xl transition-all duration-300 ease-in-out px-2 hover:text-stone-50 ">Cerrar Sesion</h1></div>
