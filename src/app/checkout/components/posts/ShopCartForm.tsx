@@ -135,6 +135,8 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
         return;
     }
 
+    
+
     try {
         const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/producto/eliminar', {
             method: 'DELETE',
@@ -175,7 +177,7 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
             setTotal(nuevoSubtotal + nuevoImpuesto); // Actualizar total aquí
 
 
-            alert(result.eliminar.mensaje);
+            setModalMessage(result.eliminar.mensaje);
         } else {
             console.error('Error al eliminar el producto del carrito:', result.eliminar.mensaje || 'Error desconocido');
         }
@@ -193,7 +195,7 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
 
     // Mostrar mensaje en el modal
     setModalMessage(
-        "¿Estás seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?"
+        "¿Estas seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?"
       );
       setIsModalOpen(true);
     };
@@ -214,6 +216,7 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
             actualizarCarrito([]);
 
             setModalMessage("Orden cancelada y carrito eliminado");
+            setIsModalOpen(false);
         } else {
             console.error('Error al eliminar todos los productos del carrito');
         }
@@ -521,7 +524,7 @@ useEffect(() => {
                 {isModalOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Confirmación</h2>
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Confirmacion</h2>
                         <p className="text-gray-600 mb-4">{modalMessage}</p>
                         <div className="flex justify-end">
                         <button
