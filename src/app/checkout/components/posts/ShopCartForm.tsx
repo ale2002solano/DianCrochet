@@ -458,15 +458,16 @@ useEffect(() => {
             </div>
 
             <div title="Resumen orden" className="m-2 p-5 rounded-md bg-gray-200 w-full lg:w-1/3 flex flex-col justify-between">
-            <div id="hd1"  className="flex flex-row flex-wrap justify-between items-start content-start space-y-4 sm:space-y-0">
-                <div id="orden" className="text-gray-800 sm:text-right"><h1 className="text-base sm:text-1xl mb-3">Resumen orden</h1>
+            <div id="hd1"  className="flex flex-row flex-wrap justify-between items-center sm:items-center space-y-4 sm:space-y-0">
+                <div id="orden" className="text-gray-800 sm:text-right">
+                    <h1 className="text-base sm:text-1xl ">Resumen orden</h1>
                     <div id="cantprod" className="max-h-52 overflow-y-auto w-full">{groupedCarrito.map((item) => (
                         <h2 key={item.id_prod_fact} className="text-sm sm:text-base mb-3">{item.cantidad_compra} x {item.nombre_prod}</h2>))}
                     </div>
                 </div>
                 
-                <div id="pago" className="text-gray-800">
-                    <h1 className="text-base sm:text-1xl mb-3 sm:text-left">Pagos con</h1>
+                <div id="pago" className="text-gray-800 sm:text-left">
+                    <h1 className="text-base sm:text-1xl">Pagos con</h1>
                     <button className="w-12 sm:w-16 border-blue-900 rounded-md border px-2 py-1 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-2px]">
                           <Image alt="paypal" src="/img/paypal-logo-0.png" width={80} height={80} className="w-8 sm:w-12 h-auto"/>
                     </button>
@@ -490,7 +491,7 @@ useEffect(() => {
                 {/* Columna izquierda: Subtotales */}
                 <div
                     id="orden"
-                    className="text-gray-800 flex-1 sm:mr-10 text-center sm:text-left"
+                    className="text-gray-800 flex-1 text-center sm:text-left"
                 >
                     <h2 className="mb-3">Subtotal</h2>
                     <h2 className="mb-3">Impuestos</h2>
