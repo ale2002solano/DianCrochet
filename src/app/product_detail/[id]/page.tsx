@@ -5,8 +5,9 @@ import Footer from 'components/Footer';
 
 import { useProducto } from '@services/product';
 import ProductDetail from '../components/ProductDetail';
-import CarruselProductoRelacionado from '../components/CarruselProductoRelacionado';
+
 import PantallaCarga from '../components/pantallacarga';
+import CarruselProductoRelacionado from '../components/CarruselProductoRelacionado';
 
 
 export default function ProductDetailPageDinamic() {
@@ -17,14 +18,18 @@ export default function ProductDetailPageDinamic() {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col bg-slate-50">
+    <div className="w-full min-h-screen flex flex-col bg-slate-50 " >
       <Navbar />
-      <main className="bg-slate-50 flex-grow w-full">
-      <div className="min-w-screen text-black bg-slate-50 flex items-center ml-24 mr-24 mt-[6%]">
-      <ProductDetail producto={producto} />
+      <main className="bg-slate-50 flex-grow container mx-auto px-4 py-10">
+      <div className="container mx-auto px-4 pt-10">
+      <section className='flex justify-center mt-[5%]'>
+        <ProductDetail producto={producto} />
+      </section>
       </div>
-      <div className="ml-24 max-w-full mr-24 mb-[5%]">
+      <div className="container mx-auto px-4 py-10">
+        <section>
         <CarruselProductoRelacionado/>
+        </section>
       </div>
       </main>
       <Footer />

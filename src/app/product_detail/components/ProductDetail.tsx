@@ -114,20 +114,21 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
   
 
   return (
-    <div className="relative w-max grid grid-cols-1 md:grid-cols-2 gap-[15%] p-8">
-  {zoomImage && (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
-      onClick={handleZoomClose}
-    >
-      <Image
-        src={zoomImage}
-        alt="Zoom de imagen"
-        width={500}
-        height={500}
-        className="rounded-lg"
-      />
-    </div>
+    
+    <div className="relative grid grid-cols-1 md:grid-cols-2  p-8 justify-center">
+        {zoomImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+          onClick={handleZoomClose}
+        >
+          <Image
+            src={zoomImage}
+            alt="Zoom de imagen"
+            width={500}
+            height={500}
+            className="rounded-lg"
+          />
+        </div>
   )}
 
   {mensajeExito && (
@@ -142,7 +143,7 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
     </div>
   )}
 
-  <div className="flex flex-col space-y-4">
+  <div className="flex flex-col space-y-4 mr-10">
     <div className="flex justify-center">
       {producto.imagen_principal ? (
         <Image
@@ -173,36 +174,36 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
       ))}
     </div>
 
-    <div className="ml-24 mr-24 max-w-full p-5">
+    <div className="max-w-full p-5">
       <p className="text-justify font-crimson text-[#727171]">{producto.descripcion}</p>
     </div>
   </div>
 
   <div className="flex flex-col space-y-4">
-    <h1 className="text-5xl font-koulen">{producto.nombre_prod}</h1>
+    <h1 className="text-5xl text-black font-koulen">{producto.nombre_prod}</h1>
     <p className="text-[#727171] font-robotoMono">L{precioActual.toFixed(2)}</p>
     <p className="font-roboto text-[#727171]">*Precio no incluye envío</p>
-
+    <div>
     {producto.tallas && producto.tallas.filter((talla) => talla !== null).length > 0 && (
-      <div>
-        <h3 className="font-koulen text-[#424242]">TALLA</h3>
-        <div className="flex space-x-2 mt-2 font-koulen text-[#424242]">
-          {producto.tallas
-            .filter((talla) => talla !== null)
-            .map((talla) => (
-              <button
-                key={talla}
-                className={`px-11 py-2 border rounded-lg ${
-                  selectedTalla === talla ? "bg-[#C68EFE] text-white" : "bg-[#D9D9D9]"
-                }`}
-                onClick={() => setSelectedTalla(talla)}
-              >
-                {talla}
-              </button>
-            ))}
-        </div>
-      </div>
-    )}
+  <div>
+    <h3 className="font-koulen text-[#424242]">TALLA</h3>
+    <div className="flex flex-col sm:flex-row md:flex-col lg:flex-col xl:flex-row space-y-2 sm:space-y-0 sm:space-x-2 md:space-y-2 md:space-x-0 lg:space-y-2 lg:space-x-0 xl:space-y-0 xl:space-x-2 mt-2 font-koulen text-[#424242]">
+      {producto.tallas
+        .filter((talla) => talla !== null)
+        .map((talla) => (
+          <button
+            key={talla}
+            className={`px-11 py-2 border rounded-lg ${
+              selectedTalla === talla ? "bg-[#C68EFE] text-white" : "bg-[#D9D9D9]"
+            }`}
+            onClick={() => setSelectedTalla(talla)}
+          >
+            {talla}
+          </button>
+        ))}
+    </div>
+  </div>
+)}
 
     {producto.grosores && producto.grosores.filter((grosor) => grosor !== null).length > 0 && (
       <div>
@@ -228,11 +229,11 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
         </div>
       </div>
     )}
-
+    </div>
     <div>
       <h3 className="font-robotoMono text-[#727171]">Cantidad</h3>
     </div>
-    <div className="flex flex-col items-start">
+    <div className="flex flex-col text-black items-start">
       <div className="flex items-center bg-gray-100 rounded-full shadow-md px-2 py-1">
         <button
           onClick={decreaseQuantity}
@@ -249,17 +250,22 @@ const ProductDetail = ({ producto }: ProductDetailProps) => {
         </button>
       </div>
     </div>
-
+    <div className="">
     <button
       onClick={handleAddToCart}
       className="px-4 py-2 mt-4 bg-[#C68EFE] text-white font-semibold rounded-lg shadow-md hover:bg-[#b053fe] transition duration-300"
     >
       Agregar al Carrito
     </button>
+    </div>
   </div>
 </div>
 
   );
 };
+
+
+
+
 
 export default ProductDetail;
