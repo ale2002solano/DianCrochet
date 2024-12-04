@@ -459,14 +459,14 @@ useEffect(() => {
 
             <div title="Resumen orden" className="m-2 p-5 rounded-md bg-gray-200 w-full lg:w-1/3 flex flex-col justify-between">
             <div id="hd1"  className="flex flex-row flex-wrap justify-between items-start sm:items-start space-y-4 sm:space-y-0">
-                <div id="orden" className="text-gray-800 sm:text-right">
+                <div id="orden" className="text-gray-800 sm:text-right flex flex-col justify-center">
                     <h1 className="text-base sm:text-1xl ">Resumen orden</h1>
                     <div id="cantprod" className="max-h-52 overflow-y-auto w-full">{groupedCarrito.map((item) => (
                         <h2 key={item.id_prod_fact} className="text-sm sm:text-base mb-3">{item.cantidad_compra} x {item.nombre_prod}</h2>))}
                     </div>
                 </div>
                 
-                <div id="pago" className="text-gray-800 sm:text-left">
+                <div id="pago" className="text-gray-800 sm:text-left flex flex-col justify-center">
                     <h1 className="text-base sm:text-1xl">Pagos con</h1>
                     <button className="w-12 sm:w-16 border-blue-900 rounded-md border px-2 py-1 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-2px]">
                           <Image alt="paypal" src="/img/paypal-logo-0.png" width={80} height={80} className="w-8 sm:w-12 h-auto"/>
@@ -491,24 +491,24 @@ useEffect(() => {
                 {/* Columna izquierda: Subtotales */}
                 <div
                     id="texto"
-                    className="text-gray-800 flex-1 text-center sm:text-left"
+                    className="text-gray-800 flex-1 text-center sm:text-left flex flex-col justify-center"
                 >
-                    <h2 className="mb-3">Subtotal</h2>
-                    <h2 className="mb-3">Impuestos</h2>
-                    <h2 className="mb-3">Envio</h2>
-                    <h2 className="mb-3">Total</h2>
+                    <h2 className="mb-0">Subtotal</h2>
+                    <h2 className="mb-0">Impuestos</h2>
+                    <h2 className="mb-0">Envio</h2>
+                    <h2 className="mb-0">Total</h2>
                 </div>
 
                 {/* Columna derecha: Valores */}
-                <div id="valor" className="text-gray-800 flex-1 text-center sm:text-right">
-                    <h3 className="mb-3" id="subtotal">
+                <div id="valor" className="text-gray-800 flex-1 text-center sm:text-right flex flex-col justify-center">
+                    <h3 className="mb-0" id="subtotal">
                     L. {carrito.length === 0 ? "0.00" : subtotal.toFixed(2)}
                     </h3>
-                    <h3 className="mb-3" id="impuestos">
+                    <h3 className="mb-0" id="impuestos">
                     L. {carrito.length === 0 ? "0.00" : impuestos.toFixed(2)}
                     </h3>
-                    <h3 className="mb-3">...</h3>
-                    <h3 className="mb-3" id="total">
+                    <h3 className="mb-0">...</h3>
+                    <h3 className="mb-0" id="total">
                     L. {carrito.length === 0 ? "0.00" : (subtotal + impuestos).toFixed(2)}
                     </h3>
                 </div>
