@@ -62,7 +62,7 @@ export default function Historial() {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="mt-20 flex h-24 select-none items-center pl-[5%]">
+      <div className=" mt-2 sm:mt-20 flex h-24 select-none items-center pl-[2%] sm:pl-[5%]">
         <h1 className="font-koulen text-2xl text-[#424242]">
           HISTORIAL DE COMPRAS
         </h1>

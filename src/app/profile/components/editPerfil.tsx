@@ -85,11 +85,15 @@ const UserProfile: React.FC = () => {
 
 
   return (
-    <div className="bg-gray-50 p-6 rounded-lg w-[711px] mx-auto space-y-4 shadow-lg">
-      
+    <div className="bg-gray-50 ml-4 p-6 rounded-lg mt-20 sm:mt-[5%] w-[90%] sm:w-[711px] mx-auto space-y-4 shadow-xl sm:shadow-lg">
+      <div>
+      <h1 className="font-koulen text-2xl text-purple-500">
+          EDITAR DATOS PERSONALES
+        </h1>
+      </div>
       <div className="space-y-4">
         {/* Nombre */}
-        <div className="flex items-center">
+        <div className="flex-col sm:flex items-center">
           <label className="w-32 font-semibold text-gray-700">NOMBRE</label>
           <input
             type="text"
@@ -97,12 +101,12 @@ const UserProfile: React.FC = () => {
             value={editing ? formData.Nuevo_nombre : user?.nombre || ''}
             onChange={handleInputChange}
             disabled={!editing}
-            className="flex-1 px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
+            className="flex-1 w-full px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
           />
         </div>
 
         {/* Apellido */}
-        <div className="flex items-center">
+        <div className="flex-col sm:flex items-center">
           <label className="w-32 font-semibold text-gray-700">APELLIDO</label>
           <input
             type="text"
@@ -110,12 +114,12 @@ const UserProfile: React.FC = () => {
             value={editing ? formData.Nuevo_apellido : user?.apellido || ''}
             onChange={handleInputChange}
             disabled={!editing}
-            className="flex-1 px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
+            className="flex-1 w-full px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
           />
         </div>
 
         {/* Teléfono */}
-        <div className="flex items-center">
+        <div className="flex-col sm:flex items-center">
           <label className="w-32 font-semibold text-gray-700">TELÉFONO</label>
           <input
             type="text"
@@ -123,26 +127,26 @@ const UserProfile: React.FC = () => {
             value={editing ? formData.Nuevo_telefono : user?.telefono || ''}
             onChange={handleInputChange}
             disabled={!editing}
-            className="flex-1 px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
+            className="flex-1 w-full px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
           />
         </div>
 
         {/* Correo */}
-        <div className="flex items-center">
+        <div className="flex-col sm:flex items-center">
           <label className="w-32 font-semibold text-gray-700">CORREO</label>
           <input
             type="text"
             name="correo"
             value={user?.correo || ''}
             disabled
-            className="flex-1 px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
+            className="flex-1 w-full px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
           />
         </div>
 
         {/* Contenedor de Fecha de Nacimiento y Género */}
-        <div className="flex items-center">
+        <div className="flex-col sm:flex items-center">
           <label className="w-32 font-semibold text-gray-700">FECHA DE NACIMIENTO</label>
-          <div className="flex-1 flex space-x-4 items-center">
+          <div className="flex-1 w-full flex space-x-4 items-center">
             {/* Fecha de Nacimiento */}
             <input
               type={editing ? 'date' : 'text'}
@@ -159,7 +163,7 @@ const UserProfile: React.FC = () => {
             <div></div>
             <div></div>
             <div></div>
-            <div className="flex items-center space-x-2">
+            <div className="flex hidden sm:block items-center space-x-2">
               <label className="font-semibold text-gray-700">GÉNERO</label>
               {editing ? (
                 <select

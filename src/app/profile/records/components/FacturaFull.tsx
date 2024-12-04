@@ -60,14 +60,14 @@ export default function FacturaFull({
       {isLoading ? (
         <div
           ref={ref}
-          className="absolute bottom-0 left-[31.5%] z-20 flex h-5/6 w-[37%] flex-col bg-slate-50"
+          className="absolute bottom-0 w-full h-5/6 sm:left-[31.5%] z-20 flex sm:h-5/6 sm:w-[37%] flex-col bg-slate-50"
         >
           <LoadingSpinner />
         </div>
       ) : (
         <div
           ref={ref}
-          className="absolute bottom-0 left-[31.5%] z-20 flex h-5/6 w-[37%] flex-col bg-slate-50"
+          className="absolute bottom-0 w-full h-5/6 sm:left-[31.5%] z-20 flex sm:h-5/6 sm:w-[37%] flex-col bg-slate-50"
         >
           <div className="flex h-10 w-full flex-row-reverse pl-5 pr-2 pt-2">
             <svg
@@ -112,7 +112,7 @@ export default function FacturaFull({
             ))}
           </div>
 
-          <div className="bottom-0 mt-auto h-32 w-full pl-5 pr-7">
+          <div className="bottom-0 mb-3 mt-auto h-32 w-full pl-5 pr-7">
             <h2 className="flex w-2/3 ml-auto items-center justify-between font-roboto text-xl text-[#353535]">
               <span>SubTotal</span>
               <span>{factura[0].subtotal} Lps</span>
@@ -125,7 +125,7 @@ export default function FacturaFull({
               <span>ISV 15%</span>
               <span>{factura[0].impuesto} Lps</span>
             </h2>
-            <h2 className="flex w-2/3 ml-auto items-center justify-between font-roboto text-3xl text-[#353535]">
+            <h2 className="flex w-4/5 sm:w-2/3 ml-auto items-center justify-between font-roboto text-3xl text-[#353535]">
               <span>Total</span>
               <span>{factura[0].total} Lps</span>
             </h2>
