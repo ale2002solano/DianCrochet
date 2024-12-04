@@ -520,29 +520,36 @@ useEffect(() => {
 
 
 
-             {/* Modal de Confirmación */}
-                {isModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Confirmacion</h2>
-                        <p className="text-gray-600 mb-4">{modalMessage}</p>
-                        <div className="flex justify-end">
-                        <button
-                            onClick={confirmCancelOrder}
-                            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-                        >
-                            Aceptar
-                        </button>
-                        <button
-                            onClick={() => setIsModalOpen(false)}
-                            className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 ml-2"
-                        >
-                            Cancelar
-                        </button>
-                        </div>
-                    </div>
-                    </div>
-                )}
+           {/* Modal de Confirmación */}
+    {isModalOpen && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl p-6 sm:p-8">
+        {/* Título */}
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 text-center sm:text-left">
+            Confirmacion
+        </h2>
+
+        {/* Mensaje */}
+        <p className="text-gray-600 mb-6 text-center sm:text-left">{modalMessage}</p>
+
+        {/* Botones */}
+        <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-2">
+            <button
+            onClick={confirmCancelOrder}
+            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300 w-full sm:w-auto"
+            >
+            Aceptar
+            </button>
+            <button
+            onClick={() => setIsModalOpen(false)}
+            className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition duration-300 w-full sm:w-auto"
+            >
+            Cancelar
+            </button>
+        </div>
+        </div>
+    </div>
+    )}      
 
 
                  
