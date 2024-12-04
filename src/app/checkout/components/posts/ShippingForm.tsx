@@ -182,7 +182,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
                 name="depto"
                 id="depto"
                 aria-label="depto"
-                className="rounded-md border border-red-500 bg-gray-300 border-none h-12 font-lekton text-gray-700"
+                className="rounded-md  bg-gray-300 border-none h-12 font-lekton text-gray-700"
                 onChange={(e) => setSelectedDepartamento(e.target.value)}
                 value={selectedDepartamento}
             >
@@ -312,7 +312,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
 
     
     return (
-        <div className="flex justify-between font-koulen w-full p-8 border border-red-500 lg:flex-row flex-col">
+        <div className="flex justify-between font-koulen w-full p-8  lg:flex-row flex-col">
             <div title="detalle envio" className="m-2 p-2 rounded-md bg-gray-200 lg:w-[65%] w-full flex-grow py-5 sm:px-40 ">
             <div id="header" className="text-gray-700 flex flex-row flex-nowrap justify-center items-baseline content-stretch">
                     <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch text-purple-400">Resumen <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-purple-800" /> <IoRemoveOutline /></h4></div>
