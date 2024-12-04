@@ -1,6 +1,5 @@
 'use client';
 import { Categories } from "@interfaces/product";
-import { getCategories } from "@services/product";
 import { useRef, useState, useEffect } from "react";
 
 interface CategoriesProps {
@@ -12,7 +11,7 @@ interface CategoriesProps {
 
 export default function Categorias({ open, setOpen, categories, setCategories }: CategoriesProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [categoriasOptions, setCategoriasOptions] = useState<Categories[]>([
+  const [categoriasOptions] = useState<Categories[]>([
     { ID_CATEGORIA: 1, CATEGORIA: 'Productos' },
     { ID_CATEGORIA: 2, CATEGORIA: 'Kits' },
     { ID_CATEGORIA: 3, CATEGORIA: 'Materiales' },
