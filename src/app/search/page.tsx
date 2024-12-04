@@ -1,4 +1,4 @@
-"use client"; // Indica que este componente es del lado del cliente
+"use client"; // Indica que el componente es del lado del cliente
 
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -13,13 +13,20 @@ import Categorias from "./components/categories";
 
 export default function Products() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get("query") || ""; // Convertimos null a string vacío para evitar errores de tipo
+
+  // Envolver en Suspense el uso de `useSearchParams`
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const searchParams = useSearchParams(); // CSR para evitar problemas en SSR
 
   const [productos, setProductos] = useState<ProductoSearch[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showCategories, setShowCategories] = useState(false);
   const [categories, setCategories] = useState<number[]>([]);
+
+  // Fetch inicial del query de búsqueda
+  useEffect(() => {
+    setSearchQuery(searchParams.get("query") || ""); // Convertimos null a ""
+  }, [searchParams]);
 
   const handleToggleCategories = () => {
     setShowCategories((prev) => !prev);
@@ -30,16 +37,13 @@ export default function Products() {
   };
 
   useEffect(() => {
-    setCategories([]); // Vaciar categorías cuando cambia el término de búsqueda
-  }, [searchQuery]);
-
-  useEffect(() => {
     async function fetchProducts() {
       try {
         setIsLoading(true);
         const categoryFilter = categories.length > 0 ? categories : null;
-        const res = await search(searchQuery, null, categoryFilter); // Siempre enviamos una cadena vacía, no null
 
+        // Obtener productos desde servicio
+        const res = await search(searchQuery,null, categoryFilter);
         setProductos(res);
       } catch (error) {
         console.error("Error al traer productos:", error);
@@ -152,6 +156,5 @@ export default function Products() {
     </Suspense>
   );
 }
-
 
 
