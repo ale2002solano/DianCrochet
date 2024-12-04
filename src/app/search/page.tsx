@@ -139,7 +139,7 @@ export default function Products() {
           />
         </div>
         {(productos.length == 0 && categories.length==0)? (""):(
-                  <div className="sm:-mt-4 flex sm:h-32 h-44 flex-col-reverse">
+                  <div className="sm:-mt-4 flex sm:h-32 h-20 flex-col-reverse">
 
                   <div className="relative mb-3 flex flex-col sm:flex-row sm:h-9 w-full sm:mt-0 mt-3 sm:items-center pl-0 sm:pl-6 ">
                     <h2 className="font-lekton text-lg text-[#444343] hidden sm:block">Filtros :</h2>
