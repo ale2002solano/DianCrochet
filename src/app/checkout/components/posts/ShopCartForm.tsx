@@ -415,7 +415,7 @@ useEffect(() => {
 
                 <h1 className="text-2xl sm:text-2xl lg:text-4xl text-gray-900 pb-5">Articulos</h1>
 
-                <div id="PRODUCTOS" className="overflow-y-auto max-h-[70vh] sm:max-h-[80vh]">
+                <div id="PRODUCTOS" className="overflow-y-auto max-h-[70vh] sm:max-h-[80vh] lg:max-h-[60vh]">
                 {groupedCarrito.map((item) => (
                     <div key={item.id_prod_fact} id="product" className="bg-white rounded-md flex flex-col sm:flex-row flex-nowrap justify-start items-start content-start overflow-auto mb-5">
                         <div id="img" className="mr-8 w-24 h-24 rounded-none rounded-tl-md rounded-bl-md" title={item.nombre_prod}>
@@ -424,8 +424,8 @@ useEffect(() => {
                         </div>
                         <div id="detalle" className="flex flex-grow justify-between mr-8">
                             <div id="det" className="">
-                                <h1 id="nombre" className="text-gray-700 text-lg sm:text-base">{item.nombre_prod}</h1>
-                                <div className="flex flex-row flex-nowrap justify-around items-stretch content-stretch">
+                                <h1 id="nombre" className="text-gray-700 text-lg sm:text-sm">{item.nombre_prod}</h1>
+                                <div className="flex flex-row flex-nowrap justify-around items-stretch content-stretch text-left ml-1 sm:text-sm">
                                     <h4 id="cantidad" className="font-lekton text-gray-400 mr-5">Cantidad: {item.cantidad_compra}</h4>
                                     {item.talla && (<h4 id="talla" className="font-lekton text-gray-400 mr-5">Talla: {item.talla}</h4>)}
                                     {item.grosor && (<h4 id="color" className="font-lekton text-gray-400">Grosor: {item.grosor}</h4>)}
@@ -448,7 +448,7 @@ useEffect(() => {
 
                             </div>
                             <div id="precio" className="mt-8 flex flex-col flex-nowrap justify-start items-end content-stretch">
-                                <h3 className="text-gray-700 sm:text-sm">{item.subtotal !== null ? `${item.subtotal} Lps` : 'No disponible'}</h3>
+                                <h3 className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">{item.subtotal !== null ? `${item.subtotal} Lps` : 'No disponible'}</h3>
                                 <button title="delete" onClick={() => handleDelete(correo, item.id_producto, item.talla, item.grosor)}>
                                     <FaRegTrashAlt className="text-gray-700 hover:text-red-700"/>
                                 </button>
