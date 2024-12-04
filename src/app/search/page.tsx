@@ -3,7 +3,7 @@ import Product from "./components/Product";
 import Image from "next/legacy/image";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import LoadingSpinner from "../checkout/components/loadding/LoadingSpinner";
+// import LoadingSpinner from "../checkout/components/loadding/LoadingSpinner";
 import { ProductoSearch } from "@interfaces/product";
 import { search } from "@services/product";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
