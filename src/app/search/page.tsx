@@ -1,7 +1,7 @@
 "use client";
 import Product from "./components/Product";
 import Image from "next/legacy/image";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import LoadingSpinner from "../checkout/components/loadding/LoadingSpinner";
 import { ProductoSearch } from "@interfaces/product";
