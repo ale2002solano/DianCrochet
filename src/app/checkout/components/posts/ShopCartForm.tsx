@@ -427,8 +427,8 @@ useEffect(() => {
                                 <h1 id="nombre" className="text-gray-700 text-lg">{item.nombre_prod}</h1>
                                 <div className="flex flex-row flex-nowrap justify-around items-stretch content-stretch">
                                     <h4 id="cantidad" className="font-lekton text-gray-400 mr-5">Cantidad: {item.cantidad_compra}</h4>
-                                    <h4 id="talla" className="font-lekton text-gray-400 mr-5">Talla: {item.talla ?? ''} </h4>
-                                    <h4 id="color" className="font-lekton text-gray-400">Grosor:{item.grosor ?? ''} </h4>
+                                    {item.talla && (<h4 id="talla" className="font-lekton text-gray-400 mr-5">Talla: {item.talla}</h4>)}
+                                {item.grosor && (<h4 id="color" className="font-lekton text-gray-400">Grosor: {item.grosor}</h4>)}
                                 </div>
                                 <div className="flex items-center border border-black rounded-full bg-gray-100 text-gray-700 font-lekton w-max">
                                 <button
