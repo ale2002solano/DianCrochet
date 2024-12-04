@@ -121,7 +121,6 @@ export default function Products() {
   }, [categories, searchQuery]); // Ejecutar cuando cambien categorías o el término de búsqueda
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
       <div>
         <div className="h-20 bg-white sm:h-24"></div>
         <section className="bg-white">
@@ -366,6 +365,5 @@ export default function Products() {
           </div>
         </section>
       </div>
-    </Suspense>
   );
 }
