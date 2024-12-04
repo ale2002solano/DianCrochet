@@ -30,6 +30,9 @@ export default function ShopCartForm() {
     const { carrito: carritoContexto, actualizarCarrito } = useCart();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [total, setTotal] = useState<number>(0); // Añadir estado para total
+    //MODAL PARA ADVERTENCIAS
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
 
       // Función para transformar el carrito
@@ -188,15 +191,14 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
    const handleCancelOrder = async () => {
     if (!facturaId) return; // Verificar que existe un id_factura
 
-    // Mostrar cuadro de confirmación
-    const confirmCancel = window.confirm(
+    // Mostrar mensaje en el modal
+    setModalMessage(
         "¿Estás seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?"
-    );
+      );
+      setIsModalOpen(true);
+    };
 
-    if (!confirmCancel) {
-        alert("La orden no fue cancelada y los productos se mantuvieron en el carrito.");
-        return;
-    }
+    const confirmCancelOrder = async () => {
 
     try {
         const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/eliminar/carrito/${facturaId}`, {
@@ -211,7 +213,7 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
             // Actualizar el carrito en el contexto
             actualizarCarrito([]);
 
-            alert("Orden cancelada y carrito eliminado");
+            setModalMessage("Orden cancelada y carrito eliminado");
         } else {
             console.error('Error al eliminar todos los productos del carrito');
         }
@@ -513,6 +515,32 @@ useEffect(() => {
                     </h3>
                 </div>
                 </div>
+
+
+
+             {/* Modal de Confirmación */}
+                {isModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Confirmación</h2>
+                        <p className="text-gray-600 mb-4">{modalMessage}</p>
+                        <div className="flex justify-end">
+                        <button
+                            onClick={confirmCancelOrder}
+                            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                        >
+                            Aceptar
+                        </button>
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 ml-2"
+                        >
+                            Cancelar
+                        </button>
+                        </div>
+                    </div>
+                    </div>
+                )}
 
 
                  
