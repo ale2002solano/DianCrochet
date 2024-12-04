@@ -464,7 +464,7 @@ useEffect(() => {
 
             <div title="Resumen orden" className="m-2 p-5 rounded-md bg-gray-200 w-full lg:w-1/3 flex flex-col justify-between">
             <div id="hd1"  className="flex flex-row flex-wrap justify-between items-start sm:items-start gap-y-4 sm:gap-y-0">
-                <div id="orden" className="text-gray-800 sm:text-right flex flex-col justify-center">
+                <div id="orden" className="text-gray-800 sm:text-left flex flex-col justify-center">
                     <h1 className="text-base sm:text-1xl ">Resumen orden</h1>
                     <div id="cantprod" className="max-h-52 overflow-y-auto w-full">{groupedCarrito.map((item) => (
                         <h2 key={item.id_prod_fact} className="text-sm sm:text-base mb-3">{item.cantidad_compra} x {item.nombre_prod}</h2>))}
