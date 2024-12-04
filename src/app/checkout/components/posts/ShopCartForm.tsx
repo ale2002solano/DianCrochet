@@ -176,8 +176,9 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
             setImpuestos(nuevoImpuesto);
             setTotal(nuevoSubtotal + nuevoImpuesto); // Actualizar total aquí
 
-
+            
             setModalMessage(result.eliminar.mensaje);
+            setIsModalOpen(true); 
         } else {
             console.error('Error al eliminar el producto del carrito:', result.eliminar.mensaje || 'Error desconocido');
         }
