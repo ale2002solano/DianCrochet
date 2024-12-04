@@ -398,7 +398,7 @@ useEffect(() => {
 
 
     return (
-        <div  id="PRINCIPAL" className="flex flex-col lg:flex-row justify-between font-koulen w-full p-8 min-h-screen overflow-y-auto">
+        <div  id="PRINCIPAL" className="flex flex-col lg:flex-row justify-between font-koulen w-full p-8 h-screen overflow-y-auto">
             {loading && <LoadingSpinner />}
             <div title="Articulos" className="m-2 rounded-md bg-gray-200 w-full lg:w-1/2 flex-grow p-5 lg:px-10">
             <div id="header" className="text-gray-700 flex flex-row justify-center items-baseline content-stretch flex-wrap">
