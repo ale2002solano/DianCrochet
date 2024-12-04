@@ -182,7 +182,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
                 name="depto"
                 id="depto"
                 aria-label="depto"
-                className="rounded-md bg-gray-300 border-none h-12 font-lekton text-gray-700"
+                className="rounded-md  bg-gray-300 border-none h-12 font-lekton text-gray-700"
                 onChange={(e) => setSelectedDepartamento(e.target.value)}
                 value={selectedDepartamento}
             >
@@ -312,8 +312,8 @@ const groupedCarrito = carrito.reduce((acc, item) => {
 
     
     return (
-        <div className="flex justify-between font-koulen w-full p-8">
-            <div title="detalle envio" className="m-2 p-2 rounded-md bg-gray-200 w-1/2 flex-grow py-5 px-40 ">
+        <div className="flex justify-between font-koulen w-full p-8  lg:flex-row flex-col">
+            <div title="detalle envio" className="m-2 p-2 rounded-md bg-gray-200 lg:w-[65%] w-full flex-grow py-5 sm:px-40 ">
             <div id="header" className="text-gray-700 flex flex-row flex-nowrap justify-center items-baseline content-stretch">
                     <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch text-purple-400">Resumen <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-purple-800" /> <IoRemoveOutline /></h4></div>
                     <div>
@@ -381,9 +381,9 @@ const groupedCarrito = carrito.reduce((acc, item) => {
                 </button>
             </div>
 
-            <div title="Resumen orden" className="m-2 p-10 rounded-md bg-gray-200 flex flex-col flex-nowrap justify-between items-stretch content-stretch">
+            <div title="Resumen orden" className="m-2 p-10 rounded-md lg:w-[35%] w-full bg-gray-200 flex flex-col flex-nowrap justify-between items-stretch content-stretch">
             <div id="hd1" className="flex flex-row flex-nowrap justify-between items-start content-start">
-                 <div id="orden" className="mr-64 text-gray-800">
+                 <div id="orden" className=" text-gray-800">
                      <h1 className="mb-3">Resumen de la orden</h1>
                      <div id="cantprod" className="max-h-52 overflow-y-auto w-auto">
                          {groupedCarrito.map((item) => (
@@ -411,7 +411,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
                 */}
 
                 <div id="hd3" className="flex flex-row flex-nowrap justify-between items-start content-start mt-2 font-inter text-sm">
-                    <div id="orden" className="mr-64 text-gray-800">
+                    <div id="orden" className="text-gray-800">
                         <h2 className="mb-3">Subtotal</h2>
                         <h2 className="mb-3">Impuestos</h2>
                         <h2 className="mb-3">Envio</h2>
@@ -428,8 +428,8 @@ const groupedCarrito = carrito.reduce((acc, item) => {
                  </div>
 
                 <div className="flex justify-end">
-                    <button onClick={handleSaveShipping} className="bg-purple-400 py-4 px-9 rounded-md mr-5">Guardar envio</button>
-                    <button title="decline" type="button" onClick={handlePayment} className="mr-8 text-gray-800 p-4 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px] rounded-md">Pagar</button>
+                    <button onClick={handleSaveShipping} className="whitespace-nowrap bg-purple-400 py-4 px-9 rounded-md mr-5">Guardar envio</button>
+                    <button title="decline" type="button" onClick={handlePayment} className="sm:mr-8 text-gray-800 p-4 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px] rounded-md">Pagar</button>
                 </div>
             </div>
         </div>

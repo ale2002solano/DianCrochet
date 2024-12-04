@@ -30,6 +30,9 @@ export default function ShopCartForm() {
     const { carrito: carritoContexto, actualizarCarrito } = useCart();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [total, setTotal] = useState<number>(0); // Añadir estado para total
+    //MODAL PARA ADVERTENCIAS
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
 
       // Función para transformar el carrito
@@ -132,6 +135,8 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
         return;
     }
 
+    
+
     try {
         const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/producto/eliminar', {
             method: 'DELETE',
@@ -171,8 +176,9 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
             setImpuestos(nuevoImpuesto);
             setTotal(nuevoSubtotal + nuevoImpuesto); // Actualizar total aquí
 
-
-            alert(result.eliminar.mensaje);
+            //cambio x para 
+            setModalMessage(result.eliminar.mensaje);
+            setIsModalOpen(true); 
         } else {
             console.error('Error al eliminar el producto del carrito:', result.eliminar.mensaje || 'Error desconocido');
         }
@@ -188,15 +194,14 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
    const handleCancelOrder = async () => {
     if (!facturaId) return; // Verificar que existe un id_factura
 
-    // Mostrar cuadro de confirmación
-    const confirmCancel = window.confirm(
-        "¿Estás seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?"
-    );
+    // Mostrar mensaje en el modal
+    setModalMessage(
+        "¿Estas seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?"
+      );
+      setIsModalOpen(true);
+    };
 
-    if (!confirmCancel) {
-        alert("La orden no fue cancelada y los productos se mantuvieron en el carrito.");
-        return;
-    }
+    const confirmCancelOrder = async () => {
 
     try {
         const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/eliminar/carrito/${facturaId}`, {
@@ -211,7 +216,8 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
             // Actualizar el carrito en el contexto
             actualizarCarrito([]);
 
-            alert("Orden cancelada y carrito eliminado");
+            setModalMessage("Orden cancelada y carrito eliminado");
+            setIsModalOpen(false);
         } else {
             console.error('Error al eliminar todos los productos del carrito');
         }
@@ -398,30 +404,31 @@ useEffect(() => {
 
 
     return (
-        <div className="flex justify-between font-koulen w-full p-8">
+        <div  id="PRINCIPAL" className="flex flex-col lg:flex-row justify-between font-koulen w-full p-8 h-screen overflow-y-auto">
             {loading && <LoadingSpinner />}
-            <div title="Articulos" className="m-2 rounded-md bg-gray-200 w-1/2 flex-grow p-5 px-10 ">
-                <div id="header" className="text-gray-700 flex flex-row flex-nowrap justify-center items-baseline content-stretch">
-                    <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch text-purple-400">Resumen <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-gray-800" /> <IoRemoveOutline /></h4></div>
-                    <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch">Envio <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-gray-800" /> <IoRemoveOutline /></h4></div>
-                    <div><h4 className="m-2 flex flex-row flex-nowrap justify-start items-baseline content-stretch">Pago <IoRemoveOutline className="ml-2"/> <FaCheckCircle className="text-gray-800" /> <IoRemoveOutline /></h4></div>
-                </div>
-                <h1 className="text-3xl text-gray-900 pb-5">Articulos</h1>
+            <div title="Articulos" className="m-2 rounded-md bg-gray-200 w-full lg:w-1/2 flex-grow p-5 lg:px-10">
+            <div id="header" className="text-gray-700 flex flex-row justify-center items-baseline content-stretch flex-wrap">
+                    <div className="m-2"><h4 className="flex flex-row justify-start items-baseline text-purple-400 text-sm sm:text-base md:text-lg lg:text-xl">Resumen<IoRemoveOutline className="ml-2" /><FaCheckCircle className="text-gray-800" /><IoRemoveOutline /></h4></div>
+                    <div className="m-2"><h4 className="flex flex-row justify-start items-baseline text-sm sm:text-base md:text-lg lg:text-xl">Envio<IoRemoveOutline className="ml-2" /><FaCheckCircle className="text-gray-800" /><IoRemoveOutline /></h4></div>
+                    <div className="m-2"><h4 className="flex flex-row justify-start items-baseline text-sm sm:text-base md:text-lg lg:text-xl">Pago<IoRemoveOutline className="ml-2" /><FaCheckCircle className="text-gray-800" /><IoRemoveOutline /></h4></div>
+            </div>
 
-                <div id="PRODUCTOS" className="max-h-96 overflow-y-auto">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl text-gray-900 pb-5">Articulos</h1>
+
+                <div id="PRODUCTOS" className="overflow-y-auto max-h-[70vh] sm:max-h-[80vh]">
                 {groupedCarrito.map((item) => (
-                    <div key={item.id_prod_fact} id="product" className="bg-white rounded-md flex flex-row flex-nowrap justify-start items-start content-start overflow-hidden mb-5">
+                    <div key={item.id_prod_fact} id="product" className="bg-white rounded-md flex flex-col sm:flex-row flex-nowrap justify-start items-start content-start overflow-auto mb-5">
                         <div id="img" className="mr-8 w-24 h-24 rounded-none rounded-tl-md rounded-bl-md" title={item.nombre_prod}>
                             {item.url ? (<Image src={item.url} alt={item.nombre_prod} width={100} height={100} objectFit="cover" className="w-full h-full"/>) : (
                             <CiImageOff className="w-full h-full object-contain text-gray-400" />)}
                         </div>
                         <div id="detalle" className="flex flex-grow justify-between mr-8">
                             <div id="det" className="">
-                                <h1 id="nombre" className="text-gray-700 text-lg">{item.nombre_prod}</h1>
+                                <h1 id="nombre" className="text-gray-700 text-lg sm:text-base">{item.nombre_prod}</h1>
                                 <div className="flex flex-row flex-nowrap justify-around items-stretch content-stretch">
                                     <h4 id="cantidad" className="font-lekton text-gray-400 mr-5">Cantidad: {item.cantidad_compra}</h4>
-                                    <h4 id="talla" className="font-lekton text-gray-400 mr-5">Talla: {item.talla ?? ''} </h4>
-                                    <h4 id="color" className="font-lekton text-gray-400">Grosor:{item.grosor ?? ''} </h4>
+                                    {item.talla && (<h4 id="talla" className="font-lekton text-gray-400 mr-5">Talla: {item.talla}</h4>)}
+                                    {item.grosor && (<h4 id="color" className="font-lekton text-gray-400">Grosor: {item.grosor}</h4>)}
                                 </div>
                                 <div className="flex items-center border border-black rounded-full bg-gray-100 text-gray-700 font-lekton w-max">
                                 <button
@@ -456,23 +463,24 @@ useEffect(() => {
                 
             </div>
 
-            <div title="Resumen orden" className="m-2 p-10 rounded-md bg-gray-200 flex flex-col flex-nowrap justify-between items-stretch content-stretch">
-            <div id="hd1" className="flex flex-row flex-nowrap justify-between items-start content-start">
-                 <div id="orden" className="mr-64 text-gray-800">
-                     <h1 className="mb-3">Resumen de la orden</h1>
-                     <div id="cantprod" className="max-h-52 overflow-y-auto w-auto">
-                         {groupedCarrito.map((item) => (
-                             <h2 key={item.id_prod_fact} className="mb-3">{item.cantidad_compra} x {item.nombre_prod}</h2>
-                         ))}
-                     </div>
-                 </div>
-                 <div id="pago" className="text-gray-800">
-                     <h1>Pagos con</h1>
-                     <button className="w-16 border-blue-900 rounded-md border-2 px-3 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px]">
-                        <Image alt="paypal" src="/img/paypal-logo-0.png"  width={100} height={100}/>
+            <div title="Resumen orden" className="m-2 p-5 rounded-md bg-gray-200 w-full lg:w-1/3 flex flex-col justify-between">
+            <div id="hd1"  className="flex flex-row flex-wrap justify-between items-start sm:items-start gap-y-4 sm:gap-y-0">
+                <div id="orden" className="text-gray-800 sm:text-left flex flex-col justify-center">
+                    <h1 className="text-base sm:text-1xl ">Resumen orden</h1>
+                    <div id="cantprod" className="max-h-52 overflow-y-auto w-full">{groupedCarrito.map((item) => (
+                        <h2 key={item.id_prod_fact} className="text-sm sm:text-base mb-3">{item.cantidad_compra} x {item.nombre_prod}</h2>))}
+                    </div>
+                </div>
+                
+                <div id="pago" className="text-gray-800 sm:text-left flex flex-col justify-center">
+                    <h1 className="text-base sm:text-1xl">Pagos con</h1>
+                    <button className="w-12 sm:w-16 border-blue-900 rounded-md border px-2 py-1 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-2px]">
+                          <Image alt="paypal" src="/img/paypal-logo-0.png" width={80} height={80} className="w-8 sm:w-12 h-auto"/>
                     </button>
-                 </div>
+
+                </div>
             </div>
+
 
 
                 {/* 
@@ -485,31 +493,72 @@ useEffect(() => {
                 </div>
                 */}
 
-                <div id="hd3" className="flex flex-row flex-nowrap justify-between items-start content-start mt-2 font-inter text-sm">
-                    <div id="orden" className="mr-64 text-gray-800">
-                        <h2 className="mb-3">Subtotal</h2>
-                        <h2 className="mb-3">Impuestos</h2>
-                        <h2 className="mb-3">Envio</h2>
-                        <h2 className="mb-3">Total</h2>
-                    </div>
-                    <div id="pago" className="text-gray-800">
-                        <h3 className="mb-3" id="subtotal">L. {carrito.length === 0 ? "0.00" : subtotal.toFixed(2)}</h3>
-                        <h3 className="mb-3" id="impuestos">L. {carrito.length === 0 ? "0.00" : impuestos.toFixed(2)}</h3>
-                        <h3 className="mb-3">...</h3>
-                        <h3 className="mb-3" id="total">L.
-                            {carrito.length === 0
-                               ? "0.00"
-                                : (subtotal + impuestos).toFixed(2)}
-                        </h3>
-                    </div>
-                 </div>
+<div id="hd3" className="mt-2 font-inter text-sm text-gray-800">
+  <table className="w-full">
+    <tbody>
+      <tr>
+        <td className="text-left py-1">Subtotal</td>
+        <td className="text-right py-1">L. {carrito.length === 0 ? "0.00" : subtotal.toFixed(2)}</td>
+      </tr>
+      <tr>
+        <td className="text-left py-1">Impuestos</td>
+        <td className="text-right py-1">L. {carrito.length === 0 ? "0.00" : impuestos.toFixed(2)}</td>
+      </tr>
+      <tr>
+        <td className="text-left py-1">Envio</td>
+        <td className="text-right py-1">...</td>
+      </tr>
+      <tr>
+        <td className="text-left py-1 font-bold">Total</td>
+        <td className="text-right py-1 font-bold">
+          L. {carrito.length === 0 ? "0.00" : (subtotal + impuestos).toFixed(2)}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+           {/* Modal de Confirmación */}
+    {isModalOpen && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl p-6 sm:p-8">
+        {/* Título */}
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 text-center sm:text-left">
+            Confirmacion
+        </h2>
+
+        {/* Mensaje */}
+        <p className="text-gray-600 mb-6 text-center sm:text-left">{modalMessage}</p>
+
+        {/* Botones */}
+        <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-2">
+            <button
+            onClick={confirmCancelOrder}
+            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300 w-full sm:w-auto"
+            >
+            Aceptar
+            </button>
+            <button
+            onClick={() => setIsModalOpen(false)}
+            className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition duration-300 w-full sm:w-auto"
+            >
+            Cancelar
+            </button>
+        </div>
+        </div>
+    </div>
+    )}      
+
 
                  
 
                 {/* BOTONES */}
                 <div id="but" className="flex flex-row flex-nowrap justify-end items-end content-start">
-                    <button title="decline" type="button" className="mr-8 text-gray-800 p-4 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px] rounded-md"  onClick={handleCancelOrder}>Cancelar Orden</button>
-                    <button title="sending" type="button" className="bg-purple-400 py-4 px-9 rounded-md transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px]" onClick={handleShippingDetailsClick}>Detalles de envio</button>
+                    <button title="decline" type="button" className="text-gray-800 bg-gray-200 py-2 px-6 sm:py-3 sm:px-8 text-sm sm:text-base rounded-md transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1" onClick={handleCancelOrder}>Cancelar</button>
+                    <button title="sending" type="button" className="bg-purple-400 text-white py-2 px-6 sm:py-3 sm:px-8 text-sm sm:text-base rounded-md transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1" onClick={handleShippingDetailsClick}>Envio</button>
                 </div>
             </div>
             
