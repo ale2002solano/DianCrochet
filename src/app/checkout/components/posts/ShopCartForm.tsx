@@ -380,7 +380,7 @@ useEffect(() => {
     }, [] as CarritoItem[]);
 
 
-    // Agrupar carrito
+    // Agrupar carrit
     const agruparCarrito = (carrito: CarritoItem[]): CarritoItem[] => {
         return carrito.reduce((acc, item) => {
             const existingItem = acc.find(i =>
