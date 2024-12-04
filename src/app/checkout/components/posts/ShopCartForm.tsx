@@ -499,7 +499,7 @@ useEffect(() => {
                     <h2 className="mb-0">Total</h2>
                 </div>
 
-                {/* Columna derecha: Valores */}
+                {/* Columna derecha: Valor */}
                 <div id="valor" className="text-gray-800 flex-1 text-center sm:text-right flex flex-col justify-center">
                     <h3 className="mb-0" id="subtotal">
                     L. {carrito.length === 0 ? "0.00" : subtotal.toFixed(2)}
