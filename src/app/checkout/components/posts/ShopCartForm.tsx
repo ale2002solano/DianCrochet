@@ -518,8 +518,8 @@ useEffect(() => {
 
                 {/* BOTONES */}
                 <div id="but" className="flex flex-row flex-nowrap justify-end items-end content-start">
-                    <button title="decline" type="button" className="mr-8 text-gray-800 p-4 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px] rounded-md"  onClick={handleCancelOrder}>Cancelar Orden</button>
-                    <button title="sending" type="button" className="bg-purple-400 py-4 px-9 rounded-md transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px]" onClick={handleShippingDetailsClick}>Detalles de envio</button>
+                    <button title="decline" type="button" className="text-gray-800 bg-gray-200 py-2 px-6 sm:py-3 sm:px-8 text-sm sm:text-base rounded-md transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1" onClick={handleCancelOrder}>Cancelar Orden</button>
+                    <button title="sending" type="button" className="bg-purple-400 text-white py-2 px-6 sm:py-3 sm:px-8 text-sm sm:text-base rounded-md transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1" onClick={handleShippingDetailsClick}>Detalles de envio</button>
                 </div>
             </div>
             
