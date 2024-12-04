@@ -186,7 +186,7 @@ export default function Products() {
           <section className="sm:min-[30vh]: relative h-full min-h-[59vh] w-full px-[8.32%] py-3 sm:py-12">
             {isLoading ? (
               <div className="ml-0 h-96 bg-white opacity-50">
-                <LoadingSpinner />{" "}
+                {/* <LoadingSpinner />{" "} */}
               </div>
             ) : productos.length == 0 ? (
               <div className="relative -mt-14 ml-0 flex h-96 flex-col items-center justify-center">
