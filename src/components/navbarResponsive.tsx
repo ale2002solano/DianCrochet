@@ -16,7 +16,12 @@ export default function Navbar() {
   const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [isSideMenuOpen, setSideMenu] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
+  const toggleProfileDropdown = () => {
+    setIsProfileDropdownOpen((prev) => !prev);
+  };
+  
   function openSideMenu() {
     setSideMenu(true);
   }
@@ -205,7 +210,63 @@ export default function Navbar() {
               <a onClick={() => router.push('/products/kits')} href="#" className="text-gray-700 hover:text-purple-500">KITS</a>
               <a onClick={() => router.push('/products/tutoriales')} href="#" className="text-gray-700 hover:text-purple-500">TUTORIALS</a>
               <a onClick={handleCarritoClick} href="#" className="text-gray-700 hover:text-purple-500">MI CARRITO</a>
-              <a onClick={handleMiperfilClick} href="#" className="text-gray-700 hover:text-purple-500">MI PERFIL</a>
+              <nav className="flex flex-col items-start gap-4 transition-all text-2xl ">
+              <a onClick={() => router.push('/products')} href="#" className="text-gray-700 hover:text-purple-500">PRODUCTOS</a>
+              <a onClick={() => router.push('/products/materials')} href="#" className="text-gray-700 hover:text-purple-500">MATERIALES</a>
+              <a onClick={() => router.push('/products/kits')} href="#" className="text-gray-700 hover:text-purple-500">KITS</a>
+              <a onClick={() => router.push('/products/tutoriales')} href="#" className="text-gray-700 hover:text-purple-500">TUTORIALS</a>
+              <a onClick={handleCarritoClick} href="#" className="text-gray-700 hover:text-purple-500">MI CARRITO</a>
+              
+              {/* MI PERFIL */}
+          <div className="relative">
+            <button
+              onClick={toggleProfileDropdown}
+              className="text-gray-700 hover:text-purple-500"
+            >
+              MI PERFIL
+            </button>
+            {isProfileDropdownOpen && (
+              <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 shadow-lg rounded-lg">
+                <a
+                  onClick={() => router.push('/profile')}
+                  href="#"
+                  className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+                >
+                  DATOS PERSONALES
+                </a>
+                <a
+                  onClick={() => router.push('/profile/records')}
+                  href="#"
+                  className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+                >
+                  HISTORIAL DE COMPRA
+                </a>
+                <a
+                  onClick={() => router.push('/profile/myvideos')}
+                  href="#"
+                  className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+                >
+                  MIS VIDEOS
+                </a>
+                <a
+                  onClick={() => router.push('/profile/mykits')}
+                  href="#"
+                  className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+                >
+                  MIS KITS
+                </a>
+              </div>
+            )}
+          </div>
+              
+              
+              <a onClick={correo ? handleLogout : () => router.push('/auth/sign-in')}
+                href="#"
+                  className="block py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  {correo ? "Cerrar Sesion" : "Iniciar Sesion"}  {/* Mostrar "Cerrar Sesión" o "Iniciar Sesión" según el estado del correo */}
+                </a>
+        </nav>
               <a onClick={correo ? handleLogout : () => router.push('/auth/sign-in')}
                 href="#"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"

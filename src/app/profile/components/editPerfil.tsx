@@ -91,7 +91,7 @@ const UserProfile: React.FC = () => {
           EDITAR DATOS PERSONALES
         </h1>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 items-center">
         {/* Nombre */}
         <div className="flex-col sm:flex items-center">
           <label className="w-32 font-semibold text-gray-700">NOMBRE</label>
@@ -143,34 +143,28 @@ const UserProfile: React.FC = () => {
           />
         </div>
 
-        {/* Contenedor de Fecha de Nacimiento y Género */}
+        {/* Contenedor de Fecha de Nacimiento y Género  */}
         <div className="flex-col sm:flex items-center">
-          <label className="w-32 font-semibold text-gray-700">FECHA DE NACIMIENTO</label>
-          <div className="flex-1 w-full flex space-x-4 items-center">
-            {/* Fecha de Nacimiento */}
-            <input
-              type={editing ? 'date' : 'text'}
-              name="Nuevo_fechaNacimiento"
-              value={editing ? formData.Nuevo_fechaNacimiento : user?.fecha_nacimiento || ''}
-              onChange={handleInputChange}
-              disabled={!editing}
-              className="w-48 px-4 flex text-center py-2 rounded bg-gray-200 text-gray-600 outline-none"
-            />
+          <label className="w-50 font-semibold text-gray-700">FECHA DE NACIMIENTO</label>
+          <input
+            type={editing ? 'date' : 'text'}
+            name="Nuevo_fechaNacimiento"
+            value={editing ? formData.Nuevo_fechaNacimiento : user?.fecha_nacimiento || ''}
+            onChange={handleInputChange}
+            disabled={!editing}
+            className="flex-1 w-full px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
+          />
+        </div>
 
-            {/* Género */}
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div className="flex hidden sm:block items-center space-x-2">
-              <label className="font-semibold text-gray-700">GÉNERO</label>
-              {editing ? (
+        {/* Contenedor de Fecha de Nacimiento y Género  */}
+        <div className="flex-col sm:flex items-center">
+        <label className="w-50 font-semibold text-gray-700">GÈNERO</label>
+        {editing ? (
                 <select
                   name="Nuevo_genero"
                   value={formData.Nuevo_genero}
                   onChange={handleInputChange}
-                  className="w-[166px] text-centerflex items-center px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
+                  className="w-full text-centerflex items-center px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
                 >
                   <option value="">Seleccionar</option>
                   <option value="Masculino">Masculino</option>
@@ -183,17 +177,15 @@ const UserProfile: React.FC = () => {
                   name="Nuevo_genero"
                   value={user?.genero || ''}
                   disabled
-                  className="w-[166px] text-center flex items-center px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
+                  className="w-full flex items-start px-4 py-2 rounded bg-gray-200 text-gray-600 outline-none"
                 />
               )}
-            </div>
-          </div>
         </div>
-      </div>
 
+        
       {/* Botones de Acción */}
       {/* Botones de Acción */}
-        <div className="flex justify-start mt-12 space-x-4 ">
+        <div className="flex justify-start mt-12 space-x-4">
           {editing ? (
             <>
               <button
@@ -230,6 +222,7 @@ const UserProfile: React.FC = () => {
             </div>
           )}
         </div>
+    </div>
     </div>
   );
 };

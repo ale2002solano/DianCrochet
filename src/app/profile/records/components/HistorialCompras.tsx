@@ -61,9 +61,9 @@ export default function Historial() {
   
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full mt-20 sm:mt-1 w-full flex-col">
       <div className=" mt-2 sm:mt-20 flex h-24 select-none items-center pl-[2%] sm:pl-[5%]">
-        <h1 className="font-koulen text-2xl text-[#424242]">
+        <h1 className="font-koulen text-2xl sm:text-[#424242] text-purple-500">
           HISTORIAL DE COMPRAS
         </h1>
         <div className="absolute right-[5%] ml-6 flex cursor-pointer select-none items-center font-lekton text-lg text-[#444343]">
@@ -97,7 +97,7 @@ export default function Historial() {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <section className="flex-1 overflow-y-auto">
+        <section className="flex-1 mb-[18%] sm:mb-0 overflow-y-auto">
           {facturas.map((factura) => (
             <div
               key={factura.id_factura}
