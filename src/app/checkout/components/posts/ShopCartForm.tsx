@@ -489,7 +489,7 @@ useEffect(() => {
                 </div>
                 */}
 
-                <div id="hd3" className="flex flex-row flex-wrap sm:flex-nowrap justify-between items-start mt-2 font-inter text-sm space-y-4 sm:space-y-0" >
+                <div id="hd3" className="flex flex-row flex-wrap sm:flex-nowrap justify-between items-start mt-2 font-inter text-sm gap-y-4 sm:gap-y-0" >
                 {/* Columna izquierda: Subtotales */}
                 <div
                     id="texto"
