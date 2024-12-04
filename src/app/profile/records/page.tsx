@@ -1,5 +1,5 @@
 import HistorialCompras from "./components/HistorialCompras";
-import Menu from "./components/Menu";
+
 
 export default function records(){
     return (
