@@ -176,7 +176,7 @@ const handleDelete = async (correo: string, idProducto: number, talla: string | 
             setImpuestos(nuevoImpuesto);
             setTotal(nuevoSubtotal + nuevoImpuesto); // Actualizar total aquí
 
-            //cambio x para deploy
+            //cambio x para 
             setModalMessage(result.eliminar.mensaje);
             setIsModalOpen(true); 
         } else {
