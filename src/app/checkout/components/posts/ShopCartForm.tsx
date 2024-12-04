@@ -413,7 +413,7 @@ useEffect(() => {
                     <div className="m-2"><h4 className="flex flex-row justify-start items-baseline text-sm sm:text-base md:text-lg lg:text-xl">Pago<IoRemoveOutline className="ml-2" /><FaCheckCircle className="text-gray-800" /><IoRemoveOutline /></h4></div>
             </div>
 
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl text-gray-900 pb-5">Articulos</h1>
+                <h1 className="text-2xl sm:text-2xl lg:text-4xl text-gray-900 pb-5">Articulos</h1>
 
                 <div id="PRODUCTOS" className="overflow-y-auto max-h-[70vh] sm:max-h-[80vh]">
                 {groupedCarrito.map((item) => (
@@ -448,7 +448,7 @@ useEffect(() => {
 
                             </div>
                             <div id="precio" className="mt-8 flex flex-col flex-nowrap justify-start items-end content-stretch">
-                                <h3 className="text-gray-700">{item.subtotal !== null ? `${item.subtotal} Lps` : 'No disponible'}</h3>
+                                <h3 className="text-gray-700 sm:text-sm">{item.subtotal !== null ? `${item.subtotal} Lps` : 'No disponible'}</h3>
                                 <button title="delete" onClick={() => handleDelete(correo, item.id_producto, item.talla, item.grosor)}>
                                     <FaRegTrashAlt className="text-gray-700 hover:text-red-700"/>
                                 </button>
