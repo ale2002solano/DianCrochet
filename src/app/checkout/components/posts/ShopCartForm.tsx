@@ -458,7 +458,7 @@ useEffect(() => {
             </div>
 
             <div title="Resumen orden" className="m-2 p-5 rounded-md bg-gray-200 w-full lg:w-1/3 flex flex-col justify-between">
-            <div id="hd1"  className="flex flex-row flex-wrap justify-between items-center sm:items-center space-y-4 sm:space-y-0">
+            <div id="hd1"  className="flex flex-row flex-wrap justify-between items-start space-y-4 sm:space-y-0">
                 <div id="orden" className="text-gray-800 sm:text-right">
                     <h1 className="text-base sm:text-1xl ">Resumen orden</h1>
                     <div id="cantprod" className="max-h-52 overflow-y-auto w-full">{groupedCarrito.map((item) => (
@@ -490,7 +490,7 @@ useEffect(() => {
                 <div id="hd3" className="flex flex-row flex-wrap sm:flex-nowrap justify-between items-start mt-2 font-inter text-sm space-y-4 sm:space-y-0" >
                 {/* Columna izquierda: Subtotales */}
                 <div
-                    id="orden"
+                    id="texto"
                     className="text-gray-800 flex-1 text-center sm:text-left"
                 >
                     <h2 className="mb-3">Subtotal</h2>
@@ -500,7 +500,7 @@ useEffect(() => {
                 </div>
 
                 {/* Columna derecha: Valores */}
-                <div id="pago" className="text-gray-800 flex-1 text-center sm:text-right">
+                <div id="valor" className="text-gray-800 flex-1 text-center sm:text-right">
                     <h3 className="mb-3" id="subtotal">
                     L. {carrito.length === 0 ? "0.00" : subtotal.toFixed(2)}
                     </h3>
