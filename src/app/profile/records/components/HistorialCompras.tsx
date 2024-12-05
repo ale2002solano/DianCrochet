@@ -102,7 +102,7 @@ export default function Historial() {
             <div
               key={factura.id_factura}
               onClick={()=>handleOpenBill(factura.id_factura)}
-              className="my-3 ml-[5%] h-28 w-9/12"
+              className="my-3 ml-[5%] h-28 lg:w-9/12 w-[85%]"
             >
               <Factura 
               codigo={factura.codigo_fact}

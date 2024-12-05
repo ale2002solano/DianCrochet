@@ -1,13 +1,15 @@
 'use client';
 
-import UserProfile from "./components/editPerfil";
+import UserProfileErick from "./components/editarPerfilErick";
+
+
 
 export default function Profile() {
     return (
-        <div className=" w-[75%] h-full mt-[10%] sm:mt-[3%]  mb-20 sm:mb-0 ">  
+        <div className="sm:w-[75%] w-full h-full flex justify-center">  
             {/* "aqui va la pagina principal, probablemente datos de usuario u otra pagina de bienvenida" 
            o tambien se puede trabajar todo aqui de un solo, sin necesidad de componente*/}
-           <UserProfile />
+           <UserProfileErick />
         </div>
     );
 }
