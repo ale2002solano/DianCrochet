@@ -187,86 +187,164 @@ console.log('Cantidad de productos en Navbar:', totalCantidad);
     </header>
   );
 
-  function MobileNav({closeSideMenu}:{closeSideMenu:()=> void}) {
-
-    return(
-      <div className="fixed left-0 top-0 flex h-full min-h-screen w-full justify-end  md:hidden">
+  function MobileNav({ closeSideMenu }: { closeSideMenu: () => void }) {
+    const navRef = useRef<HTMLDivElement>(null);
   
-      <div className="h-full w-[65%] bg-white px-4 py-4">
-        <section className="flex justify-end text-black">
-        <AiOutlineClose
-        onClick={closeSideMenu}
-        className="cursor-pointer text-4xl"/>
-        
-        </section>
-        
-        <nav className="flex flex-col items-start gap-4 transition-all text-2xl ">
-              <a onClick={() => router.push('/products')} href="#" className="text-gray-700 hover:text-purple-500">PRODUCTOS</a>
-              <a onClick={() => router.push('/products/materials')} href="#" className="text-gray-700 hover:text-purple-500">MATERIALES</a>
-              <a onClick={() => router.push('/products/kits')} href="#" className="text-gray-700 hover:text-purple-500">KITS</a>
-              <a onClick={() => router.push('/products/tutoriales')} href="#" className="text-gray-700 hover:text-purple-500">TUTORIALS</a>
-              <a onClick={handleCarritoClick} href="#" className="text-gray-700 hover:text-purple-500">MI CARRITO</a>
-              
-              {/* MI PERFIL */}
-          <div className="relative">
-            <button
-              onClick={toggleProfileDropdown}
+    // Cerrar el menú al hacer clic fuera de él
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (navRef.current && !navRef.current.contains(event.target as Node)) {
+          closeSideMenu();
+        }
+      };
+  
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [closeSideMenu]);
+  
+    return (
+      <div className="fixed left-0 top-0 flex h-full min-h-screen w-full justify-end md:hidden">
+        <div
+          ref={navRef}
+          className="h-full w-[65%] bg-white px-4 py-4"
+        >
+          <section className="flex justify-end text-black">
+            <AiOutlineClose
+              onClick={closeSideMenu}
+              className="cursor-pointer text-4xl"
+            />
+          </section>
+  
+          <nav className="flex flex-col items-start gap-4 transition-all text-2xl">
+            <a
+              onClick={() => {
+                router.push('/products');
+                closeSideMenu();
+              }}
+              href="#"
               className="text-gray-700 hover:text-purple-500"
             >
-              MI PERFIL
-            </button>
-            {isProfileDropdownOpen && (
-              <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 shadow-lg rounded-lg">
-                <a
-                  onClick={() => router.push('/profile')}
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+              PRODUCTOS
+            </a>
+            <a
+              onClick={() => {
+                router.push('/products/materials');
+                closeSideMenu();
+              }}
+              href="#"
+              className="text-gray-700 hover:text-purple-500"
+            >
+              MATERIALES
+            </a>
+            <a
+              onClick={() => {
+                router.push('/products/kits');
+                closeSideMenu();
+              }}
+              href="#"
+              className="text-gray-700 hover:text-purple-500"
+            >
+              KITS
+            </a>
+            <a
+              onClick={() => {
+                router.push('/products/tutoriales');
+                closeSideMenu();
+              }}
+              href="#"
+              className="text-gray-700 hover:text-purple-500"
+            >
+              TUTORIALS
+            </a>
+            <a
+              onClick={() => {
+                handleCarritoClick();
+                closeSideMenu();
+              }}
+              href="#"
+              className="text-gray-700 hover:text-purple-500"
+            >
+              MI CARRITO
+            </a>
+  
+            <div className="relative">
+                <button
+                  onClick={toggleProfileDropdown}
+                  className="text-gray-700 hover:text-purple-500"
                 >
-                  DATOS PERSONALES
-                </a>
-                <a
-                  onClick={() => router.push('/profile/records')}
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:text-purple-500"
-                >
-                  HISTORIAL DE COMPRA
-                </a>
-                <a
-                  onClick={() => router.push('/profile/myvideos')}
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:text-purple-500"
-                >
-                  MIS VIDEOS
-                </a>
-                <a
-                  onClick={() => router.push('/profile/mykits')}
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:text-purple-500"
-                >
-                  MIS KITS
-                </a>
+                  MI PERFIL
+                </button>
+                {isProfileDropdownOpen && (
+                  <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 shadow-lg rounded-lg">
+                    <a
+                      onClick={() => {
+                        router.push('/profile');
+                        setIsProfileDropdownOpen(false); // Cerrar el menú
+                        closeSideMenu(); // Cerrar el menú lateral si está abierto
+                      }}
+                      href="#"
+                      className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+                    >
+                      DATOS PERSONALES
+                    </a>
+                    <a
+                      onClick={() => {
+                        router.push('/profile/records');
+                        setIsProfileDropdownOpen(false); // Cerrar el menú
+                        closeSideMenu(); // Cerrar el menú lateral si está abierto
+                      }}
+                      href="#"
+                      className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+                    >
+                      HISTORIAL DE COMPRA
+                    </a>
+                    <a
+                      onClick={() => {
+                        router.push('/profile/myvideos');
+                        setIsProfileDropdownOpen(false); // Cerrar el menú
+                        closeSideMenu(); // Cerrar el menú lateral si está abierto
+                      }}
+                      href="#"
+                      className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+                    >
+                      MIS VIDEOS
+                    </a>
+                    <a
+                      onClick={() => {
+                        router.push('/profile/mykits');
+                        setIsProfileDropdownOpen(false); // Cerrar el menú
+                        closeSideMenu(); // Cerrar el menú lateral si está abierto
+                      }}
+                      href="#"
+                      className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+                    >
+                      MIS KITS
+                    </a>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-              
-              
-              <a onClick={correo ? handleLogout : () => router.push('/auth/sign-in')}
-                href="#"
-                  className="block py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  {correo ? "Cerrar Sesion" : "Iniciar Sesion"}  {/* Mostrar "Cerrar Sesión" o "Iniciar Sesión" según el estado del correo */}
-                </a>
-        </nav>
-        
-      </div>
-      
   
+            <a
+              onClick={() => {
+                if (correo) {
+                  handleLogout();
+                } else {
+                  router.push('/auth/sign-in');
+                }
+                closeSideMenu();
+              }}
+              href="#"
+              className="block py-2 text-gray-700 hover:bg-gray-100"
+            >
+              {correo ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+            </a>
+          </nav>
+        </div>
       </div>
-    )
+    );
   }
-  
-
-
 }
 
 
