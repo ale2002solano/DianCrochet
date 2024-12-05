@@ -136,7 +136,7 @@ export default function ShopCartForm() {
             return;
         }
     
-        setModalMessage("¿Estás seguro de que deseas eliminar este producto del carrito?");
+        setModalMessage("¿Estas seguro de que deseas eliminar este producto del carrito?");
         setConfirmAction(() => async () => {
             try {
                 const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/producto/eliminar', {
@@ -188,7 +188,7 @@ export default function ShopCartForm() {
     
    // Método para eliminar todo el carrito / eliminar orden con confirmación
    const handleCancelOrder = () => {
-    setModalMessage("¿Estás seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?");
+    setModalMessage("¿Estas seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?");
     setConfirmAction(() => async () => {
         try {
             const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/eliminar/carrito/${facturaId}`, {
@@ -255,8 +255,8 @@ const handleQuantityChange = async (
         if (response.ok) {
             const data = await response.json();
             if (data.actualizar.codigo === 2) {
-                setMensajeAdvertencia("No puedes agregar más de este producto, ya alcanzaste el límite en inventario.");
-                setTimeout(() => setMensajeAdvertencia(null), 3000);
+                setMensajeAdvertencia("No puedes agregar mas de este producto, ya alcanzaste el límite en inventario.");
+                setTimeout(() => setMensajeAdvertencia(null), 4000);
                 return;
             }
 
@@ -411,9 +411,9 @@ useEffect(() => {
                             <div id="det" className="">
                                 <h1 id="nombre" className="text-gray-700 text-lg sm:text-sm">{item.nombre_prod}</h1>
                                 <div className="flex flex-row flex-nowrap justify-around items-stretch content-stretch text-left ml-1 sm:text-sm">
-                                    <h4 id="cantidad" className="font-lekton text-gray-400 mr-5 white-space: nowrap;">Cantidad: {item.cantidad_compra}</h4>
-                                    {item.talla && (<h4 id="talla" className="font-lekton text-gray-400 mr-5 white-space: nowrap;">Talla: {item.talla}</h4>)}
-                                    {item.grosor && (<h4 id="color" className="font-lekton text-gray-400 white-space: nowrap;">Grosor: {item.grosor}</h4>)}
+                                    <h4 id="cantidad" className="font-lekton text-gray-400 mr-5 sm:white-space: nowrap;">Cantidad: {item.cantidad_compra}</h4>
+                                    {item.talla && (<h4 id="talla" className="font-lekton text-gray-400 mr-5 sm:white-space: nowrap;">Talla: {item.talla}</h4>)}
+                                    {item.grosor && (<h4 id="color" className="font-lekton text-gray-400 sm:white-space: nowrap;">Grosor: {item.grosor}</h4>)}
                                 </div>
                                 <div className="flex items-center border border-black rounded-full bg-gray-100 text-gray-700 font-lekton w-max">
                                 <button
@@ -433,7 +433,7 @@ useEffect(() => {
 
                             </div>
                             <div id="precio" className="mt-8 flex flex-col flex-nowrap justify-start items-end content-stretch">
-                                <h3 className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl white-space: nowrap;">{item.subtotal !== null ? `${item.subtotal} Lps` : 'No disponible'}</h3>
+                                <h3 className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl sm:white-space: nowrap;">{item.subtotal !== null ? `${item.subtotal} Lps` : 'No disponible'}</h3>
                                 <button title="delete" onClick={() => handleDelete(correo, item.id_producto, item.talla, item.grosor)}>
                                     <FaRegTrashAlt className="text-gray-700 hover:text-red-700"/>
                                 </button>
