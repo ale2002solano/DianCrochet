@@ -270,6 +270,8 @@ export default function Navbar() {
                   setIsProfileDropdownOpen(false); // Cerrar dropdown
                   closeSideMenu(); // Cerrar el menú lateral
                 }}
+                onTouchStart={(e) => e.preventDefault()}  // Evita que se muestre la URL al mantener presionado
+                onMouseDown={(e) => e.preventDefault()} 
                 ref={(el) => {
                   linksRef.current[index] = el!;
                 }} // Guardar referencia
@@ -283,52 +285,57 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-  
+
+            {correo ? (
+                       <div className="relative">
+                       <button
+                         onTouchStart={() => setActiveLink("profile")}
+                         onTouchEnd={toggleProfileDropdown}
+                         className={`${
+                           activeLink === "profile"
+                             ? "bg-purple-200 text-purple-500 rounded-lg"
+                             : "text-gray-700"
+                         } px-4`}
+                       >
+                         MI PERFIL
+                       </button>
+                       {isProfileDropdownOpen && (
+                         <div className="absolute left-0 mt-2 w-48 rounded-lg border border-gray-300 bg-white shadow-lg">
+                           {[
+                             { label: "DATOS PERSONALES", path: "/profile" },
+                             { label: "HISTORIAL DE COMPRA", path: "/profile/records" },
+                             { label: "MIS VIDEOS", path: "/profile/myvideos" },
+                             { label: "MIS KITS", path: "/profile/mykits" },
+                           ].map((subLink, subIndex) => (
+                             <a
+                               key={subLink.path}
+                               href="#"
+                               onClick={() => {
+                                 router.push(subLink.path);
+                                 setIsProfileDropdownOpen(false); // Cerrar dropdown
+                                 closeSideMenu(); // Cerrar el menú lateral
+                               }}
+                               onTouchStart={(e) => e.preventDefault()}  // Evita que se muestre la URL al mantener presionado
+                               onMouseDown={(e) => e.preventDefault()} 
+                               ref={(el) => {
+                                 linksRef.current[5 + subIndex] = el!;
+                               }} // Guardar referencias adicionales
+                               data-path={subLink.path} // Identificador único
+                               className={`${
+                                 activeLink === subLink.path
+                                   ? "bg-purple-200 text-purple-500"
+                                   : "text-gray-700"
+                               } block px-4 py-2`}
+                             >
+                               {subLink.label}
+                             </a>
+                           ))}
+                         </div>
+                       )}
+                     </div>
+            ) : ("")}
             {/* Sección Mi Perfil */}
-            <div className="relative">
-              <button
-                onTouchStart={() => setActiveLink("profile")}
-                onTouchEnd={toggleProfileDropdown}
-                className={`${
-                  activeLink === "profile"
-                    ? "bg-purple-200 text-purple-500 rounded-lg"
-                    : "text-gray-700"
-                } px-4`}
-              >
-                MI PERFIL
-              </button>
-              {isProfileDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-48 rounded-lg border border-gray-300 bg-white shadow-lg">
-                  {[
-                    { label: "DATOS PERSONALES", path: "/profile" },
-                    { label: "HISTORIAL DE COMPRA", path: "/profile/records" },
-                    { label: "MIS VIDEOS", path: "/profile/myvideos" },
-                    { label: "MIS KITS", path: "/profile/mykits" },
-                  ].map((subLink, subIndex) => (
-                    <a
-                      key={subLink.path}
-                      href="#"
-                      onClick={() => {
-                        router.push(subLink.path);
-                        setIsProfileDropdownOpen(false); // Cerrar dropdown
-                        closeSideMenu(); // Cerrar el menú lateral
-                      }}
-                      ref={(el) => {
-                        linksRef.current[5 + subIndex] = el!;
-                      }} // Guardar referencias adicionales
-                      data-path={subLink.path} // Identificador único
-                      className={`${
-                        activeLink === subLink.path
-                          ? "bg-purple-200 text-purple-500"
-                          : "text-gray-700"
-                      } block px-4 py-2`}
-                    >
-                      {subLink.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
+   
   
             {/* Cerrar Sesión / Iniciar Sesión */}
             <a
