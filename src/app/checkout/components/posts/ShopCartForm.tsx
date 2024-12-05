@@ -374,7 +374,7 @@ useEffect(() => {
             existingItem.cantidad_compra += item.cantidad_compra; // Sumar cantidades
             existingItem.subtotal = (existingItem.subtotal ?? 0) + (item.subtotal ?? 0); // Sumar subtotales
         } else {
-            acc.push({ ...item }); // Agregar como nuevo si no cumple las condiciones de agrupación
+            acc.push({ ...item }); // Agregar como nuevo si no cumple las condiciones de agrupació
         }
         return acc;
     }, [] as CarritoItem[]);
