@@ -75,12 +75,12 @@ export default function Materials() {
       direccion_ordenamiento: orden != "" ? orden : null,
     };
 
-    console.log(filteredData);
+    // console.log(filteredData);
     // Ahora debería mostrar las categorías correcta
     try {
-      console.log("enviando:", filteredData);
+      // console.log("enviando:", filteredData);
       const res = await FilteredMaterials(filteredData);
-      console.log("recibiendo:", res);
+      // console.log("recibiendo:", res);
       setPageNumber(1);
       setProductsSplit(0);
       setPricesChanges(false);

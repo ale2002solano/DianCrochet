@@ -32,9 +32,9 @@ export default function MyVideos() {
           try {
             const res = await getVideosUsuario(userCorreo, ordenamiento, orden); // Llama a la función para obtener los videos
             SetMyVideos(res.tutorialesDelUsuario);
-            console.log(res); // Actualiza el estado con el resultado
+            // console.log(res); // Actualiza el estado con el resultado
           } catch (error) {
-            console.log("ordenamiento ", ordenamiento, "\n orden ", orden);
+            // console.log("ordenamiento ", ordenamiento, "\n orden ", orden);
             console.error("Error al traer videos:", error);
           } finally {
             setIsLoading(false); // Desactiva la carga cuando la solicitud termina

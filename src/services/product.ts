@@ -58,7 +58,7 @@ export function useProducto() {
       obtenerDetallesProducto();
     }
   }, [id]);
-  console.log(producto)
+  // console.log(producto)
   
   return producto;
   
@@ -117,7 +117,7 @@ export const getMaterials = async(): Promise<FullMaterial[]> =>{
     throw new Error("Error al traer productos");
   }
   const data = await res.json();
-  console.log(data)
+  // console.log(data)
   return data.productosRandom;
 }
 
@@ -177,7 +177,7 @@ export const getKits = async(): Promise<FullKit[]> =>{
     throw new Error("Error al traer productos");
   }
   const data = await res.json();
-  console.log(data)
+  // console.log(data)
   return data.productosRandom;
 };
 

@@ -37,7 +37,7 @@ export default function Categorias({ open, setOpen, categories, setCategories }:
   
   // Este efecto escucha cambios en `categories` y los imprime
   useEffect(() => {
-    console.log("Actualizando categories:", categories);
+    // console.log("Actualizando categories:", categories);
   }, [categories]);
 
   const handleGlobalKeyDown = (event: Event) => {

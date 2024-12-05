@@ -36,7 +36,7 @@ export default function LoginForm() {
   //Envío del formulario
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Datos enviados:", formData);
+    // console.log("Datos enviados:", formData);
     // Aqui se hace la transaccion beebboop
     setLoading(true);
     try {
@@ -45,7 +45,7 @@ export default function LoginForm() {
       setMessage(response.mensaje);
 
       if (response.codigo == 1) {
-        console.log("Login exitoso:", response);
+        // console.log("Login exitoso:", response);
          // Guarda el objeto 'response' en el localStorage
         localStorage.setItem('loginResponse', JSON.stringify(response));
         setCodigo(1);
@@ -53,7 +53,7 @@ export default function LoginForm() {
         //beep boop, aqui se implementa el cambio cuando se hace login
       } else if (response.codigo == 2) {
         setCodigo(2);
-        console.log(response.mensaje);
+        // console.log(response.mensaje);
       } else if (response.codigo == 3) {
         setCodigo(3);
       } else if (response.codigo == 4) {

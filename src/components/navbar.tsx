@@ -51,10 +51,6 @@ export default function Navbar() {
     setProfileOpen(!isProfileOpen);
   };
 
-
-console.log('Cantidad de productos en Navbar:', totalCantidad);
-
-
   // Cerrar el menú al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -76,6 +72,7 @@ console.log('Cantidad de productos en Navbar:', totalCantidad);
 
   const handleLogout = () => {
     localStorage.clear();
+    setCorreo("");
     router.push('/auth/sign-in');
   };
 
@@ -189,8 +186,24 @@ console.log('Cantidad de productos en Navbar:', totalCantidad);
 
   function MobileNav({ closeSideMenu }: { closeSideMenu: () => void }) {
     const navRef = useRef<HTMLDivElement>(null);
+    const linksRef = useRef<HTMLAnchorElement[]>([]);
+    const [activeLink, setActiveLink] = useState<string | null>(null); // Enlace actualmente activo
+    const router = useRouter();
+
+    useEffect(() => {
+      const preventScroll = (event: TouchEvent) => {
+        if (navRef.current && navRef.current.contains(event.target as Node)) {
+          event.preventDefault();
+        }
+      };
   
-    // Cerrar el menú al hacer clic fuera de él
+      document.addEventListener("touchmove", preventScroll, { passive: false });
+      return () => {
+        document.removeEventListener("touchmove", preventScroll);
+      };
+    }, []);
+  
+    // Cerrar menú al hacer clic fuera
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
         if (navRef.current && !navRef.current.contains(event.target as Node)) {
@@ -198,18 +211,42 @@ console.log('Cantidad de productos en Navbar:', totalCantidad);
         }
       };
   
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
       return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener("mousedown", handleClickOutside);
       };
     }, [closeSideMenu]);
   
+    useEffect(() => {
+      const handleTouchMove = (event: TouchEvent) => {
+        const touch = event.touches[0];
+        const target = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (target instanceof HTMLAnchorElement && linksRef.current.includes(target)) {
+          setActiveLink(target.dataset.path || null);
+        }
+      };
+  
+      const handleTouchEnd = () => {
+        if (activeLink) {
+          router.push(activeLink);
+          closeSideMenu();
+          setActiveLink(null);
+        }
+      };
+  
+      document.addEventListener("touchmove", handleTouchMove);
+      document.addEventListener("touchend", handleTouchEnd);
+  
+      return () => {
+        document.removeEventListener("touchmove", handleTouchMove);
+        document.removeEventListener("touchend", handleTouchEnd);
+      };
+    }, [activeLink, closeSideMenu, router]);
+  
     return (
-      <div className="fixed left-0 top-0 flex h-full min-h-screen w-full justify-end md:hidden">
-        <div
-          ref={navRef}
-          className="h-full w-[65%] bg-white px-4 py-4"
-        >
+      <div className="fixed !ml-0 left-0 top-0 flex h-full min-h-screen w-full justify-end md:hidden">
+        <div className="h-full w-[35%] bg-slate-700 opacity-55 px-4 py-4"></div>
+        <div ref={navRef} className="h-full w-[65%] bg-white px-4 py-4">
           <section className="flex justify-end text-black">
             <AiOutlineClose
               onClick={closeSideMenu}
@@ -217,116 +254,85 @@ console.log('Cantidad de productos en Navbar:', totalCantidad);
             />
           </section>
   
-          <nav className="flex flex-col items-start gap-4 transition-all text-2xl">
-            <a
-              onClick={() => {
-                router.push('/products');
-                closeSideMenu();
-              }}
-              href="#"
-              className="text-gray-700 hover:text-purple-500"
-            >
-              PRODUCTOS
-            </a>
-            <a
-              onClick={() => {
-                router.push('/products/materials');
-                closeSideMenu();
-              }}
-              href="#"
-              className="text-gray-700 hover:text-purple-500"
-            >
-              MATERIALES
-            </a>
-            <a
-              onClick={() => {
-                router.push('/products/kits');
-                closeSideMenu();
-              }}
-              href="#"
-              className="text-gray-700 hover:text-purple-500"
-            >
-              KITS
-            </a>
-            <a
-              onClick={() => {
-                router.push('/products/tutoriales');
-                closeSideMenu();
-              }}
-              href="#"
-              className="text-gray-700 hover:text-purple-500"
-            >
-              TUTORIALS
-            </a>
-            <a
-              onClick={() => {
-                handleCarritoClick();
-                closeSideMenu();
-              }}
-              href="#"
-              className="text-gray-700 hover:text-purple-500"
-            >
-              MI CARRITO
-            </a>
+          <nav className="flex flex-col items-start gap-4 text-2xl transition-all">
+            {[
+              { label: "PRODUCTOS", path: "/products" },
+              { label: "MATERIALES", path: "/products/materials" },
+              { label: "KITS", path: "/products/kits" },
+              { label: "TUTORIALS", path: "/products/tutoriales" },
+              { label: "MI CARRITO", path: "/checkout/shop-cart" },
+            ].map((link, index) => (
+              <a
+                key={link.path}
+                href="#"
+                onClick={() => {
+                  router.push(link.path);
+                  setIsProfileDropdownOpen(false); // Cerrar dropdown
+                  closeSideMenu(); // Cerrar el menú lateral
+                }}
+                ref={(el) => {
+                  linksRef.current[index] = el!;
+                }} // Guardar referencia
+                data-path={link.path} // Identificador único
+                className={`${
+                  activeLink === link.path
+                    ? "bg-purple-200 text-purple-500 rounded-md"
+                    : "text-gray-700"
+                } px-4 `}
+              >
+                {link.label}
+              </a>
+            ))}
   
+            {/* Sección Mi Perfil */}
             <div className="relative">
-                <button
-                  onClick={toggleProfileDropdown}
-                  className="text-gray-700 hover:text-purple-500"
-                >
-                  MI PERFIL
-                </button>
-                {isProfileDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 shadow-lg rounded-lg">
+              <button
+                onTouchStart={() => setActiveLink("profile")}
+                onTouchEnd={toggleProfileDropdown}
+                className={`${
+                  activeLink === "profile"
+                    ? "bg-purple-200 text-purple-500 rounded-lg"
+                    : "text-gray-700"
+                } px-4`}
+              >
+                MI PERFIL
+              </button>
+              {isProfileDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-48 rounded-lg border border-gray-300 bg-white shadow-lg">
+                  {[
+                    { label: "DATOS PERSONALES", path: "/profile" },
+                    { label: "HISTORIAL DE COMPRA", path: "/profile/records" },
+                    { label: "MIS VIDEOS", path: "/profile/myvideos" },
+                    { label: "MIS KITS", path: "/profile/mykits" },
+                  ].map((subLink, subIndex) => (
                     <a
-                      onClick={() => {
-                        router.push('/profile');
-                        setIsProfileDropdownOpen(false); // Cerrar el menú
-                        closeSideMenu(); // Cerrar el menú lateral si está abierto
-                      }}
+                      key={subLink.path}
                       href="#"
-                      className="block px-4 py-2 text-gray-700 hover:text-purple-500"
-                    >
-                      DATOS PERSONALES
-                    </a>
-                    <a
                       onClick={() => {
-                        router.push('/profile/records');
-                        setIsProfileDropdownOpen(false); // Cerrar el menú
-                        closeSideMenu(); // Cerrar el menú lateral si está abierto
+                        router.push(subLink.path);
+                        setIsProfileDropdownOpen(false); // Cerrar dropdown
+                        closeSideMenu(); // Cerrar el menú lateral
                       }}
-                      href="#"
-                      className="block px-4 py-2 text-gray-700 hover:text-purple-500"
+                      ref={(el) => {
+                        linksRef.current[5 + subIndex] = el!;
+                      }} // Guardar referencias adicionales
+                      data-path={subLink.path} // Identificador único
+                      className={`${
+                        activeLink === subLink.path
+                          ? "bg-purple-200 text-purple-500"
+                          : "text-gray-700"
+                      } block px-4 py-2`}
                     >
-                      HISTORIAL DE COMPRA
+                      {subLink.label}
                     </a>
-                    <a
-                      onClick={() => {
-                        router.push('/profile/myvideos');
-                        setIsProfileDropdownOpen(false); // Cerrar el menú
-                        closeSideMenu(); // Cerrar el menú lateral si está abierto
-                      }}
-                      href="#"
-                      className="block px-4 py-2 text-gray-700 hover:text-purple-500"
-                    >
-                      MIS VIDEOS
-                    </a>
-                    <a
-                      onClick={() => {
-                        router.push('/profile/mykits');
-                        setIsProfileDropdownOpen(false); // Cerrar el menú
-                        closeSideMenu(); // Cerrar el menú lateral si está abierto
-                      }}
-                      href="#"
-                      className="block px-4 py-2 text-gray-700 hover:text-purple-500"
-                    >
-                      MIS KITS
-                    </a>
-                  </div>
-                )}
-              </div>
+                  ))}
+                </div>
+              )}
+            </div>
   
+            {/* Cerrar Sesión / Iniciar Sesión */}
             <a
+              href="#"
               onClick={() => {
                 if (correo) {
                   handleLogout();
@@ -335,10 +341,10 @@ console.log('Cantidad de productos en Navbar:', totalCantidad);
                 }
                 closeSideMenu();
               }}
-              href="#"
               className="block py-2 text-gray-700 hover:bg-gray-100"
             >
-              {correo ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+            {correo ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+
             </a>
           </nav>
         </div>

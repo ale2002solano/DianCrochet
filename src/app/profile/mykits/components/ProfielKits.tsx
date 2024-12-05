@@ -32,7 +32,7 @@ export default function MyKits(){
             try {
                 const res = await getKitsUsuario(userCorreo, ordenamiento, orden); // Llama a la función para obtener los videos
                 SetMyKits(res.kitsDelUsuario);
-                console.log(res); // Actualiza el estado con el resultado
+                // console.log(res); // Actualiza el estado con el resultado
             }catch (error) {
                 console.log("ordenamiento ", ordenamiento, "\n orden ", orden);
                 console.error("Error al traer kits:", error);

@@ -28,7 +28,7 @@ export default function PswdCodeForm({ email }: PswdCodeFormProps) {
         setLauncher(true);
       }else{
         setModalTitle("Error de Verificación");
-        console.log(data)
+        // console.log(data)
         setModalMessage(data.user.mensaje);
         setModalType(2); // Tipo 3 para error
         setShowModal(true);

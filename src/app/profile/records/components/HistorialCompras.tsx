@@ -35,13 +35,13 @@ export default function Historial() {
       const userCorreo = parsedResponse?.query_result?.CORREO || '';
 
       if (userCorreo) {
-        console.log(userCorreo)
+        // console.log(userCorreo)
         const fetchGets = async () => {
           setIsLoading(true); // Activa la carga antes de la solicitud
           try {
             const res = await getFacturas(userCorreo,ordenamiento, orden); // Llama a la función para obtener las facturas
             setFacturas(res.FacturasUsuario);
-            console.log(res) // Actualiza el estado con el resultado
+            // console.log(res) // Actualiza el estado con el resultado
           } catch (error) {
             console.error("Error al traer facturas:", error);
           } finally {

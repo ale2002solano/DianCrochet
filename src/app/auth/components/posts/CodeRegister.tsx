@@ -41,15 +41,14 @@ export default function CodeRegister({ mail, setShowEmailVerification }: AuthFor
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
     setLoading(true);
     try {
       const response = await verifyEmailRegister(formData);
-      console.log('respuesta: ', response);
+      // console.log('respuesta: ', response);
 
       // Condicionales para asignar valores al modal
       if (response.user.codigo === 1) {
-        console.log("Registro exitoso de código:", response);
+        // console.log("Registro exitoso de código:", response);
         setModalTitle("Registro Exitoso");
         setModalMessage("");
         setModalType(1);
@@ -79,12 +78,12 @@ export default function CodeRegister({ mail, setShowEmailVerification }: AuthFor
 
   const handleModal = () => {
     setShowModal(true);
-    console.log("cambiando modal: ", showModal);
+    // console.log("cambiando modal: ", showModal);
   };
 
   const handleModalResend = () => {
     setShowModalResend(!showModalResend);
-    console.log("cambiando modal: ", showModalResend);
+    // console.log("cambiando modal: ", showModalResend);
   };
 
   const handleResendCode = async () => {

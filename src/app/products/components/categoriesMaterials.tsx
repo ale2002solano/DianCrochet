@@ -34,7 +34,7 @@ export default function CategoriasMateriales({ open, setOpen, categories, setCat
       : [...categories, category];
     
     setCategories(updatedCategories); // Propagamos el cambio al componente padre inmediatamente
-    console.log("actualizando categories:", categories)
+    // console.log("actualizando categories:", categories)
   };
 
   const handleClickOutside = (event: MouseEvent) => {

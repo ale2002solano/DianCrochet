@@ -1,7 +1,7 @@
 import { CarritoRequest } from "@interfaces/product";
 
 export const agregarAlCarrito = async (data: CarritoRequest) => {
-  console.log('antes de enviar al carrito:', data)
+  // console.log('antes de enviar al carrito:', data)
     try {
       const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/insertar/actualizar', {
         method: 'POST',

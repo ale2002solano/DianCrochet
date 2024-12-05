@@ -52,7 +52,7 @@ export function RegisterForm() {
   };
 
   const handlePasswordVerification = () => {
-    console.log(formData.contrasena, "  =  ", Password2);
+    // console.log(formData.contrasena, "  =  ", Password2);
     return formData.contrasena === Password2;
   };
 
@@ -78,23 +78,23 @@ export function RegisterForm() {
       formData.fechaNacimiento = "1111/11/11";
     }
     setLoading(true);
-    console.log(formData); // Inicia el estado de carga
+    // console.log(formData); // Inicia el estado de carga
     try {
       const responsePassword = await passwordVerify(formData.contrasena);
-      console.log(responsePassword);
+      // console.log(responsePassword);
       if (responsePassword.codigo == 1) {
         setPasswordMessage("");
       } else {
         setPasswordMessage(responsePassword.mensaje);
-        console.log(passwordvalidation);
-        console.log(passwordMessage);
+        // console.log(passwordvalidation);
+        // console.log(passwordMessage);
         return;
       }
 
       const response = await register(formData);
-      console.log("respuesta: ", response);
+      // console.log("respuesta: ", response);
       if (response.user.codigo == 1) {
-        console.log("Registro exitoso:", response);
+        // console.log("Registro exitoso:", response);
         setShowEmailVerification(!showEmailVerification);
       } else {
         setShowModal(true);
@@ -125,10 +125,10 @@ export function RegisterForm() {
       const hasSpecialChar = /[_!@#$%^&*-]/.test(value); // Al menos un carácter especial
 
       // Debugging para confirmar los valores
-      console.log(`Contraseña: ${value}`);
-      console.log(
-        `MinLength: ${minLength}, HasNumber: ${hasNumber}, HasSpecialChar: ${hasSpecialChar}`,
-      );
+      // console.log(`Contraseña: ${value}`);
+      // console.log(
+      //   `MinLength: ${minLength}, HasNumber: ${hasNumber}, HasSpecialChar: ${hasSpecialChar}`,
+      // );
 
       // Actualizar el estado con las condiciones evaluadas
       setPasswordConditions([minLength, hasNumber, hasSpecialChar]);

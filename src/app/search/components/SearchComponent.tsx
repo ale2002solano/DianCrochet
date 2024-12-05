@@ -94,15 +94,15 @@ export default function SearchComponent() {
     useEffect(() => {
       async function fetchProducts() {
         try {
-          console.log("categorias", categories);
+          // console.log("categorias", categories);
           setIsLoading(true);
           const categoryFilter = categories.length > 0 ? categories : null; // Si no hay categorías, enviar null
-          console.log(
-            "Enviando búsqueda:",
-            searchQuery,
-            "Categorías:",
-            categoryFilter,
-          );
+          // console.log(
+          //   "Enviando búsqueda:",
+          //   searchQuery,
+          //   "Categorías:",
+          //   categoryFilter,
+          // );
   
           // Llama al servicio con ambos parámetros
           const res = await search(searchQuery, null, categoryFilter);

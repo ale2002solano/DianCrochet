@@ -66,7 +66,7 @@ export default function ShopCartForm() {
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             const storedCorreo = parsedData.query_result.CORREO;
-            console.log('Correo almacenado:', storedCorreo); // Verifica el correo almacenado
+            // console.log('Correo almacenado:', storedCorreo); // Verifica el correo almacenado
             setCorreo(storedCorreo);
         }
     }, []);
@@ -77,7 +77,7 @@ export default function ShopCartForm() {
                 try {
                     const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/carrito/${correo}`);
                     const data = await response.json();
-                    console.log('Datos del carrito:', data); // Verifica los datos recibidos
+                    // console.log('Datos del carrito:', data); // Verifica los datos recibidos
                     setCarrito(data.carrito);
                     const carritoAgrupado = agruparCarrito(data.carrito);
                     setCarrito(carritoAgrupado);
@@ -103,7 +103,7 @@ export default function ShopCartForm() {
         const storedFacturaId = localStorage.getItem('facturaId');
         if (storedFacturaId) {
             setFacturaId(Number(storedFacturaId));
-            console.log('Factura ID recuperada:', storedFacturaId);
+            // console.log('Factura ID recuperada:', storedFacturaId);
         }
     }, []);
 

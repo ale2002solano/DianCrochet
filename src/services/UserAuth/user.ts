@@ -27,7 +27,7 @@ export const register = async (data: RegisterData) => {
     },
     body: JSON.stringify(data),
   });
-  console.log('registro completado')
+  // console.log('registro completado')
   if (!response.ok) {
     throw new Error("Error al iniciar registro");
   }
@@ -59,7 +59,7 @@ export const resendCode = async(correo: string) =>{
     },
     body: JSON.stringify({ correo }),
   });
-  console.log("json: ",  JSON.stringify({ correo }))
+  // console.log("json: ",  JSON.stringify({ correo }))
 
   if (!response.ok) {
     throw new Error("Error al verificar codigo");
@@ -76,7 +76,7 @@ export const passwordVerify = async(contrasena: string) =>{
     },
     body: JSON.stringify({ contrasena }),
   });
-  console.log('Service ', response)
+  // console.log('Service ', response)
   if (!response.ok) {
     throw new Error("Error al validar contraseña");
   }

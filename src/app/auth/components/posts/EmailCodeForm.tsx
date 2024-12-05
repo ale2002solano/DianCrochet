@@ -31,7 +31,7 @@ export default function EmailAuthForm({ title }: AuthFormProps) {
         setModalMessage(response.mensaje);
         setModalType(2);
       }
-      console.log("Respuesta del servidor:", response);
+      // console.log("Respuesta del servidor:", response);
 
       setShowModal(true);
     } catch (error) {

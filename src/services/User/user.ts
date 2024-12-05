@@ -12,10 +12,10 @@ export const getFacturas = async(correo:string, col: string, dir: string)=>{
     }),
   });
 
-  console.log(JSON.stringify({
-    columna_ordenamiento: col,
-    direccion_ordenamiento: dir,
-  }))
+  // console.log(JSON.stringify({
+  //   columna_ordenamiento: col,
+  //   direccion_ordenamiento: dir,
+  // }))
 
   if (!response.ok) {
     throw new Error("Error al traer facturas");
@@ -37,10 +37,10 @@ export const getFacturas = async(correo:string, col: string, dir: string)=>{
       }),
     });
 
-    console.log(JSON.stringify({
-      columna_ordenamiento: col,
-      direccion_ordenamiento: dir,
-    }))
+    // console.log(JSON.stringify({
+    //   columna_ordenamiento: col,
+    //   direccion_ordenamiento: dir,
+    // }))
   
     if (!response.ok) {
       throw new Error("Error al traer videos");
@@ -106,10 +106,10 @@ export const getFacturas = async(correo:string, col: string, dir: string)=>{
       }),
     });
 
-    console.log(JSON.stringify({
-      columna_ordenamiento: col,
-      direccion_ordenamiento: dir,
-    }))
+    // console.log(JSON.stringify({
+    //   columna_ordenamiento: col,
+    //   direccion_ordenamiento: dir,
+    // }))
   
     if (!response.ok) {
       throw new Error("Error al traer kits");

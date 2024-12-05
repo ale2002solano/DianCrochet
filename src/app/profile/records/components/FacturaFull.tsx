@@ -21,7 +21,7 @@ export default function FacturaFull({
       try {
         const res = await getFacturaFull(idFactura); // Llama a la función para obtener los facturas
         setFactura(res.DetalleProducto);
-        console.log("factura full:", res);
+        // console.log("factura full:", res);
         setIsLoading(false);
       } catch (error) {
         console.error("Error al traer facturas:", error);

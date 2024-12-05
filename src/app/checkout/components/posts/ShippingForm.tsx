@@ -53,7 +53,7 @@ export default function ShippingForm() {
                 try {
                     const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/carrito/${correo}`);
                     const data = await response.json();
-                    console.log('Datos del carrito:', data);
+                    // console.log('Datos del carrito:', data);
                     setCarrito(data.carrito);
                 } catch (error) {
                     console.error('Error al obtener el carrito:', error);
@@ -77,7 +77,7 @@ export default function ShippingForm() {
     
             if (response.ok) {
                 const data = await response.json();
-                console.log('Subtotal e impuestos recibidos:', data); // Verifica la respuesta del backend
+                // console.log('Subtotal e impuestos recibidos:', data); // Verifica la respuesta del backend
                 setSubtotal(data.subtotal);
                 setImpuestos(data.impuesto);
             } else {
@@ -237,7 +237,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
                 numero: telefono
             });
    
-            console.log('Respuesta del servidor:', response);
+            // console.log('Respuesta del servidor:', response);
    
             if (response.status === 201) {
                 setEnvioGuardado(true); // Marca el envío como guardado
@@ -248,8 +248,8 @@ const groupedCarrito = carrito.reduce((acc, item) => {
                 setEnvio(envio);  // Asignamos el valor de 'envio' al estado
                 setTotal(total);  // Aquí asignas el valor de 'total' al estado
    
-                console.log('Envio:', envio);
-                console.log('Total:', total);
+                // console.log('Envio:', envio);
+                // console.log('Total:', total);
             } else {
                 console.error('Error al guardar el envío:', response);
                 alert('Hubo un error al procesar el envío');

@@ -38,10 +38,10 @@ export default function ResetPswForm() {
     if (showModal) {
       const timer = setTimeout(() => {
         if (modalType === 1) {
-          console.log("Redirigiendo a la página de inicio de sesión");
+          // console.log("Redirigiendo a la página de inicio de sesión");
           window.location.href = "/auth/sign-in"; // Redirigir a la página de inicio de sesión
         } else if (modalType === 3) {
-          console.log("Recargando la página");
+          // console.log("Recargando la página");
           window.location.reload(); // Recargar la página
         }
       }, 1000); // Redirigir después de 1 segundo
@@ -54,7 +54,7 @@ export default function ResetPswForm() {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      console.log("Las contraseñas no coinciden");
+      // console.log("Las contraseñas no coinciden");
       setModalTitle("Error");
       setModalMessage("Las contraseñas no coinciden");
       setModalType(3); // Tipo 3 para error
@@ -63,9 +63,9 @@ export default function ResetPswForm() {
     }
 
     try {
-      console.log("Enviando solicitud para restablecer la contraseña");
+      // console.log("Enviando solicitud para restablecer la contraseña");
       const response = await resetPwd(correo, password);
-      console.log("Respuesta de la API:", response);
+      // console.log("Respuesta de la API:", response);
 
       if (response.codigo === 1) {
         setModalTitle("Éxito");

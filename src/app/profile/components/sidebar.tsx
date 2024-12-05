@@ -58,7 +58,7 @@ export default function Sidebar() {
         <div className="hidden sm:flex sm:w-[25%] shadow-xl h-screen relative flex-col md:items-center">
             <div className="relative rounded-full mt-32 h-28 w-28 object-contain">
                 <Image
-                  src={profileImageUrl ? profileImageUrl : "https://ik.imagekit.io/diancrochet/Fotos/GORROCUERNOS.jpg?updatedAt=1728867304044"}
+                  src={profileImageUrl ? profileImageUrl : "https://ik.imagekit.io/diancrochet/Fotos/user.png"}
                   alt="Profile Pic"
                   layout="fill" // Esto hace que la imagen ocupe todo el espacio disponible
                   className="object-cover rounded-full select-none" 
