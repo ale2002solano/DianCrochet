@@ -433,7 +433,7 @@ useEffect(() => {
 
                             </div>
                             <div id="precio" className="mt-8 flex flex-col flex-nowrap justify-start items-end content-stretch">
-                                <h3 className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl sm:white-space: nowrap;">{item.subtotal !== null ? `${item.subtotal} Lps` : 'No disponible'}</h3>
+                                <h3 className="text-gray-700 text-sm sm:text-base sm:white-space: nowrap;">{item.subtotal !== null ? `${item.subtotal} Lps` : 'No disponible'}</h3>
                                 <button title="delete" onClick={() => handleDelete(correo, item.id_producto, item.talla, item.grosor)}>
                                     <FaRegTrashAlt className="text-gray-700 hover:text-red-700"/>
                                 </button>
