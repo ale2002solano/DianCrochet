@@ -233,8 +233,11 @@ export default function Navbar() {
           setActiveLink(null);
         }
       };
+      const preventScroll2 = (event: TouchEvent) => {
+        event.preventDefault(); // Evita el scroll
+      };
   
-      document.addEventListener("touchmove", handleTouchMove);
+      document.addEventListener("touchmove", preventScroll2, { passive: false });
       document.addEventListener("touchend", handleTouchEnd);
   
       return () => {
@@ -263,27 +266,30 @@ export default function Navbar() {
               { label: "MI CARRITO", path: "/checkout/shop-cart" },
             ].map((link, index) => (
               <a
-                key={link.path}
-                href="#"
-                onClick={() => {
+              key={link.path}
+              href="#"
+              onClick={() => {
+                if (link.path === "/checkout/shop-cart") {
+                  // Llama a la función handleCartClick
+                  handleCarritoClick();
+                } else {
+                  // Usa router.push para otros enlaces
                   router.push(link.path);
-                  setIsProfileDropdownOpen(false); // Cerrar dropdown
-                  closeSideMenu(); // Cerrar el menú lateral
-                }}
-                onTouchStart={(e) => e.preventDefault()}  // Evita que se muestre la URL al mantener presionado
-                onMouseDown={(e) => e.preventDefault()} 
-                ref={(el) => {
-                  linksRef.current[index] = el!;
-                }} // Guardar referencia
-                data-path={link.path} // Identificador único
-                className={`${
-                  activeLink === link.path
-                    ? "bg-purple-200 text-purple-500 rounded-md"
-                    : "text-gray-700"
-                } px-4 `}
-              >
-                {link.label}
-              </a>
+                }
+                closeSideMenu(); // Cierra el menú lateral
+              }} // Evita que se muestre la URL al mantener presionado
+              ref={(el) => {
+                linksRef.current[index] = el!;
+              }} // Guardar referencia
+              data-path={link.path} // Identificador único
+              className={`${
+                activeLink === link.path
+                  ? "bg-purple-200 text-purple-500 rounded-md"
+                  : "text-gray-700"
+              } px-4`}
+            >
+              {link.label}
+            </a>
             ))}
 
             {correo ? (
