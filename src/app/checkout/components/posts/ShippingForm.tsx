@@ -197,72 +197,72 @@ const groupedCarrito = carrito.reduce((acc, item) => {
     };
      
 
-    const handleSaveShipping = async () => {
-        let isValid = true;
+    // const handleSaveShipping = async () => {
+    //     let isValid = true;
    
-        // Validación de los campos
-        if (!direccion) {
-            setDireccionError('Por favor, ingresa una direccion');
-            isValid = false;
-        } else {
-            setDireccionError('');
-        }
+    //     // Validación de los campos
+    //     if (!direccion) {
+    //         setDireccionError('Por favor, ingresa una direccion');
+    //         isValid = false;
+    //     } else {
+    //         setDireccionError('');
+    //     }
    
-        if (!selectedCiudad) {
-            setCiudadError('Por favor, selecciona una ciudad');
-            isValid = false;
-        } else {
-            setCiudadError('');
-        }
+    //     if (!selectedCiudad) {
+    //         setCiudadError('Por favor, selecciona una ciudad');
+    //         isValid = false;
+    //     } else {
+    //         setCiudadError('');
+    //     }
    
-        if (!telefono) {
-            setTelefonoError('Por favor, ingresa un número de telefono');
-            isValid = false;
-        } else {
-            setTelefonoError('');
-        }
+    //     if (!telefono) {
+    //         setTelefonoError('Por favor, ingresa un número de telefono');
+    //         isValid = false;
+    //     } else {
+    //         setTelefonoError('');
+    //     }
    
-        if (!isValid) return;
+    //     if (!isValid) return;
    
-        if (!idFactura) {
-            console.error('El id de la factura no está disponible');
-            return;
-        }
+    //     if (!idFactura) {
+    //         console.error('El id de la factura no está disponible');
+    //         return;
+    //     }
    
-        try {
-            const response = await axios.post('https://deploybackenddiancrochet.onrender.com/factura/envio', {
-                id_factura: idFactura,
-                direccion,
-                id_ciudad: selectedCiudad,
-                numero: telefono
-            });
+    //     try {
+    //         const response = await axios.post('https://deploybackenddiancrochet.onrender.com/factura/envio', {
+    //             id_factura: idFactura,
+    //             direccion,
+    //             id_ciudad: selectedCiudad,
+    //             numero: telefono
+    //         });
    
-            // console.log('Respuesta del servidor:', response);
+    //         // console.log('Respuesta del servidor:', response);
    
-            if (response.status === 201) {
-                setEnvioGuardado(true); // Marca el envío como guardado
-                const envioData = response.data.envio;
-                const envio = envioData?.envio ?? 0;
-                const total = envioData?.total ?? 'No disponible'; // Aquí obtienes el total desde la respuesta
+    //         if (response.status === 201) {
+    //             setEnvioGuardado(true); // Marca el envío como guardado
+    //             const envioData = response.data.envio;
+    //             const envio = envioData?.envio ?? 0;
+    //             const total = envioData?.total ?? 'No disponible'; // Aquí obtienes el total desde la respuesta
    
-                setEnvio(envio);  // Asignamos el valor de 'envio' al estado
-                setTotal(total);  // Aquí asignas el valor de 'total' al estado
+    //             setEnvio(envio);  // Asignamos el valor de 'envio' al estado
+    //             setTotal(total);  // Aquí asignas el valor de 'total' al estado
    
-                // console.log('Envio:', envio);
-                // console.log('Total:', total);
-            } else {
-                console.error('Error al guardar el envío:', response);
-                alert('Hubo un error al procesar el envío');
-            }
+    //             // console.log('Envio:', envio);
+    //             // console.log('Total:', total);
+    //         } else {
+    //             console.error('Error al guardar el envío:', response);
+    //             alert('Hubo un error al procesar el envío');
+    //         }
    
-        } catch (error) {
-            console.error('Error al guardar el envío:', error);
-            if (axios.isAxiosError(error)) {
-                console.error('Detalles del error:', error.response?.data);
-            }
-            alert('Hubo un error al procesar el envío');
-        }
-    };   
+    //     } catch (error) {
+    //         console.error('Error al guardar el envío:', error);
+    //         if (axios.isAxiosError(error)) {
+    //             console.error('Detalles del error:', error.response?.data);
+    //         }
+    //         alert('Hubo un error al procesar el envío');
+    //     }
+    // };   
     
 
     //Formatear el numero de telefono para que no tenga espacios
@@ -282,31 +282,96 @@ const groupedCarrito = carrito.reduce((acc, item) => {
 
     // Función para manejar el pago
         const handlePayment = async () => {
-            if (!idFactura || total === 'No disponible' || typeof total === 'string') {
-                console.error('No se puede procesar el pago: falta el ID de la factura o el total no está disponible.');
-                alert('Hubo un problema al iniciar el pago. Por favor, revisa la información e inténtalo de nuevo.');
+            let isValid = true;
+   
+            // Validación de los campos
+            if (!direccion) {
+                setDireccionError('Por favor, ingresa una direccion');
+                isValid = false;
+            } else {
+                setDireccionError('');
+            }
+       
+            if (!selectedCiudad) {
+                setCiudadError('Por favor, selecciona una ciudad');
+                isValid = false;
+            } else {
+                setCiudadError('');
+            }
+       
+            if (!telefono) {
+                setTelefonoError('Por favor, ingresa un número de telefono');
+                isValid = false;
+            } else {
+                setTelefonoError('');
+            }
+       
+            if (!isValid) return;
+       
+            if (!idFactura) {
+                console.error('El id de la factura no está disponible');
                 return;
             }
-        
+       
             try {
-                const response = await axios.post<PayPalResponse>('https://deploybackenddiancrochet.onrender.com/pago/crear', {
-                    total_pago: Number(total), // Convertir el total a número si es necesario
+                const response = await axios.post('https://deploybackenddiancrochet.onrender.com/factura/envio', {
                     id_factura: idFactura,
+                    direccion,
+                    id_ciudad: selectedCiudad,
+                    numero: telefono
                 });
-        
-                const data = response.data;
-                const approvalLink = data?.data?.links.find((link) => link.rel === "approve")?.href;
-        
-                if (approvalLink) {
-                    window.location.href = approvalLink; // Redirigir al enlace de aprobación de PayPal
+       
+                // console.log('Respuesta del servidor:', response);
+       
+                if (response.status === 201) {
+                    setEnvioGuardado(true); // Marca el envío como guardado
+                    const envioData = response.data.envio;
+                    const envio = envioData?.envio ?? 0;
+                    const total = envioData?.total ?? 'No disponible'; // Aquí obtienes el total desde la respuesta
+       
+                    setEnvio(envio);  // Asignamos el valor de 'envio' al estado
+                    setTotal(total);  // Aquí asignas el valor de 'total' al estado
+       
+                    if (!idFactura || total === 'No disponible' || typeof total === 'string') {
+                        console.error('No se puede procesar el pago: falta el ID de la factura o el total no está disponible.');
+                        alert('Hubo un problema al iniciar el pago. Por favor, revisa la información e inténtalo de nuevo.');
+                        return;
+                    }
+                
+                    try {
+                        const response = await axios.post<PayPalResponse>('https://deploybackenddiancrochet.onrender.com/pago/crear', {
+                            total_pago: Number(total), // Convertir el total a número si es necesario
+                            id_factura: idFactura,
+                        });
+                
+                        const data = response.data;
+                        const approvalLink = data?.data?.links.find((link) => link.rel === "approve")?.href;
+                
+                        if (approvalLink) {
+                            window.location.href = approvalLink; // Redirigir al enlace de aprobación de PayPal
+                        } else {
+                            console.error('No se encontró el enlace de aprobación en la respuesta:', data);
+                            alert('No se pudo iniciar el pago. Intenta de nuevo más tarde.');
+                        }
+                    } catch (error) {
+                        console.error('Error al procesar el pago:', error);
+                        alert('Hubo un error al procesar el pago.');
+                    }                    // console.log('Envio:', envio);
+                    // console.log('Total:', total);
                 } else {
-                    console.error('No se encontró el enlace de aprobación en la respuesta:', data);
-                    alert('No se pudo iniciar el pago. Intenta de nuevo más tarde.');
+                    console.error('Error al guardar el envío:', response);
+                    alert('Hubo un error al procesar el envío');
                 }
+       
             } catch (error) {
-                console.error('Error al procesar el pago:', error);
-                alert('Hubo un error al procesar el pago.');
+                console.error('Error al guardar el envío:', error);
+                if (axios.isAxiosError(error)) {
+                    console.error('Detalles del error:', error.response?.data);
+                }
+                alert('Hubo un error al procesar el envío');
             }
+
+
         };
     
 
@@ -428,8 +493,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
                  </div>
 
                 <div className="flex justify-end">
-                    <button onClick={handleSaveShipping} className="whitespace-nowrap bg-purple-400 py-4 px-9 rounded-md mr-5">Guardar envio</button>
-                    <button title="decline" type="button" onClick={handlePayment} className="sm:mr-8 text-gray-800 p-4 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px] rounded-md">Pagar</button>
+                    <button title="decline" type="button" onClick={handlePayment} className="whitespace-nowrap bg-purple-400 py-4 px-9 text-slate-100 p-4 transition-all duration-300 ease-in-out hover:shadow-lg hover:translate-y-[-5px] rounded-md">Pagar</button>
                 </div>
             </div>
         </div>
