@@ -550,7 +550,7 @@ useEffect(() => {
             </div>
             
             {mensajeAdvertencia && (
-             <div className="text-lg items-center w-1/4 flex justify-center font-koulen fixed bottom-5 right-5 bg-gray-200 opacity-75 text-purple-800 px-1 py-2 rounded-lg z-50">
+             <div className="text-lg items-center w-1/4 flex justify-center font-koulen fixed bottom-5 right-5 bg-gray-200 opacity-65 text-purple-800 px-1 py-2 rounded-lg z-50">
             {mensajeAdvertencia}
            </div>
           )}
