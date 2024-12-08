@@ -187,21 +187,8 @@ export default function Navbar() {
   function MobileNav({ closeSideMenu }: { closeSideMenu: () => void }) {
     const navRef = useRef<HTMLDivElement>(null);
     const linksRef = useRef<HTMLAnchorElement[]>([]);
-    const [activeLink, setActiveLink] = useState<string | null>(null); // Enlace actualmente activo
+    const [activeLink, setActiveLink] = useState<string | null>(null);
     const router = useRouter();
-
-    useEffect(() => {
-      const preventScroll = (event: TouchEvent) => {
-        if (navRef.current && navRef.current.contains(event.target as Node)) {
-          event.preventDefault();
-        }
-      };
-  
-      document.addEventListener("touchmove", preventScroll, { passive: false });
-      return () => {
-        document.removeEventListener("touchmove", preventScroll);
-      };
-    }, []);
   
     // Cerrar menú al hacer clic fuera
     useEffect(() => {
@@ -233,11 +220,8 @@ export default function Navbar() {
           setActiveLink(null);
         }
       };
-      const preventScroll2 = (event: TouchEvent) => {
-        event.preventDefault(); // Evita el scroll
-      };
   
-      document.addEventListener("touchmove", preventScroll2, { passive: false });
+      document.addEventListener("touchmove", handleTouchMove);
       document.addEventListener("touchend", handleTouchEnd);
   
       return () => {
@@ -245,7 +229,6 @@ export default function Navbar() {
         document.removeEventListener("touchend", handleTouchEnd);
       };
     }, [activeLink, closeSideMenu, router]);
-  
     return (
       <div className="fixed !ml-0 left-0 top-0 flex h-full min-h-screen w-full justify-end md:hidden">
         <div className="h-full w-[35%] bg-slate-700 opacity-55 px-4 py-4"></div>
@@ -356,7 +339,7 @@ export default function Navbar() {
               }}
               className="block py-2 text-gray-700 hover:bg-gray-100"
             >
-            {correo ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+            {correo ? 'Cerrar Sesion' : 'Iniciar Sesion'}
 
             </a>
           </nav>
