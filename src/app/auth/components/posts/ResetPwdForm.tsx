@@ -67,7 +67,7 @@ export default function ResetPswForm() {
       const response = await resetPwd(correo, password);
       // console.log("Respuesta de la API:", response);
 
-      if (response.codigo === 1) {
+      if (response.codigo == 1) {
         setModalTitle("Éxito");
         setModalMessage("Contraseña cambiada con éxito");
         setModalType(1);
