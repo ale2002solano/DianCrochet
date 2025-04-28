@@ -3,7 +3,7 @@ import { Filtered, FullKit, FullMaterial, ProductoDetalle, ProductoSearch } from
 import { useParams } from 'next/navigation';
 import { FullProduct, Producto, ProductoSimilar } from "@interfaces/product";
 
-const API_URL = "https://deploybackenddiancrochet.onrender.com/producto";
+const API_URL = "https://vercel-dianas.vercel.app/producto";
 
 
 export const GetProductosPopulares = async (): Promise<Producto[]> => {

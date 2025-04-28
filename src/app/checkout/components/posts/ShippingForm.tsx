@@ -51,7 +51,7 @@ export default function ShippingForm() {
         if (correo) {
             const fetchCarrito = async () => {
                 try {
-                    const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/carrito/${correo}`);
+                    const response = await fetch(`https://vercel-dianas.vercel.app/factura/carrito/${correo}`);
                     const data = await response.json();
                     // console.log('Datos del carrito:', data);
                     setCarrito(data.carrito);
@@ -67,7 +67,7 @@ export default function ShippingForm() {
     // Función para obtener el subtotal e impuestos
     const fetchSubtotal = async () => {
         try {
-            const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/subtotal', {
+            const response = await fetch('https://vercel-dianas.vercel.app/factura/carrito/subtotal', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
         const fetchCiudades = async () => {
             if (selectedDepartamento) {
                 try {
-                    const response = await axios.get(`https://deploybackenddiancrochet.onrender.com/factura/ciudad/${selectedDepartamento}`);
+                    const response = await axios.get(`https://vercel-dianas.vercel.app/factura/ciudad/${selectedDepartamento}`);
                     setCiudades(response.data.Ciudades);
                 } catch (error) {
                     console.error("Error al obtener las ciudades:", error);
@@ -161,7 +161,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
         useEffect(() => {
             const fetchDepartments = async () => {
                 try {
-                    const response = await axios.get('https://deploybackenddiancrochet.onrender.com/factura/departamentos');
+                    const response = await axios.get('https://vercel-dianas.vercel.app/factura/departamentos');
                     setDepartments(response.data.Departamentos);
                     setLoading(false);
                 } catch (error) {
@@ -230,7 +230,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
         }
    
         try {
-            const response = await axios.post('https://deploybackenddiancrochet.onrender.com/factura/envio', {
+            const response = await axios.post('https://vercel-dianas.vercel.app/factura/envio', {
                 id_factura: idFactura,
                 direccion,
                 id_ciudad: selectedCiudad,
@@ -289,7 +289,7 @@ const groupedCarrito = carrito.reduce((acc, item) => {
             }
         
             try {
-                const response = await axios.post<PayPalResponse>('https://deploybackenddiancrochet.onrender.com/pago/crear', {
+                const response = await axios.post<PayPalResponse>('https://vercel-dianas.vercel.app/pago/crear', {
                     total_pago: Number(total), // Convertir el total a número si es necesario
                     id_factura: idFactura,
                 });

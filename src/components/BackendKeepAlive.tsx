@@ -19,7 +19,7 @@ const useKeepAlive = (url: string, interval: number = 30000): void => {
 };
 
 const BackendKeepAlive: React.FC = () => {
-    useKeepAlive("https://deploybackenddiancrochet.onrender.com/", 30000);
+    useKeepAlive("https://vercel-dianas.vercel.app/", 30000);
     return null;
 };
 

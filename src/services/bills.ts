@@ -1,4 +1,4 @@
-const API_URL = "https://deploybackenddiancrochet.onrender.com/factura";
+const API_URL = "https://vercel-dianas.vercel.app/factura";
 
 export const getFacturaFull = async(id:number)=>{
     const res = await fetch(`${API_URL}/detalle/${id}`);

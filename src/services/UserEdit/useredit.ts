@@ -2,7 +2,7 @@ import { User, ActualizarUser } from '@interfaces/user';
 
 export const fetchUser = async (correo: string): Promise<User | null> => {
   try {
-    const response = await fetch(`https://deploybackenddiancrochet.onrender.com/user/detalle/${correo}`);
+    const response = await fetch(`https://vercel-dianas.vercel.app/user/detalle/${correo}`);
     const data = await response.json();
 
     if (data?.Usuario) {
@@ -19,7 +19,7 @@ export const fetchUser = async (correo: string): Promise<User | null> => {
 
 export const updateUser = async (correo: string, formData: ActualizarUser): Promise<User | null> => {
     try {
-        const response = await fetch(`https://deploybackenddiancrochet.onrender.com/user/actualizar/${correo}`, {
+        const response = await fetch(`https://vercel-dianas.vercel.app/user/actualizar/${correo}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

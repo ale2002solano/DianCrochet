@@ -1,6 +1,6 @@
 import { loginData, RegisterData, ResetPwdResponse, verifyCode } from "@interfaces/user";
 
-const API_URL = "https://deploybackenddiancrochet.onrender.com/user";
+const API_URL = "https://vercel-dianas.vercel.app/user";
 
 // Función para hacer el POST del login
 export const login = async (data: loginData) => {

@@ -75,7 +75,7 @@ export default function ShopCartForm() {
         if (correo) {
             const fetchCarrito = async () => {
                 try {
-                    const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/carrito/${correo}`);
+                    const response = await fetch(`https://vercel-dianas.vercel.app/factura/carrito/${correo}`);
                     const data = await response.json();
                     // console.log('Datos del carrito:', data); // Verifica los datos recibidos
                     setCarrito(data.carrito);
@@ -110,7 +110,7 @@ export default function ShopCartForm() {
      // Función para obtener el subtotal e impuestos
      const fetchSubtotal = async () => {
         try {
-            const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/subtotal', {
+            const response = await fetch('https://vercel-dianas.vercel.app/factura/carrito/subtotal', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ correo })
@@ -139,7 +139,7 @@ export default function ShopCartForm() {
         setModalMessage("¿Estas seguro de que deseas eliminar este producto del carrito?");
         setConfirmAction(() => async () => {
             try {
-                const response = await fetch('https://deploybackenddiancrochet.onrender.com/factura/carrito/producto/eliminar', {
+                const response = await fetch('https://vercel-dianas.vercel.app/factura/carrito/producto/eliminar', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -191,7 +191,7 @@ export default function ShopCartForm() {
     setModalMessage("¿Estas seguro de que deseas cancelar la orden y eliminar todos los productos del carrito?");
     setConfirmAction(() => async () => {
         try {
-            const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/eliminar/carrito/${facturaId}`, {
+            const response = await fetch(`https://vercel-dianas.vercel.app/factura/eliminar/carrito/${facturaId}`, {
                 method: 'DELETE',
             });
 
@@ -244,7 +244,7 @@ const handleQuantityChange = async (
 
     try {
         const response = await fetch(
-            'https://deploybackenddiancrochet.onrender.com/factura/carrito/actualizar',
+            'https://vercel-dianas.vercel.app/factura/carrito/actualizar',
             {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -301,7 +301,7 @@ useEffect(() => {
 useEffect(() => {
     const fetchCarrito = async () => {
         try {
-            const response = await fetch(`https://deploybackenddiancrochet.onrender.com/factura/carrito/${correo}`);
+            const response = await fetch(`https://vercel-dianas.vercel.app/factura/carrito/${correo}`);
             const data = await response.json();
             setCarrito(data.carrito);
             if (data.carrito.length > 0) {
